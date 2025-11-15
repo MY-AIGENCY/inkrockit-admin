@@ -448,9 +448,9 @@ class Model_Admin_Sales extends Model_Sales {
         $user = DB::sql_row('SELECT company_id FROM users WHERE id=:id', array(':id' => $result_data['client_id']));
 
         //add notes
-        DB::sql('INSERT INTO request_notes (request_id,`text`,date,type_user,author_id,job_id, `type`, company_id) VALUES (:request_id,:text,NOW(),"sys",:author_id,:job_id, :type, :company_id)', array(
+        DB::sql('INSERT INTO request_notes (request_id,`text`,date,type_user,author_id,job_id, `type`, company_id, required_uid, removed) VALUES (:request_id,:text,NOW(),"sys",:author_id,:job_id, :type, :company_id, :required_uid, :removed)', array(
             ':job_id' => $result_data['payment_job_id'], ':text' => $note_message,
-            ':author_id' => $admin['id'], ':request_id' => $result_data['request_id'], ':type' => 'payment', ':company_id' => $user['company_id']
+            ':author_id' => $admin['id'], ':request_id' => $result_data['request_id'], ':type' => 'payment', ':company_id' => $user['company_id'], ':required_uid' => 0, ':removed' => 0
         ));
         //add payment history
         $r = DB::sql('INSERT INTO payment_history (job_id,`type`,user_type,`date`,client_id,summ,description, card_id, edg, transaction_code, procent, total) 
@@ -469,9 +469,9 @@ class Model_Admin_Sales extends Model_Sales {
             $admin = unserialize($admin);
         }
         //add notes
-        DB::sql('INSERT INTO request_notes (request_id,`text`,date,type_user,author_id,job_id, `type`, company_id) VALUES (:request_id,:text,NOW(),"sys",:author_id,:job_id, :type, :company_id)', array(
+        DB::sql('INSERT INTO request_notes (request_id,`text`,date,type_user,author_id,job_id, `type`, company_id, required_uid, removed) VALUES (:request_id,:text,NOW(),"sys",:author_id,:job_id, :type, :company_id, :required_uid, :removed)', array(
             ':job_id' => $job_id, ':text' => $note_message,
-            ':author_id' => $admin['id'], ':request_id' => $req_id, ':type' => 'payment', ':company_id' => $company_id
+            ':author_id' => $admin['id'], ':request_id' => $req_id, ':type' => 'payment', ':company_id' => $company_id, ':required_uid' => 0, ':removed' => 0
         ));
         //add event
         Model::factory('Admin_Event')->add_event($type, $pay_id, $note_message);
@@ -485,9 +485,9 @@ class Model_Admin_Sales extends Model_Sales {
         }
         $note_message = 'Credit Return ' . $order['title'] . ' xxxxxxxxx' . substr($order['cardnumber'], -4) . '; AMOUNT: $' . $order['chargetotal'] . '; JOB ID: ' . $current_job['job_id'] . '; X:Payment Description: ' . $note;
         //add notes
-        DB::sql('INSERT INTO request_notes (request_id,`text`,date,type_user,author_id,job_id, `type`, company_id) VALUES (:request_id,:text,NOW(),"sys",:author_id,:job_id, :type, :company_id)', array(
+        DB::sql('INSERT INTO request_notes (request_id,`text`,date,type_user,author_id,job_id, `type`, company_id, required_uid, removed) VALUES (:request_id,:text,NOW(),"sys",:author_id,:job_id, :type, :company_id, :required_uid, :removed)', array(
             ':job_id' => $current_job['id'], ':text' => $note_message,
-            ':author_id' => $admin['id'], ':request_id' => $payment['request_id'], ':type' => 'credit', ':company_id' => $current_job['company_id']
+            ':author_id' => $admin['id'], ':request_id' => $payment['request_id'], ':type' => 'credit', ':company_id' => $current_job['company_id'], ':required_uid' => 0, ':removed' => 0
         ));
         //add payment history
         $r = DB::sql('INSERT INTO payment_history (job_id,`type`,user_type,`date`,client_id,summ,description, card_id, edg, transaction_code, procent, total) 

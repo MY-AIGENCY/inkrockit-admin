@@ -115,8 +115,8 @@ class Fedex {
             $note_message = 'Pick Up request been sent: #'.$response->PickupConfirmationNumber;
             $job = DB::sql_row('SELECT * FROM requests WHERE id=:id', array(':id' => $pack_info['item_id']));
             //add note
-            DB::sql('INSERT INTO request_notes (request_id, `text`, `date`, author_id, job_id, type_user, company_id) VALUES (:id, :text, NOW(), :author_id, :job_id, "sys", :company_id)', array(
-                ':id' => $pack_info['item_id'], ':text' => $note_message, ':author_id' => $admin['id'], ':job_id' => $job['job_id'], ':company_id'=>$job['company_id']));
+            DB::sql('INSERT INTO request_notes (request_id, `text`, `date`, author_id, job_id, type_user, company_id, required_uid, removed) VALUES (:id, :text, NOW(), :author_id, :job_id, "sys", :company_id, :required_uid, :removed)', array(
+                ':id' => $pack_info['item_id'], ':text' => $note_message, ':author_id' => $admin['id'], ':job_id' => $job['job_id'], ':company_id'=>$job['company_id'], ':required_uid' => 0, ':removed' => 0));
             //add event
             Model::factory('Admin_Event')->add_event('fedex_pickup', $pack_info['item_id'], 'New Pick Up. Confirmation number '.$response->PickupConfirmationNumber);
         } else {
@@ -350,8 +350,8 @@ class Fedex {
             $job = DB::sql_row('SELECT * FROM requests WHERE id=:id', array(':id' => $pack_info['item_id']));
             if (!empty($job)) {
                 //add note
-                DB::sql('INSERT INTO request_notes (request_id, `text`, `date`, author_id, job_id, type_user, `type`, company_id) VALUES (:id, :text, NOW(), :author_id, :job_id, "sys", "shipping_out", :company_id)', array(
-                    ':id' => $pack_info['item_id'], ':text' => $note_message, ':author_id' => $admin['id'], ':job_id' => $job['job_id'], ':company_id'=>$job['company_id']));
+                DB::sql('INSERT INTO request_notes (request_id, `text`, `date`, author_id, job_id, type_user, `type`, company_id, required_uid, removed) VALUES (:id, :text, NOW(), :author_id, :job_id, "sys", "shipping_out", :company_id, :required_uid, :removed)', array(
+                    ':id' => $pack_info['item_id'], ':text' => $note_message, ':author_id' => $admin['id'], ':job_id' => $job['job_id'], ':company_id'=>$job['company_id'], ':required_uid' => 0, ':removed' => 0));
 
                 //add event
                 Model::factory('Admin_Event')->add_event('fedex_ship', $pack_info['item_id'], 'New Shipment. '.$mess_track);
@@ -775,8 +775,8 @@ class Fedex {
                 //add event
                 Model::factory('Admin_Event')->add_event('close_ship', $req['id'], 'Close Shipment. Tracking Number: '.$trackingnumber);
                 
-                DB::sql('INSERT INTO request_notes (request_id, `text`, `date`, author_id, job_id, type_user, company_id) VALUES (:id, :text, NOW(), :author_id, :job_id, "sys", :company_id)', array(
-                    ':id' => $req['id'], ':text' => $note_message, ':author_id' => $admin['id'], ':job_id' => $req['job_id'], ':company_id'=>$req['company_id']));
+                DB::sql('INSERT INTO request_notes (request_id, `text`, `date`, author_id, job_id, type_user, company_id, required_uid, removed) VALUES (:id, :text, NOW(), :author_id, :job_id, "sys", :company_id, :required_uid, :removed)', array(
+                    ':id' => $req['id'], ':text' => $note_message, ':author_id' => $admin['id'], ':job_id' => $req['job_id'], ':company_id'=>$req['company_id'], ':required_uid' => 0, ':removed' => 0));
             }
         } else {
             $return = array('err' => $content);

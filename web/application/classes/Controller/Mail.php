@@ -64,9 +64,9 @@ class Controller_Mail extends Main {
                                     echo $head_info->subject;
                                     echo '<hr>';
                                     //add to notes
-                                    DB::sql('INSERT INTO request_notes (request_id, company_id, text, date, job_id, author_id, type, type_user) '
-                                            . 'VALUES (:request_id, :company_id, :text, :date, :job_id, :author_id, :type, :type_user)', array(':request_id' => $req['id'], ':company_id' => $job['company_id'], ':text' => $message_text, ':date' => $date,
-                                        ':job_id' => $job['id'], ':author_id' => 1, ':type' => 'email_in', ':type_user' => 'A'));
+                                    DB::sql('INSERT INTO request_notes (request_id, company_id, text, date, job_id, author_id, type, type_user, required_uid, removed) '
+                                            . 'VALUES (:request_id, :company_id, :text, :date, :job_id, :author_id, :type, :type_user, :required_uid, :removed)', array(':request_id' => $req['id'], ':company_id' => $job['company_id'], ':text' => $message_text, ':date' => $date,
+                                        ':job_id' => $job['id'], ':author_id' => 1, ':type' => 'email_in', ':type_user' => 'A', ':required_uid' => 0, ':removed' => 0));
                                 }
                             }
                             
