@@ -23,14 +23,38 @@ class Model_Admin_User extends Model_User {
             //add event
             Model::factory('Admin_Event')->add_event('user_updated', $id, "");
         } else {
-            $r = DB::sql('INSERT INTO users (login, password, email, first_name, last_name, group_id) 
-                VALUES (:login, :password, :email, :first_name, :last_name, :group_id)', array(':login' => $login, ':password' => md5($post['password']), ':email' => $email, ':first_name' => $first_name, ':last_name' => $last_name, ':group_id' => $group_id));
+            $defaults = array(
+                ':login' => $login,
+                ':password' => md5($post['password']),
+                ':email' => $email,
+                ':email_alt' => '',
+                ':first_name' => $first_name,
+                ':last_name' => $last_name,
+                ':group_id' => $group_id,
+                ':company_id' => 0,
+                ':user_abbr' => '',
+                ':country' => '',
+                ':street' => '',
+                ':street2' => '',
+                ':city' => '',
+                ':state' => '',
+                ':zip' => '',
+                ':phone' => '',
+                ':phone_ext' => '',
+                ':phone_type' => '',
+                ':position' => '',
+                ':industry' => '',
+                ':fax' => '',
+                ':admin_comment' => ''
+            );
+            $r = DB::sql('INSERT INTO users (login, password, email, email_alt, first_name, last_name, group_id, company_id, user_abbr, country, street, street2, city, state, zipcode, phone, phone_ext, phone_type, position, industry, fax, admin_comment) 
+                VALUES (:login, :password, :email, :email_alt, :first_name, :last_name, :group_id, :company_id, :user_abbr, :country, :street, :street2, :city, :state, :zip, :phone, :phone_ext, :phone_type, :position, :industry, :fax, :admin_comment)', $defaults);
             $id = $r[0];
             //add event
             Model::factory('Admin_Event')->add_event('new_user', $id, "");
         }
 
-        if (is_file($_FILES['photo']['tmp_name'])) {
+        if (!empty($_FILES['photo']['tmp_name']) && is_file($_FILES['photo']['tmp_name'])) {
             $img = Image::factory($_FILES['photo']['tmp_name']);
             $img->resize(79, 79, Image::INVERSE)->crop(79, 79)->save(APPPATH . 'files/users/' . $id . '.jpg', 95);
         }

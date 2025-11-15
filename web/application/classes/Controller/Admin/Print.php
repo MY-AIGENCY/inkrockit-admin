@@ -542,7 +542,8 @@ class Controller_Admin_Print extends Admin {
                 echo 'location';
                 break;
             case 'add_category':
-                $r = DB::sql('INSERT INTO `print_category` (title,active) VALUES(:title, 1)', array(':title' => $post['title']));
+                $abbr = !empty($post['abbr']) ? $post['abbr'] : strtoupper(substr(preg_replace('/[^A-Z0-9]/i', '', $post['title']), 0, 5));
+                $r = DB::sql('INSERT INTO `print_category` (title,abbr,active) VALUES(:title,:abbr, 1)', array(':title' => $post['title'], ':abbr' => $abbr));
                 $rez['ins_id'] = $r[0];
                 break;
             case 'add_request_note':

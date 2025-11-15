@@ -320,10 +320,10 @@ class Controller_Admin_Sales extends Admin {
                 $rez = mail($_POST['email'], $_POST['subj'], $_POST['text'], $headers);
 
                 //add note
-                DB::sql('INSERT INTO request_notes (request_id, `text`, `date`, `type`, author_id, job_id, type_user, required_uid, company_id) '
-                        . 'VALUES (:id, :text, NOW(), "email_out", :author_id, :job_id, :access, "", :company_id)', 
+                DB::sql('INSERT INTO request_notes (request_id, `text`, `date`, `type`, author_id, job_id, type_user, required_uid, company_id, removed) '
+                        . 'VALUES (:id, :text, NOW(), "email_out", :author_id, :job_id, :access, :required_uid, :company_id, :removed)', 
                         array(':id' => $post['req_id'], ':text' => 'Subject: '.$post['subj'].'; Text: '.$post['text'], ':author_id' => $this->admin['id'], 
-                            ':job_id' => $post['job_id'], ':access' => 'A', ':company_id' => $post['comp_id']));
+                            ':job_id' => $post['job_id'], ':access' => 'A', ':required_uid' => 0, ':company_id' => $post['comp_id'], ':removed' => 0));
 
 
                 break;

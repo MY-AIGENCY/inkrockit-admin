@@ -1533,12 +1533,12 @@ class Model_Admin_Print extends Model_Print {
         }
 
         $required = (!empty($post['required'])) ? 1 : 0;
-        $assign = (!empty($post['assign'])) ? $post['assign'] : '';
+        $assign = (!empty($post['assign'])) ? (int)$post['assign'] : 0;
         $date = (!empty($post['date'])) ? $post['date'] : date('Y-m-d H:m:s');
 
         $job_id = (!empty($post['job_id'])) ? $post['job_id'] : 0;
         $comp = DB::sql_row('SELECT company_id FROM requests WHERE id=:id', array(':id' => $post['id']));
-        $r = DB::sql('INSERT INTO request_notes (request_id, `text`, `date`, `type`, author_id, job_id, type_user, required_uid, company_id) VALUES (:id, :text, :date,:type, :author_id, :job_id, :access, :required_uid, :company_id)', array(':id' => $id, ':text' => $post['note_text'], ':type' => $post['type'], ':date' => $date, ':author_id' => $admin['id'], ':job_id' => $job_id, ':access' => $post['user_type'], ':required_uid' => $assign, ':company_id' => $comp['company_id']));
+        $r = DB::sql('INSERT INTO request_notes (request_id, `text`, `date`, `type`, author_id, job_id, type_user, required_uid, company_id, removed) VALUES (:id, :text, :date,:type, :author_id, :job_id, :access, :required_uid, :company_id, :removed)', array(':id' => $id, ':text' => $post['note_text'], ':type' => $post['type'], ':date' => $date, ':author_id' => $admin['id'], ':job_id' => $job_id, ':access' => $post['user_type'], ':required_uid' => $assign, ':company_id' => $comp['company_id'], ':removed' => 0));
         $id = $r[0];
 
         if (!empty($required) && !empty($assign)) {
@@ -2094,7 +2094,12 @@ class Model_Admin_Print extends Model_Print {
     public function add_new_user($data) {
         // Check Company
         $company = DB::sql_row('SELECT * FROM users_company WHERE company=:company', array(':company' => $data['company']));
-        $r = DB::sql('INSERT INTO users_company (company) VALUES (:company)', array(':company' => $data['company']));
+        $r = DB::sql('INSERT INTO users_company (company, main_uid, abbr, duplicate) VALUES (:company, :main_uid, :abbr, :duplicate)', array(
+            ':company' => $data['company'],
+            ':main_uid' => 0,
+            ':abbr' => '',
+            ':duplicate' => 0
+        ));
         $comp_id = $r[0];
 
         //add user
@@ -2124,9 +2129,9 @@ class Model_Admin_Print extends Model_Print {
         if (!empty($data['phone_ext'])) {
             $address.= ' ext ' . $data['phone_ext'];
         }
-        $r = DB::sql('INSERT INTO requests (company_id, user_id, job_id, request_date, industry, complete_address, order_data, tracking_number, operating_sys, graphics_app, ref_source, other_source, conversations, search_id, offers, user_ip, status) 
-            VALUES (:company_id, :user_id, 0, NOW(), :industry, :complete_address, :order_data, "", "", "", "Admin CP", "", "", "", "", "", 1)', array(
-                    ':company_id' => $comp_id, ':user_id' => $user['id'], ':industry' => $data['industry'], ':complete_address' => $address, ':order_data' => serialize($order_data)
+        $r = DB::sql('INSERT INTO requests (company_id, user_id, job_id, request_date, industry, industry_send, complete_address, order_data, tracking_number, operating_sys, graphics_app, ref_source, other_source, conversations, search_id, offers, user_ip, status) 
+            VALUES (:company_id, :user_id, 0, NOW(), :industry, :industry_send, :complete_address, :order_data, "", "", "", "Admin CP", "", "", "", "", "", 1)', array(
+                    ':company_id' => $comp_id, ':user_id' => $user['id'], ':industry' => $data['industry'], ':industry_send' => $data['industry'], ':complete_address' => $address, ':order_data' => serialize($order_data)
         ));
         $id = $r[0];
         //add event
@@ -2139,26 +2144,43 @@ class Model_Admin_Print extends Model_Print {
      */
 
     private function add_user($comp_id, $data) {
-        $r = DB::sql('INSERT INTO users (login,password,email,first_name,last_name,group_id,company_id,street,city,state,zipcode,phone,phone_ext,position,industry,fax,country) 
-                    VALUES ("' . $data['email'] . '","","' . $data['email'] . '","' . $data['first_name'] . '",
-                        "' . $data['last_name'] . '",1,"' . $comp_id . '","' . $data['address'] . '","' . $data['city'] . '",
-                        "' . $data['state'] . '","' . $data['zip'] . '","' . $data['phone'] . '", "' . $data['phone_ext'] . '",
-                        "' . $data['position'] . '","' . $data['industry'] . '","' . $data['fax'] . '", "'.$data['country'].'")');
+        $r = DB::sql('INSERT INTO users (login,password,email,email_alt,first_name,last_name,group_id,company_id,user_abbr,country,street,street2,city,state,zipcode,phone,phone_ext,phone_type,position,industry,fax,admin_comment) 
+                    VALUES (:login,"",:email,:email_alt,:first_name,:last_name,1,:company_id,:user_abbr,:country,:street,:street2,:city,:state,:zip,:phone,:phone_ext,:phone_type,:position,:industry,:fax,"")', array(
+                        ':login' => $data['email'],
+                        ':email' => $data['email'],
+                        ':email_alt' => '',
+                        ':first_name' => $data['first_name'],
+                        ':last_name' => $data['last_name'],
+                        ':company_id' => $comp_id,
+                        ':user_abbr' => '',
+                        ':country' => $data['country'],
+                        ':street' => $data['address'],
+                        ':street2' => isset($data['address2']) ? $data['address2'] : '',
+                        ':city' => $data['city'],
+                        ':state' => $data['state'],
+                        ':zip' => $data['zip'],
+                        ':phone' => $data['phone'],
+                        ':phone_ext' => $data['phone_ext'],
+                        ':phone_type' => '',
+                        ':position' => $data['position'],
+                        ':industry' => $data['industry'],
+                        ':fax' => $data['fax']
+                    ));
         //add event
         $uid = $r[0];
 
         $comp = DB::sql_row('SELECT company FROM users_company WHERE id=:id', array(':id' => $comp_id));
         //add def shipping info
-        DB::sql('INSERT INTO credit_card_shipping (user_id,company_id,title,first_name,last_name,company,address,address2,suite,city,state,zip,country,phone,email,public) 
-                VALUES (:user_id,:company_id,:title,:first_name,:last_name,:company,:address,:address2,:suite,:city,:state,:zip,:country,:phone,:email,:public)', array(
+        DB::sql('INSERT INTO credit_card_shipping (user_id,company_id,title,first_name,last_name,company,address,address2,suite,city,state,zip,country,phone,phone_ext,email,public) 
+                VALUES (:user_id,:company_id,:title,:first_name,:last_name,:company,:address,:address2,:suite,:city,:state,:zip,:country,:phone,:phone_ext,:email,:public)', array(
             ':user_id' => $uid, ':company_id' => $comp_id, ':title' => 'default', ':first_name' => $data['first_name'], ':last_name' => $data['last_name'], ':company' => $comp['company'], ':address' => $data['address'],
-            ':address2' => '', ':suite' => '', ':city' => $data['city'], ':state' => $data['state'], ':zip' => $data['zip'], ':country' => @$data['country'], ':phone' => $data['phone'], ':email' => $data['email'], ':public' => 0
+            ':address2' => isset($data['address2']) ? $data['address2'] : '', ':suite' => '', ':city' => $data['city'], ':state' => $data['state'], ':zip' => $data['zip'], ':country' => @$data['country'], ':phone' => $data['phone'], ':phone_ext' => $data['phone_ext'], ':email' => $data['email'], ':public' => 0
         ));
         //add def billing info
-        DB::sql('INSERT INTO credit_card_billing (user_id,title,first_name,last_name,company,address,address2,suite,city,state,zip,country,phone,phone_ext,email,`default`,visible) 
-                VALUES (:user_id,:title,:first_name,:last_name,:company,:address,:address2,:suite,:city,:state,:zip,:country,:phone,:phone_ext,:email,1,1)', array(
+        DB::sql('INSERT INTO credit_card_billing (user_id,title,first_name,last_name,company,address,address2,suite,city,state,zip,country,phone,phone_ext,email,`default`,visible,full_name) 
+                VALUES (:user_id,:title,:first_name,:last_name,:company,:address,:address2,:suite,:city,:state,:zip,:country,:phone,:phone_ext,:email,1,1,:full_name)', array(
             ':user_id' => $uid, ':title' => 'default', ':first_name' => $data['first_name'], ':last_name' => $data['last_name'], ':company' => $comp['company'], ':address' => $data['address'],
-            ':address2' => '', ':suite' => '', ':city' => $data['city'], ':state' => $data['state'], ':zip' => $data['zip'], ':country' => @$data['country'], ':phone' => $data['phone'], ':phone_ext' => $data['phone_ext'], ':email' => $data['email']
+            ':address2' => isset($data['address2']) ? $data['address2'] : '', ':suite' => '', ':city' => $data['city'], ':state' => $data['state'], ':zip' => $data['zip'], ':country' => @$data['country'], ':phone' => $data['phone'], ':phone_ext' => $data['phone_ext'], ':email' => $data['email'], ':full_name' => trim($data['first_name'].' '.$data['last_name'])
         ));
         Model::factory('Admin_Event')->add_event('new_user', $uid);
         return $uid;
