@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:q0="http://fedex.com/ws/pickup/v3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soapenv:Body>
+    <q0:CreatePickupRequest>
+      <q0:WebAuthenticationDetail>
+        <q0:UserCredential>
+          <q0:Key></q0:Key>
+          <q0:Password></q0:Password>
+        </q0:UserCredential>
+      </q0:WebAuthenticationDetail>
+      <q0:ClientDetail>
+        <q0:AccountNumber></q0:AccountNumber>
+        <q0:MeterNumber></q0:MeterNumber>
+      </q0:ClientDetail>
+      <q0:TransactionDetail>
+        <q0:CustomerTransactionId>Freight Pickup Example</q0:CustomerTransactionId>
+      </q0:TransactionDetail>
+      <q0:Version>
+        <q0:ServiceId>disp</q0:ServiceId>
+        <q0:Major>3</q0:Major>
+        <q0:Intermediate>0</q0:Intermediate>
+        <q0:Minor>0</q0:Minor>
+      </q0:Version>
+      <q0:OriginDetail>
+        <q0:PickupLocation>
+          <q0:Contact>
+            <q0:PersonName>John Doe</q0:PersonName>
+            <q0:CompanyName>ABC Widget Co</q0:CompanyName>
+            <q0:PhoneNumber>555123456</q0:PhoneNumber>
+          </q0:Contact>
+          <q0:Address>
+            <q0:StreetLines>1202 Chalet Ln</q0:StreetLines>
+            <q0:StreetLines>Do Not Delete - Test Account</q0:StreetLines>
+            <q0:City>Harrison</q0:City>
+            <q0:StateOrProvinceCode>AR</q0:StateOrProvinceCode>
+            <q0:PostalCode>72601</q0:PostalCode>
+            <q0:CountryCode>US</q0:CountryCode>
+          </q0:Address>
+        </q0:PickupLocation>
+        <q0:ReadyTimestamp>2011-07-22T09:00:00</q0:ReadyTimestamp>
+        <q0:CompanyCloseTime>17:30:00</q0:CompanyCloseTime>
+      </q0:OriginDetail>
+      <q0:FreightPickupDetail>
+        <q0:Payment>PREPAID</q0:Payment>
+        <q0:Role>SHIPPER</q0:Role>
+        <q0:LineItems>
+          <q0:Service>FEDEX_FREIGHT_ECONOMY</q0:Service>
+          <q0:SequenceNumber>1</q0:SequenceNumber>
+          <q0:Destination>
+            <q0:StreetLines>1234 Limbo St</q0:StreetLines>
+            <q0:StreetLines>Suite 200</q0:StreetLines>
+            <q0:City>Akron</q0:City>
+            <q0:StateOrProvinceCode>OH</q0:StateOrProvinceCode>
+            <q0:PostalCode>44333</q0:PostalCode>
+            <q0:CountryCode>US</q0:CountryCode>
+          </q0:Destination>
+          <q0:Packaging>PALLET</q0:Packaging>
+          <q0:Weight>
+            <q0:Units>LB</q0:Units>
+            <q0:Value>200.0</q0:Value>
+          </q0:Weight>
+          <q0:TotalHandlingUnits>1</q0:TotalHandlingUnits>
+          <q0:Description>School Text Books</q0:Description>
+        </q0:LineItems>
+      </q0:FreightPickupDetail>
+      <q0:CarrierCode>FXFR</q0:CarrierCode>
+    </q0:CreatePickupRequest>
+  </soapenv:Body>
+</soapenv:Envelope>

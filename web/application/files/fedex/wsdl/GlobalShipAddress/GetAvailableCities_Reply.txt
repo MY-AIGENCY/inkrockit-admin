@@ -1,0 +1,69 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <env:Header xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+   <soapenv:Body>
+      <v1:AvailableCitiesReply xmlns:v1="http://fedex.com/ws/gsai/v1">
+         <v1:HighestSeverity xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">SUCCESS</v1:HighestSeverity>
+         <v1:Notifications xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <v1:Severity>SUCCESS</v1:Severity>
+            <v1:Source>gsai</v1:Source>
+            <v1:Code>000</v1:Code>
+            <v1:Message>SUCCESS</v1:Message>
+            <v1:LocalizedMessage>SUCCESS</v1:LocalizedMessage>
+         </v1:Notifications>
+         <v1:TransactionDetail>
+            <v1:CustomerTransactionId>AvailableCitiesRequest</v1:CustomerTransactionId>
+            <v1:Localization>
+               <v1:LanguageCode>EN</v1:LanguageCode>
+               <v1:LocaleCode>US</v1:LocaleCode>
+            </v1:Localization>
+         </v1:TransactionDetail>
+         <v1:Version>
+            <v1:ServiceId>gsai</v1:ServiceId>
+            <v1:Major>1</v1:Major>
+            <v1:Intermediate>0</v1:Intermediate>
+            <v1:Minor>0</v1:Minor>
+         </v1:Version>
+         <v1:TotalResultAvailable xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">1</v1:TotalResultAvailable>
+         <v1:ResultsReturned xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">1</v1:ResultsReturned>
+         <v1:MatchedCities xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <v1:Address>
+               <v1:City>COLLIERVILLE</v1:City>
+               <v1:StateOrProvinceCode>TN</v1:StateOrProvinceCode>
+               <v1:CountryCode>US</v1:CountryCode>
+               <v1:Residential>false</v1:Residential>
+            </v1:Address>
+            <v1:StateOrProvinceName>TENNESSEE</v1:StateOrProvinceName>
+            <v1:LocationServiceDetails>
+               <v1:LocationId>ZZCRT</v1:LocationId>
+               <v1:ExpressServiceCategories>
+                  <v1:ServiceCategory>EXPRESS_FREIGHT</v1:ServiceCategory>
+               </v1:ExpressServiceCategories>
+            </v1:LocationServiceDetails>
+            <v1:LocationServiceDetails>
+               <v1:LocationId>HKAA</v1:LocationId>
+               <v1:ExpressServiceCategories>
+                  <v1:ServiceCategory>EXPRESS_PARCEL</v1:ServiceCategory>
+               </v1:ExpressServiceCategories>
+            </v1:LocationServiceDetails>
+            <v1:LocationServiceDetails>
+               <v1:LocationId>FXTJ</v1:LocationId>
+               <v1:ExpressServiceCategories>
+                  <v1:ServiceCategory>EXPRESS_PARCEL</v1:ServiceCategory>
+               </v1:ExpressServiceCategories>
+            </v1:LocationServiceDetails>
+            <v1:LocationServiceDetails>
+               <v1:LocationId>OLVRT</v1:LocationId>
+               <v1:ExpressServiceCategories>
+                  <v1:ServiceCategory>EXPRESS_FREIGHT</v1:ServiceCategory>
+               </v1:ExpressServiceCategories>
+            </v1:LocationServiceDetails>
+            <v1:LocationServiceDetails>
+               <v1:LocationId>FXTL</v1:LocationId>
+               <v1:ExpressServiceCategories>
+                  <v1:ServiceCategory>EXPRESS_PARCEL</v1:ServiceCategory>
+               </v1:ExpressServiceCategories>
+            </v1:LocationServiceDetails>
+         </v1:MatchedCities>
+      </v1:AvailableCitiesReply>
+   </soapenv:Body>
+</soapenv:Envelope>

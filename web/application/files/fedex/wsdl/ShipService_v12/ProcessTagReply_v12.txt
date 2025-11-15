@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><env:Header xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/><env:Body xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><v12:ProcessTagReply xmlns:v12="http://fedex.com/ws/ship/v12"><v12:HighestSeverity>SUCCESS</v12:HighestSeverity><v12:Notifications><v12:Severity>SUCCESS</v12:Severity><v12:Source>ship</v12:Source><v12:Code>0000</v12:Code><v12:Message>Success</v12:Message><v12:LocalizedMessage>Success</v12:LocalizedMessage></v12:Notifications><v12:TransactionDetail>
+            <v12:CustomerTransactionId>Process Tag V10</v12:CustomerTransactionId>
+         </v12:TransactionDetail><v12:Version>
+            <v12:ServiceId>ship</v12:ServiceId>
+            <v12:Major>12</v12:Major>
+            <v12:Intermediate>1</v12:Intermediate>
+            <v12:Minor>0</v12:Minor>
+         </v12:Version><v12:CompletedShipmentDetail><v12:UsDomestic>true</v12:UsDomestic><v12:MasterTrackingId><v12:TrackingIdType>GROUND</v12:TrackingIdType><v12:TrackingNumber>997038007243745</v12:TrackingNumber></v12:MasterTrackingId><v12:TagDetail><v12:ConfirmationNumber>997038007243745</v12:ConfirmationNumber></v12:TagDetail><v12:CompletedPackageDetails><v12:SequenceNumber>1</v12:SequenceNumber><v12:TrackingIds><v12:TrackingIdType>GROUND</v12:TrackingIdType><v12:TrackingNumber>997038007243745</v12:TrackingNumber></v12:TrackingIds><v12:GroupNumber>0</v12:GroupNumber></v12:CompletedPackageDetails></v12:CompletedShipmentDetail></v12:ProcessTagReply></env:Body></soapenv:Envelope>

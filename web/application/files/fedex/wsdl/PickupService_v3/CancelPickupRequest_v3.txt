@@ -1,0 +1,81 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v3="http://fedex.com/ws/pickup/v3">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <v3:CancelPickupRequest>
+         <v3:WebAuthenticationDetail>
+            <v3:UserCredential>
+               <v3:Key></v3:Key>
+               <v3:Password>
+</v3:Password>
+            </v3:UserCredential>            
+         </v3:WebAuthenticationDetail>
+         <v3:ClientDetail>
+            <v3:AccountNumber></v3:AccountNumber>
+            <v3:MeterNumber></v3:MeterNumber>          
+            <v3:Localization>
+               <v3:LanguageCode>EN</v3:LanguageCode>               
+               <v3:LocaleCode>ES</v3:LocaleCode>
+            </v3:Localization>
+         </v3:ClientDetail>         
+         <v3:TransactionDetail>            
+            <v3:CustomerTransactionId>WSVC_Exp_CancelPickup</v3:CustomerTransactionId>            
+            <v3:Localization>
+               <v3:LanguageCode>EN</v3:LanguageCode>               
+               <v3:LocaleCode>ES</v3:LocaleCode>
+            </v3:Localization>
+         </v3:TransactionDetail>         
+         <v3:Version>
+            <v3:ServiceId>disp</v3:ServiceId>
+            <v3:Major>3</v3:Major>
+            <v3:Intermediate>0</v3:Intermediate>
+            <v3:Minor>0</v3:Minor>
+         </v3:Version>         
+         <v3:CarrierCode>FDXE</v3:CarrierCode>         
+         <v3:PickupConfirmationNumber>2</v3:PickupConfirmationNumber>         
+         <v3:ScheduledDate>2010-12-22</v3:ScheduledDate>
+           <v3:Location>MWLA</v3:Location>         
+         <v3:Remarks>This is a test Exp_CancelPickup Request</v3:Remarks>         
+                <v3:ShippingChargesPayment>            
+            <v3:PaymentType>ACCOUNT</v3:PaymentType>            
+            <v3:Payor>               
+               <v3:AccountNumber></v3:AccountNumber>               
+               <v3:CountryCode>US</v3:CountryCode>               
+            </v3:Payor>            
+              <v3:CreditCard>               
+               <v3:Number>1234567890123456789</v3:Number>               
+               <v3:CreditCardType>MASTERCARD</v3:CreditCardType>               
+               <v3:ExpirationDate>2020-11-01</v3:ExpirationDate>               
+               <v3:VerificationCode>1236</v3:VerificationCode>               
+               <v3:CreditCardHolder>                  
+                  <v3:Contact>                     
+                     <v3:PersonName>                        
+                        <v3:FirstName>Komal</v3:FirstName>                        
+                        <v3:MiddleName>Keshav</v3:MiddleName>                        
+                        <v3:LastName>Kapate</v3:LastName>
+                     </v3:PersonName>  
+                    <v3:Title>Komal</v3:Title>                     
+                     <v3:CompanyName>Syntel</v3:CompanyName>                     
+                     <v3:PhoneNumber>9158555438</v3:PhoneNumber>                     
+                     <v3:PagerNumber>12345</v3:PagerNumber>                     
+                     <v3:FaxNumber>7894561230</v3:FaxNumber>                     
+                     <v3:EMailAddress>komal_kapate@syntelinc.com</v3:EMailAddress>
+                  </v3:Contact>                  
+                  <v3:Address>                     
+                 <v3:StreetLines>2900 AIRPORT RD</v3:StreetLines>
+<v3:City>Denton</v3:City>
+<v3:StateOrProvinceCode>TX</v3:StateOrProvinceCode>
+<v3:PostalCode>76207</v3:PostalCode> 
+<v3:CountryCode>US</v3:CountryCode>                 
+                  </v3:Address>
+               </v3:CreditCardHolder>
+            </v3:CreditCard>        
+             <v3:Amount>               
+               <v3:Currency>USD</v3:Currency>               
+               <v3:Amount>150.0</v3:Amount>
+            </v3:Amount>
+         </v3:ShippingChargesPayment>  
+         <v3:Reason>Late Payment</v3:Reason>         
+         <v3:ContactName>Komal</v3:ContactName>
+            </v3:CancelPickupRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

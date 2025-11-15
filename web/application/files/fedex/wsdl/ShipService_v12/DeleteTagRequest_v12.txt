@@ -1,0 +1,39 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://fedex.com/ws/ship/v12">
+   <SOAP-ENV:Body>
+      <DeleteTagRequest>
+         <WebAuthenticationDetail>
+            <UserCredential>
+               <Key>
+</Key>
+               <Password></Password>
+            </UserCredential>
+         </WebAuthenticationDetail>
+         <ClientDetail>
+            <AccountNumber></AccountNumber>
+            <MeterNumber>
+</MeterNumber>
+         </ClientDetail>
+         <TransactionDetail>
+            <CustomerTransactionId>TC13_USUS_CancelGndCallTag_POS</CustomerTransactionId>
+         </TransactionDetail>
+         <Version>
+            <ServiceId>ship</ServiceId>
+            <Major>12</Major>
+            <Intermediate>1</Intermediate>
+            <Minor>0</Minor>
+         </Version>
+         <DispatchDate>2012-08-17</DispatchDate>
+         <Payment>
+            <PaymentType>SENDER</PaymentType>
+            <Payor>
+<ResponsibleParty>
+               <AccountNumber></AccountNumber>
+<Contact>
+</Contact>
+</ResponsibleParty>
+            </Payor>
+         </Payment>
+         <ConfirmationNumber>997038007243745</ConfirmationNumber>
+      </DeleteTagRequest>
+   </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

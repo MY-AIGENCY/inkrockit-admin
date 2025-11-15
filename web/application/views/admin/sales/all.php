@@ -1,0 +1,294 @@
+<div class="one_wrap">
+    <div id="activity_stats">
+        <h3><?php
+            if (!empty($show_data_entry)) {
+                echo 'Data Entry';
+            } elseif (!empty($hide_search)) {
+                if ($hide_search == 1) {
+                    echo 'Active Customers';
+                } elseif ($hide_search == 2) {
+                    echo 'Assigned Tasks ';
+                } else {
+                    echo 'My Tasks';
+                }
+            } else {
+                echo 'Contact List';
+            }
+            ?></h3>
+    </div>
+
+
+    <?php if (empty($hide_search)) { ?>
+        <div style="min-height: 50px">
+            <ul class="form_fields_container search_block">
+                <li>
+                    <input type="checkbox" name="check_all" class="left hide" style="margin: 8px 8px 8px 24px">
+
+                    <div class="adv_menu">
+                        <div class="left pointer" id="adv_search_show" style="padding: 10px 2px 10px 10px">
+                            &blacktriangledown; Advanced Search 
+                        </div>
+
+                        <dl class="search_menu hide">
+                            <dt><br>
+                            <span class="left">Request Date:</span>
+                            <a class="grey clear_search_date right <?php if (empty($search_date)) echo'hide' ?>">clear date</a>
+                            <br class="clear">
+
+                            <input name="datepick" value="<?= @$search_date ?>">
+                            <input name="datepick_hide" type="hidden" value="<?= @$search_date ?>">
+                            <div class="form_date_append"></div>
+                            </dt>
+
+                            <?php
+                            $fields = Session::instance()->get('print_search_fields');
+                            if (!empty($fields)) {
+                                $result_fields = array();
+                                $arr = explode('&', $fields);
+                                if (!empty($arr)) {
+                                    foreach ($arr as $val) {
+                                        $values = explode('=', $val);
+                                        $result_fields[$values[0]] = urldecode($values[1]);
+                                    }
+                                }
+                            }
+                            ?>
+                            <dt><h4><input type="checkbox" data-group="contact" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field2'])) echo 'checked="checked"'; ?>> <span>Contact info</span></h4></dt>
+                            <dt><input type="checkbox" name="print_field2" value="company" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field2'])) echo 'checked="checked"'; ?> data-group="contact"> Company</dt>
+                            <dt><input type="checkbox" name="print_field3" value="users.name" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field3'])) echo 'checked="checked"'; ?> data-group="contact"> Name</dt>
+                            <dt><input type="checkbox" name="print_field4" value="users.phone" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field4'])) echo 'checked="checked"'; ?> data-group="contact"> Phone</dt>
+                            <dt><input type="checkbox" name="print_field5" value="users.email" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field5'])) echo 'checked="checked"'; ?> data-group="contact"> Email</dt>
+
+                            <dt><h4><input type="checkbox" data-group="address" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field6'])) echo 'checked="checked"'; ?>> <span>Address</span></h4></dt>
+                            <dt><input type="checkbox" name="print_field6" value="users.position" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field6'])) echo 'checked="checked"'; ?> data-group="address"> Position</dt>
+                            <dt><input type="checkbox" name="print_field7" value="users.street" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field7'])) echo 'checked="checked"'; ?> data-group="address"> Street Address</dt>
+                            <dt><input type="checkbox" name="print_field8" value="users.city"  class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field8'])) echo 'checked="checked"'; ?> data-group="address"> City</dt>
+                            <dt><input type="checkbox" name="print_field9" value="users.state"  class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field9'])) echo 'checked="checked"'; ?> data-group="address"> State</dt>
+                            <dt><input type="checkbox" name="print_field10" value="users.zipcode"  class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field10'])) echo 'checked="checked"'; ?> data-group="address"> Zip Code</dt>
+
+                            <dt><h4><input type="checkbox" data-group="other" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field12'])) echo 'checked="checked"'; ?>> <span>Other</span></h4></dt>
+                            <dt><input type="checkbox" name="print_field12" value="requests.industry" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field12'])) echo 'checked="checked"'; ?> data-group="other"> Industry</dt>
+                            <dt><input type="checkbox" name="print_field13" value="conversations" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field13'])) echo 'checked="checked"'; ?> data-group="other"> Conversation</dt>
+                            <!--<dt><input type="checkbox" name="print_field15" value="search_id" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field15'])) echo 'checked="checked"'; ?> data-group="other"> Search Engine Referral</dt>-->
+                            <dt><input type="checkbox" name="print_field16" value="search_keyword" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field16'])) echo 'checked="checked"'; ?> data-group="other"> Lead Source</dt>
+                            <dt><input type="checkbox" name="print_field17" value="user_ip" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field17'])) echo 'checked="checked"'; ?> data-group="other"> Client IP</dt>
+                            <dt><input type="checkbox" name="print_field18" value="operating_sys" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field18'])) echo 'checked="checked"'; ?> data-group="other"> Operating System</dt>
+                            <dt><input type="checkbox" name="print_field19" value="graphics_app" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field19'])) echo 'checked="checked"'; ?> data-group="other"> Graphics Applications</dt>
+                            <dt><input type="checkbox" name="print_field20" value="ref_source" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field20'])) echo 'checked="checked"'; ?> data-group="other"> Referral Source</dt>
+                            <dt><input type="checkbox" name="print_field21" value="other_source" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field21'])) echo 'checked="checked"'; ?> data-group="other"> Other Source</dt>
+                            <dt><input type="checkbox" name="print_field22" value="tracking_number" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field22'])) echo 'checked="checked"'; ?> data-group="other"> Tracking Numbers</dt>
+
+                            <dt><input type="checkbox" name="print_field23" value="job_id" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field23'])) echo 'checked="checked"'; ?> data-group="other"> Job #</dt>
+                            <dt><input type="checkbox" name="print_field24" value="notes" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field24'])) echo 'checked="checked"'; ?> data-group="other"> Notes<br></dt>
+                            <dt><input type="checkbox" name="print_field25" value="pay_info" class="pointer" <?php if (empty($result_fields) || !empty($result_fields['print_field25'])) echo 'checked="checked"'; ?> data-group="other"> Payment Info<br><br></dt>
+                        </dl>
+                    </div>
+                    <?php
+                    $disable_advanced_search = Session::instance()->get('disable_advanced_search');
+                    ?>
+                    <input type="checkbox" value="1" class="left disable_advanced_search" style="margin-top: 8px" <?php if (empty($disable_advanced_search)) echo'checked="checked"' ?>>
+
+                    <div class="form_input">
+                        <label>Search:</label>
+                        <input type="text" name="search_print" class="search_field left" data-new="<?= (empty($proc)) ? 0 : 1; ?>" value="<?= @$search_word ?>">
+                        <input type="button" name="add_new_contact" value="Add New" class="greenishBtn button_small right">
+                    </div>
+                    <br class="clear">
+                    <div style="width: 580px; margin-left: 5px">
+                        <div class="hide buttons_block">
+                            <a style="margin: 5px" class="dblueBtn button_small" id="fedex_sent">Create a Shipment</a>
+                            <a style="margin: 5px" class="dblueBtn button_small" id="edit_print_list"><span class="iconsweet">8</span> Edit</a>
+                            <a style="margin: 5px" class="dblueBtn button_small" id="confirm_without_req">Set as Processed</a>
+                        </div>
+                    </div>
+                    
+                </li>
+            </ul>
+        </div>
+        <?php
+    }
+
+    if (!empty($show_data_entry)) {
+        $entry_type = Session::instance()->get('print_entry_type');
+        $search_date = Session::instance()->get('print_entry_date');
+        if (empty($entry_type)) {
+            $entry_type = array();
+        }
+        ?>
+        <div>
+            <ul class="form_fields_container search_block">
+                <li>
+                    <div style="width: 240px; float: left; margin-left: 20px">
+                        <input name="datepick" placeholder="Date" class="entry_date" value="<?= @$search_date ?>">
+                        <input name="datepick_hide" type="hidden" value="<?= @$search_date ?>">
+                        <div class="form_date_append" style="position: absolute; z-index: 100; width: 240px"></div>
+                        <a class="grey clear_search_date right <?php if (empty($search_date)) echo'hide' ?>">clear date</a>
+                    </div>
+                    <div class="form_input" style="width: 400px">
+                        <ul>
+                            <li><label style="width: 110px"><input type="checkbox" name="entry_type" <?php if (in_array('have_notes', $entry_type)) echo'checked="checked"' ?> value="have_notes"> Have Notes</label></li>
+                            <li><label style="width: 110px"><input type="checkbox" name="entry_type" <?php if (in_array('processed', $entry_type)) echo'checked="checked"' ?> value="processed"> Processed</label></li>
+                            <li><label style="width: 110px"><input type="checkbox" name="entry_type" <?php if (in_array('revision', $entry_type)) echo'checked="checked"' ?> value="revision"> Revision</label></li>
+                        </ul>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <?php
+    }
+    ?>
+
+    <div class="widget">
+        <div class="widget_body">
+
+            <div id="print_table">
+                <?php if (!empty($results)) { ?>
+
+                    <table class="activity_datatable" style="width: 100%; min-width: 1300px" id="sortTable">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" name="check_all" style="margin-right: 25px"></th>
+                                <th>#</th>
+                                <th>Request Date</th>
+                                <th>Company</th>
+                                <th>Industry</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Processed<br> Date</th>
+                                <th>Tracking Numbers</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach ($results as $key => $val) {
+                                ?>
+                                <tr data-id="<?= $val['id'] ?>" data-uid="<?= $val['user_id'] ?>" data-cid="<?= $val['company_id'] ?>" class="print_row" <?php
+                                if (!empty($val['order_data'])) {
+                                    $need_req = unserialize($val['order_data']);
+                                    if (in_array("Photo Frame", $need_req)){
+                                        echo 'style="background-color: #f7df65"';
+                                    }
+                                }elseif ($val['ref_source'] == 'photoframepro.com') {
+                                    echo 'style="background-color: #ffb020"';
+                                }
+                                if ($val['duplicate']) {
+                                    echo 'style="background-color:#ffcccc"';
+                                }
+                                ?>>
+                                    <td width="50" class="center"><input type="checkbox" name="fedex[]" data-check="all" value="<?= $val['id'] ?>">
+                                        <a class="ui-icon ui-icon-pencil right" href="/admin/sales/all/edit/<?=
+                                        $val['id'];
+                                        ?>">edit</a>
+                                    </td>
+                                    <td><?= $key + 1 ?></td>
+                                    <td width="100" class="load_tasks"><?= $val['request_date'] ?></td>
+                                    <td class="load_tasks"><?= $val['company'] ?></td>
+                                    <td width="200" class="load_tasks industry_field">
+                                        <?= @$val['req_industry'] ?>
+                                        <span class="industry_title"><?= @$val['industry_send'] ?></span>
+                                        <span class="iconsweet right" style="opacity: 0">8</span>
+                                    </td>
+                                    <td class="load_tasks show_users">
+                                        <span class="set_username"><?= $val['first_name'] . ' ' . $val['last_name'] ?></span>
+                                        <div class="hide aval_company_users">
+                                            <img src="/images/admin/load6.gif">
+                                        </div>
+                                    </td>
+                                    <td width="130" class="additional_phone">
+                                        <small class="v1">
+                                            <?=
+                                            $val['phone'];
+                                            if (!empty($val['phone_ext'])) {
+                                                echo ' ext ' . $val['phone_ext'];
+                                            }
+                                            echo '<br>';
+                                            if (!empty($alt[$val['user_id']]['phone'])) {
+                                                foreach ($alt[$val['user_id']]['phone'] as $v) {
+                                                    if (!empty($v['value'])) {
+                                                        echo $v['value'];
+                                                        if (!empty($v['ext'])) {
+                                                            echo ' ext ' . $v['ext'];
+                                                        }
+                                                        echo '<br>';
+                                                    }
+                                                }
+                                            }
+                                            ?></small>
+                                        <span class="iconsweet right" style="opacity: 0">8</span>
+                                    </td>
+                                    <td width="80" class="additional_email">
+                                        <div class="v1">
+                                            <a href="mailto:<?= $val['email'] ?>"><?= $val['email'] ?></a><br>
+                                            <?php
+                                            if (!empty($alt[$val['user_id']]['email'])) {
+                                                foreach ($alt[$val['user_id']]['email'] as $v) {
+                                                    if (!empty($v['value'])) {
+                                                        ?><a href="mailto:<?= $v['value'] ?>"><?= $v['value'] ?></a><br><?php
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                        </div>
+                                        <span class="iconsweet right" style="opacity: 0">8</span>
+                                    </td>
+                                    <td width="80"><?= ($val['processed_date'] == '00-00-0000') ? '' : $val['processed_date']; ?></td>
+                                    <td width="80"><?php
+                                        if (!empty($val['tracking_number'])) {
+                                            $number = explode(',', $val['tracking_number']);
+                                            $usps = substr($number[0], strpos($number[0], ":") + 1);
+                                            $uspsurl = 'http://trkcnfrm1.smi.usps.com/PTSInternetWeb/InterLabelInquiry.do?origTrackNum=';
+                                            if (!empty($usps)) {
+                                                echo 'USPS: <a href="' . $uspsurl . $usps . '" target="_blank">' . $usps . '</a><br/>';
+                                            }
+
+                                            $fdx = substr($number[1], strpos($number[1], ":") + 1);
+                                            $fdxurl = 'http://www.fedex.com/Tracking?language=english&cntry_code=us&tracknumbers=';
+                                            echo 'GROUND: <a href="' . $fdxurl . $fdx . '" target="_blank">' . $fdx . '</a><br/>';
+                                        }
+                                        ?></td>
+                                    <td width="20">
+                                        <a class="ui-icon ui-icon-closethick left remove" href="/admin/sales/all/remove/<?= $val['id'] ?>">delete</a>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                    <div class="hide fedex_sent">
+                        <a style="margin:5px;" class="dblueBtn button_small">Create a Shipment</a>
+                    </div>
+
+                    <?php if (!empty($pages)) { ?>
+                        <div class="content_pad text_center">
+                            <ul class="pagination">
+                                <?php
+                                echo $pages;
+                                ?>
+                            </ul>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+        $("#sortTable").tablesorter({headers: {
+                0: {sorter: false},
+                9: {sorter: false},
+                10: {sorter: false}
+            }});
+        $('.header').click(function() {
+            $('.task_details').prev().css('border-bottom', '1px solid #E5E5E5').css('font-weight', 'normal')
+            $('.task_details').remove()
+        })
+    })
+</script>

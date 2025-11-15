@@ -1,0 +1,255 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://fedex.com/ws/ship/v12">
+   <SOAP-ENV:Body>
+      <ProcessShipmentRequest>
+         <WebAuthenticationDetail>
+            <UserCredential>
+               <Key></Key>
+               <Password/>
+            </UserCredential>
+         </WebAuthenticationDetail>
+         <ClientDetail>
+            <AccountNumber></AccountNumber>
+            <MeterNumber></MeterNumber>
+         </ClientDetail>
+         <TransactionDetail>
+            <CustomerTransactionId>ETD-SD-EDT WIS Testing</CustomerTransactionId>
+         </TransactionDetail>
+         <Version>
+            <ServiceId>ship</ServiceId>
+            <Major>12</Major>
+            <Intermediate>1</Intermediate>
+            <Minor>0</Minor>
+         </Version>
+         <RequestedShipment>
+            <ShipTimestamp>2012-08-17T17:32:25.363Z</ShipTimestamp>
+            <DropoffType>REGULAR_PICKUP</DropoffType>
+            <ServiceType>INTERNATIONAL_PRIORITY</ServiceType>
+            <PackagingType>YOUR_PACKAGING</PackagingType>
+            <TotalWeight>
+               <Units>LB</Units>
+               <Value>5</Value>
+            </TotalWeight>
+            <Shipper>
+               <Tins>
+                  <TinType>BUSINESS_NATIONAL</TinType>
+                  <Number>123456789</Number>
+               </Tins>
+               <Contact>
+                  <PersonName>Joe Shipper</PersonName>
+                  <Title>Part-Time Shipping Clerk</Title>
+                  <CompanyName>ABC Exports</CompanyName>
+                  <PhoneNumber>469-555-5555</PhoneNumber>
+                  <PagerNumber>469-555-3333</PagerNumber>
+                  <FaxNumber>469-555-4444</FaxNumber>
+                  <EMailAddress>joe@abcexports.com</EMailAddress>
+               </Contact>
+               <Address>
+                  <StreetLines>4200 Regent Blvd</StreetLines>
+                  <StreetLines/>
+                  <City>Irving</City>
+                  <StateOrProvinceCode>TX</StateOrProvinceCode>
+                  <PostalCode>75063</PostalCode>
+                  <CountryCode>US</CountryCode>
+               </Address>
+            </Shipper>
+            <Recipient>
+               <Contact>
+                  <PersonName>Joe Recipient</PersonName>
+                  <Title>Clerk</Title>
+                  <CompanyName>XYX Imports</CompanyName>
+                  <PhoneNumber>5557654321</PhoneNumber>
+                  <FaxNumber>469-555-5555</FaxNumber>
+                  <EMailAddress>joe@xyzimports.com</EMailAddress>
+               </Contact>
+               <Address>
+                  <StreetLines>6895 Bramalea Rd</StreetLines>
+                  <StreetLines/>
+                  <City>Mississauga</City>
+                  <StateOrProvinceCode>ON</StateOrProvinceCode>
+                  <PostalCode>L5S 1Z7</PostalCode>
+                  <CountryCode>CA</CountryCode>
+                  <Residential>false</Residential>
+               </Address>
+            </Recipient>
+            <ShippingChargesPayment>
+               <PaymentType>SENDER</PaymentType>
+               <Payor>
+                  <ResponsibleParty>
+                     <AccountNumber></AccountNumber>
+                     <Contact>
+                        <PersonName>Joe Shipper</PersonName>
+                        <Title>Part-Time Shipping Clerk</Title>
+                        <CompanyName>ABC Exports</CompanyName>
+                        <PhoneNumber>469-555-5555</PhoneNumber>
+                        <PagerNumber>469-555-3333</PagerNumber>
+                        <FaxNumber>469-555-4444</FaxNumber>
+                        <EMailAddress>joe@abcexports.com</EMailAddress>
+                     </Contact>
+                     <Address>
+                        <StreetLines>4200 Regent Blvd</StreetLines>
+                        <StreetLines/>
+                        <City>Irving</City>
+                        <StateOrProvinceCode>TX</StateOrProvinceCode>
+                        <PostalCode>75063</PostalCode>
+                        <CountryCode>US</CountryCode>
+                     </Address>
+                  </ResponsibleParty>
+               </Payor>
+            </ShippingChargesPayment>
+            <SpecialServicesRequested>
+               <SpecialServiceTypes>ELECTRONIC_TRADE_DOCUMENTS</SpecialServiceTypes>
+               <EtdDetail>
+                  <RequestedDocumentCopies>COMMERCIAL_INVOICE</RequestedDocumentCopies>
+               </EtdDetail>
+            </SpecialServicesRequested>
+            <CustomsClearanceDetail>
+               <DutiesPayment>
+                  <PaymentType>SENDER</PaymentType>
+                  <Payor>
+                     <ResponsibleParty>
+                        <AccountNumber></AccountNumber>
+                        <Contact>
+                           <PersonName>Joe Shipper</PersonName>
+                           <Title>Part-Time Shipping Clerk</Title>
+                           <CompanyName>ABC Exports</CompanyName>
+                           <PhoneNumber>469-555-5555</PhoneNumber>
+                           <PagerNumber>469-555-3333</PagerNumber>
+                           <FaxNumber>469-555-4444</FaxNumber>
+                           <EMailAddress>joe@abcexports.com</EMailAddress>
+                        </Contact>
+                        <Address>
+                           <StreetLines>4200 Regent Blvd</StreetLines>
+                           <StreetLines/>
+                           <City>Irving</City>
+                           <StateOrProvinceCode>TX</StateOrProvinceCode>
+                           <PostalCode>75063</PostalCode>
+                           <CountryCode>US</CountryCode>
+                        </Address>
+                     </ResponsibleParty>
+                  </Payor>
+               </DutiesPayment>
+               <CustomsValue>
+                  <Currency>USD</Currency>
+                  <Amount>1000</Amount>
+               </CustomsValue>
+               <InsuranceCharges>
+                  <Currency>USD</Currency>
+                  <Amount>10</Amount>
+               </InsuranceCharges>
+               <PartiesToTransactionAreRelated>false</PartiesToTransactionAreRelated>
+               <CommercialInvoice>
+                  <Comments>CI Comments</Comments>
+                  <FreightCharge>
+                     <Currency>USD</Currency>
+                     <Amount>234.56</Amount>
+                  </FreightCharge>
+                  <TaxesOrMiscellaneousCharge>
+                     <Currency>USD</Currency>
+                     <Amount>19.99</Amount>
+                  </TaxesOrMiscellaneousCharge>
+                  <PackingCosts>
+                     <Currency>USD</Currency>
+                     <Amount>9.87</Amount>
+                  </PackingCosts>
+                  <HandlingCosts>
+                     <Currency>USD</Currency>
+                     <Amount>7.89</Amount>
+                  </HandlingCosts>
+                  <SpecialInstructions>Fragile Handle with care!</SpecialInstructions>
+                  <PaymentTerms>Just 3 easy payments of $99.99!</PaymentTerms>
+                  <Purpose>SAMPLE</Purpose>
+                 
+                  <OriginatorName>Joe Signature</OriginatorName>
+                  <TermsOfSale>CIF_OR_CIP</TermsOfSale>
+               </CommercialInvoice>
+               <Commodities>
+                  <Name>Golf Clubs</Name>
+                  <NumberOfPieces>1</NumberOfPieces>
+                  <Description>Set of 14 golf clubs</Description>
+                  <CountryOfManufacture>CN</CountryOfManufacture>
+                  <HarmonizedCode>950631002000</HarmonizedCode>
+                  <Weight>
+                     <Units>LB</Units>
+                     <Value>5</Value>
+                  </Weight>
+                  <Quantity>1</Quantity>
+                  <QuantityUnits>EA</QuantityUnits>
+                  <AdditionalMeasures>
+                     <Quantity>14</Quantity>
+                     <Units>UNITS</Units>
+                  </AdditionalMeasures>
+                  <UnitPrice>
+                     <Currency>USD</Currency>
+                     <Amount>1000</Amount>
+                  </UnitPrice>
+                  <CustomsValue>
+                     <Currency>USD</Currency>
+                     <Amount>1000</Amount>
+                  </CustomsValue>
+               </Commodities>
+            </CustomsClearanceDetail>
+            <LabelSpecification>
+               <LabelFormatType>COMMON2D</LabelFormatType>
+               <ImageType>PDF</ImageType>
+               <LabelStockType>PAPER_8.5X11_TOP_HALF_LABEL</LabelStockType>
+               <CustomerSpecifiedDetail>
+                  <MaskedData>SHIPPER_ACCOUNT_NUMBER</MaskedData>
+                  <MaskedData>DUTIES_AND_TAXES_PAYOR_ACCOUNT_NUMBER</MaskedData>
+                  <MaskedData>TRANSPORTATION_CHARGES_PAYOR_ACCOUNT_NUMBER</MaskedData>
+                  <MaskedData>CUSTOMS_VALUE</MaskedData>
+               </CustomerSpecifiedDetail>
+            </LabelSpecification>
+            <ShippingDocumentSpecification>
+               <ShippingDocumentTypes>COMMERCIAL_INVOICE</ShippingDocumentTypes>
+               <CommercialInvoiceDetail>
+                  <Format>
+                     <ImageType>PDF</ImageType>
+                     <StockType>PAPER_LETTER</StockType>
+                     <ProvideInstructions>true</ProvideInstructions>
+                  </Format>
+                  <CustomerImageUsages>
+                     <Type>LETTER_HEAD</Type>
+                     <Id>IMAGE_1</Id>
+                  </CustomerImageUsages>
+                  <CustomerImageUsages>
+                     <Type>SIGNATURE</Type>
+                     <Id>IMAGE_2</Id>
+                  </CustomerImageUsages>
+               </CommercialInvoiceDetail>
+            </ShippingDocumentSpecification>
+            <RateRequestTypes>ACCOUNT</RateRequestTypes>
+            <EdtRequestType>ALL</EdtRequestType>
+            <PackageCount>1</PackageCount>
+            <RequestedPackageLineItems>
+               <SequenceNumber>1</SequenceNumber>
+               <InsuredValue>
+                  <Currency>USD</Currency>
+                  <Amount>1000</Amount>
+               </InsuredValue>
+               <Weight>
+                  <Units>LB</Units>
+                  <Value>5</Value>
+               </Weight>
+               <CustomerReferences>
+                  <CustomerReferenceType>CUSTOMER_REFERENCE</CustomerReferenceType>
+                  <Value>CR123</Value>
+               </CustomerReferences>
+               <CustomerReferences>
+                  <CustomerReferenceType>INVOICE_NUMBER</CustomerReferenceType>
+                  <Value>IN123</Value>
+               </CustomerReferences>
+               <CustomerReferences>
+                  <CustomerReferenceType>P_O_NUMBER</CustomerReferenceType>
+                  <Value>PO123</Value>
+               </CustomerReferences>
+               <SpecialServicesRequested>
+                  <SpecialServiceTypes>SIGNATURE_OPTION</SpecialServiceTypes>
+                  <SignatureOptionDetail>
+                     <OptionType>DIRECT</OptionType>
+                  </SignatureOptionDetail>
+               </SpecialServicesRequested>
+            </RequestedPackageLineItems>
+         </RequestedShipment>
+      </ProcessShipmentRequest>
+   </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

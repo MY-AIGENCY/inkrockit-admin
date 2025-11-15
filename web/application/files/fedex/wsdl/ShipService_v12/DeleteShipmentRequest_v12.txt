@@ -1,0 +1,42 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v12="http://fedex.com/ws/ship/v12">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <v12:DeleteShipmentRequest>
+         <v12:WebAuthenticationDetail>
+            <v12:UserCredential>
+               <v12:Key></v12:Key>
+               <v12:Password></v12:Password>
+            </v12:UserCredential>
+         </v12:WebAuthenticationDetail>
+         <v12:ClientDetail>
+            <v12:AccountNumber></v12:AccountNumber>
+            <v12:MeterNumber></v12:MeterNumber>
+            <v12:IntegratorId>12345</v12:IntegratorId>
+            <v12:Localization>
+               <v12:LanguageCode>EN</v12:LanguageCode>   
+               <v12:LocaleCode>ES</v12:LocaleCode>
+            </v12:Localization>
+         </v12:ClientDetail>
+         <v12:TransactionDetail>
+            <v12:CustomerTransactionId>Delete Domestic Express Shipment</v12:CustomerTransactionId>
+            <v12:Localization>
+               <v12:LanguageCode>EN</v12:LanguageCode>   
+               <v12:LocaleCode>ES</v12:LocaleCode>
+            </v12:Localization>
+         </v12:TransactionDetail>
+         <v12:Version>
+            <v12:ServiceId>ship</v12:ServiceId>
+            <v12:Major>12</v12:Major>
+            <v12:Intermediate>1</v12:Intermediate>
+            <v12:Minor>0</v12:Minor>
+         </v12:Version>
+         <v12:ShipTimestamp>2012-08-17T10:53:53-06:00</v12:ShipTimestamp>
+         <v12:TrackingId>
+            <v12:TrackingIdType>EXPRESS</v12:TrackingIdType>
+            <v12:FormId>0455</v12:FormId>
+            <v12:TrackingNumber>794815413454</v12:TrackingNumber>
+         </v12:TrackingId>
+         <v12:DeletionControl>DELETE_ALL_PACKAGES</v12:DeletionControl>
+      </v12:DeleteShipmentRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

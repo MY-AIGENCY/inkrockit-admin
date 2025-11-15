@@ -1,0 +1,163 @@
+/*.perfect_pixsel{
+    position: absolute;
+    background: url(/images/perfect_pixsel/1.png);
+    width: 1034px;
+    height: 926px;
+    opacity: 0;
+    top: 0;
+    left: 116px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.perfect_pixsel:hover{
+    opacity: 0.5;
+}*/
+.mainThirdTitle {
+    float: left;
+    margin: 35px 0 0 23px;
+}
+.mainthirdTitle {
+    float: left;
+    margin: 34px 0 0 423px;
+    width: 320px;
+}
+.thirdMainButton {
+    float: right;
+    margin: 26px 45px 0 0;
+    padding: 0;
+    text-align: right;
+    width: 700px;
+}
+.foursText {
+    margin-top: 245px;
+}
+.custom {
+    margin: 19px 0 1px 16px;
+}
+.mainRightMenu {
+    padding-bottom: 15px;
+}
+.MainButtonthird {
+    background: url("/images/buttonBg.png") repeat scroll 0 0 transparent;
+    border: medium none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 0 0 21px;
+    padding: 4px 32px 4px 18px;
+    position: relative;
+}
+.customerImage{
+    margin: 12px 0 0 88px;
+}
+.customerText {
+    font-family: Arial,Helvetica,"sans-serif";
+    font-size: 12px;
+    font-weight: bold;
+    margin: 10px 0 0 14px;
+}
+.customArrow {
+    float: left;
+    margin: 5px 5px;
+}
+.custommenuText {
+    float: left;
+    font-size: 12px;
+    margin: 5px 0 0 2px;
+    color:#333333;
+}
+.mainFooterFirstBlock {
+    cursor:pointer;
+    background: url("/images/DESIGN_IT.png") no-repeat scroll 13px 10px transparent;
+    float:left;
+    width: 309px;
+    padding-right: 6px;
+    height:119px;
+    position: relative;
+    border-radius: 8px;
+    font-weight: 600;
+    border:1px solid #fff;
+    margin: 0 9px 0px 5px;
+}
+.mainFooterSecondBlock {
+    cursor:pointer;
+    background: url("/images/PRINT_IT.png") no-repeat scroll 14px 11px transparent;
+    margin-bottom: 15px;
+    float:left;
+    width: 316px;
+    height:119px;
+    position: relative;
+    display: block;
+    border-radius: 10px;
+    border:1px solid #fff;
+    margin: 0 9px 0px 9px;
+
+}
+.mainFooterThirdBlock {
+    cursor:pointer;
+    background: url("/images/MAIL_IT.png") no-repeat scroll 16px 12px transparent;
+    margin-bottom: 15px;
+    float:left;
+    width:314px;
+    position: relative; 
+    height:119px;
+    border-radius: 10px;
+    border:1px solid #fff;
+    margin: 0 9px 15px 8px;
+}
+.mainFooterBlockText {
+    color: #000000;
+    font-family: Arial,Helvetica,"sans-serif";
+    font-size: 12px;
+    margin: 60px 0 0 16px;
+    position: relative;
+    font-weight: normal;
+    width: 205px;
+}
+
+.mainRightMenu {
+    padding-bottom: 11px;
+}
+.customerLogos {
+    background: url('/images/pepsiBg.png') repeat-x scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 10px 10px 10px 10px;
+    float: left;
+    height: 134px;
+    margin-top: 12px;
+    width: 241px;
+}
+
+.arrow_hover_fitst{
+    background-image: url('/images/arrow_hover_bottom_hover.png');
+    width: 10px;
+    height: 12px;
+    float: left;
+    left: 156px;
+    display: none;
+    top: 12px;
+    position: absolute;
+}
+.arrow_hover_second{
+    background-image: url('/images/arrow_hover_bottom_hover.png');
+    width: 10px;
+    height: 12px;
+    float: left;
+    left: 135px;
+    display: none;
+    top: 13px;
+    position: absolute;
+}
+.arrow_hover_third{
+    background-image: url('/images/arrow_hover_bottom_hover.png');
+    width: 10px;
+    height: 12px;
+    float: left;
+    left: 120px;
+    display: none;
+    top: 13px;
+    position: absolute;
+}

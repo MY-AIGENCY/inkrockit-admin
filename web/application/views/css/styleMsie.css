@@ -1,0 +1,150 @@
+.main{
+    padding-top: 2px;
+}
+.go_prev, .go_next{
+    background: #FFF;
+}
+.modal{
+    background: #333;
+}
+.mainFooterFirstBlock:hover,.mainFooterSecondBlock:hover,.mainFooterThirdBlock:hover{
+    border: 1px solid #CCC;
+}
+.drop_text{
+    display: none !important;
+}
+.cwechen{
+    margin-right: 70px;
+    float: right;
+}
+
+.cwechin_spit{
+    margin-right: 12px;
+    margin-top: 4px;
+    float: right;
+}
+.cwechin{
+    margin-right: 120px;
+    margin-top: 4px;
+    float: right;
+}
+.opera_order_confirmattion{
+    width: 319px;
+}
+
+.border_top_left_print{
+    display: none;
+}
+
+.border_top_right_print{
+    display: none;
+}
+
+.border_bottom_right_print{
+   display: none;
+}
+
+.border_bottom_left_print{
+   display: none;
+}
+
+.firefox_last_list{
+    margin-left: 10px;
+}
+
+.left_ie{
+    float: left;
+}
+.option_coanings li input{
+    padding-bottom: 0px;
+}
+
+
+
+.MainButton {
+    background: url("/images/buttonBg.png") repeat scroll 0 0 transparent;
+    border: medium none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 22px 0 0 21px;
+    padding: 3px 14px;
+    z-index: 10;
+}
+.MainButton:hover{
+    background: url("/images/buttonBgSel.png") repeat scroll 0 0 transparent;
+    padding: 3px 14px;
+}
+
+.MainButtonSec {
+    background: url("/images/buttonBg.png") repeat scroll 0 0 transparent;
+    border: medium none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 18px 0 0 20px;
+    padding: 3px 18px;
+}
+.MainButtonSec:hover{
+    background: url("/images/buttonBgSel.png") repeat scroll 0 0 transparent;
+    padding: 3px 18px;
+}
+
+.MainButtonthird {
+    background: url("/images/buttonBg.png") repeat scroll 0 0 transparent;
+    border: medium none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 0 0 21px;
+    padding: 3px 32px 4px 18px;
+    position: relative;
+}
+.MainButtonthird:hover{
+    background: url("/images/buttonBgSel.png") repeat scroll 0 0 transparent;
+}
+
+.Apply_Button {
+    background: url("/images/buttonBg.png") repeat scroll 0 0 transparent;
+    border: medium none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0px 0 0 0px;
+    padding: 3px 20px;
+    z-index: 10;
+}
+.Save_Button {
+    background: url("/images/buttonBg.png") repeat scroll 0 0 transparent;
+    border: medium none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0px 0 0 0px;
+    padding: 3px 24px;
+    margin-left: 22px;
+    z-index: 10;
+}
+
+.Submit_Button {
+    background: url("/images/buttonBg.png") repeat scroll 0 0 transparent;
+    border: medium none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 3px 0 0 0px;
+    padding: 3px 16px;
+    z-index: 10;
+}

@@ -1,0 +1,41 @@
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+vendor/
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+tmp/
+temp/
+cache/
+
+# Credentials
+credentials.json
+*-credentials.json
+*.pem
+*.key
+*.crt
+
+# Backups
+*.backup
+*.bak
+*.sql
+*.sql.gz

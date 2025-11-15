@@ -1,0 +1,63 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v3="http://fedex.com/ws/pickup/v3">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <v3:PickupAvailabilityRequest>
+         <v3:WebAuthenticationDetail>
+            <v3:UserCredential>
+               <v3:Key></v3:Key>
+               <v3:Password></v3:Password>
+            </v3:UserCredential>
+         </v3:WebAuthenticationDetail>
+         <v3:ClientDetail>
+            <v3:AccountNumber></v3:AccountNumber>
+            <v3:MeterNumber></v3:MeterNumber>
+            <v3:Localization>
+               <v3:LanguageCode>EN</v3:LanguageCode>
+               <v3:LocaleCode>ES</v3:LocaleCode>
+            </v3:Localization>
+         </v3:ClientDetail>
+         <v3:TransactionDetail>
+            <v3:CustomerTransactionId>PICKUP AVAIALABILITY</v3:CustomerTransactionId>
+            <v3:Localization>
+               <v3:LanguageCode>EN</v3:LanguageCode>
+               <v3:LocaleCode>ES</v3:LocaleCode>
+            </v3:Localization>
+         </v3:TransactionDetail>
+         <v3:Version>
+            <v3:ServiceId>disp</v3:ServiceId>
+            <v3:Major>3</v3:Major>
+            <v3:Intermediate>0</v3:Intermediate>
+            <v3:Minor>0</v3:Minor>
+         </v3:Version>
+         <v3:PickupAddress>
+            <v3:StreetLines>SHIPPER ADDRESS LINE 1</v3:StreetLines>
+            <v3:City>COLORADO SPRINGS</v3:City>
+            <v3:StateOrProvinceCode>CO</v3:StateOrProvinceCode>
+            <v3:PostalCode>80915</v3:PostalCode>
+            <v3:UrbanizationCode>CO</v3:UrbanizationCode>
+            <v3:CountryCode>US</v3:CountryCode>
+            <v3:Residential>1</v3:Residential>
+         </v3:PickupAddress>
+         <v3:PickupRequestType>SAME_DAY</v3:PickupRequestType>
+         <v3:DispatchDate>2010-12-21</v3:DispatchDate>
+         <v3:NumberOfBusinessDays>3</v3:NumberOfBusinessDays>
+         <v3:PackageReadyTime>15:00:00</v3:PackageReadyTime>
+         <v3:CustomerCloseTime>17:00:00</v3:CustomerCloseTime>
+         <v3:Carriers>FDXE</v3:Carriers>
+         <v3:ShipmentAttributes>
+            <v3:ServiceType>PRIORITY_OVERNIGHT</v3:ServiceType>
+            <v3:PackagingType>YOUR_PACKAGING</v3:PackagingType>
+            <v3:Dimensions>
+               <v3:Length>12</v3:Length>
+               <v3:Width>12</v3:Width>
+               <v3:Height>12</v3:Height>
+               <v3:Units>IN</v3:Units>
+            </v3:Dimensions>
+            <v3:Weight>
+               <v3:Units>LB</v3:Units>
+               <v3:Value>150</v3:Value>
+            </v3:Weight>
+         </v3:ShipmentAttributes>
+      </v3:PickupAvailabilityRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

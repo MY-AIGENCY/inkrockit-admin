@@ -1,0 +1,88 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <env:Header xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+  <soapenv:Body>
+    <v3:CreatePickupReply xmlns:v3="http://fedex.com/ws/pickup/v3">
+      <v3:HighestSeverity xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">SUCCESS</v3:HighestSeverity>
+      <v3:Notifications xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <v3:Severity>SUCCESS</v3:Severity>
+        <v3:Source>disp</v3:Source>
+        <v3:Code>0000</v3:Code>
+        <v3:Message>Success</v3:Message>
+        <v3:LocalizedMessage>Success</v3:LocalizedMessage>
+      </v3:Notifications>
+      <q0:TransactionDetail xmlns:q0="http://fedex.com/ws/pickup/v3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <q0:CustomerTransactionId>Freight Pickup Example</q0:CustomerTransactionId>
+      </q0:TransactionDetail>
+      <q0:Version xmlns:q0="http://fedex.com/ws/pickup/v3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <q0:ServiceId>disp</q0:ServiceId>
+        <q0:Major>3</q0:Major>
+        <q0:Intermediate>0</q0:Intermediate>
+        <q0:Minor>0</q0:Minor>
+      </q0:Version>
+      <v3:PickupConfirmationNumber xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">20110721HRO279995</v3:PickupConfirmationNumber>
+      <v3:CompletedFreightPickupDetail xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <v3:Origin>
+          <v3:AdditionalDays>0</v3:AdditionalDays>
+          <v3:LocalDistance>
+            <v3:Value>0.0</v3:Value>
+            <v3:Units>MI</v3:Units>
+          </v3:LocalDistance>
+          <v3:LocalDuration>PT3M</v3:LocalDuration>
+          <v3:Location>HRO</v3:Location>
+          <v3:ContactAndAddress>
+            <v3:Contact>
+              <v3:PersonName>FRED GARRY</v3:PersonName>
+              <v3:CompanyName>HARRISON</v3:CompanyName>
+              <v3:PhoneNumber>8008744723</v3:PhoneNumber>
+              <v3:FaxNumber>8707417325</v3:FaxNumber>
+            </v3:Contact>
+            <v3:Address>
+              <v3:StreetLines>2200 FORWARD DR</v3:StreetLines>
+              <v3:City>HARRISON</v3:City>
+              <v3:StateOrProvinceCode>AR</v3:StateOrProvinceCode>
+              <v3:PostalCode>72601-2004</v3:PostalCode>
+              <v3:CountryCode>US</v3:CountryCode>
+              <v3:Residential>false</v3:Residential>
+            </v3:Address>
+          </v3:ContactAndAddress>
+        </v3:Origin>
+        <v3:LineItems>
+          <v3:SequenceNumber>1</v3:SequenceNumber>
+          <v3:Destination>
+            <v3:InterlineCarrierCode>FEDEX_FREIGHT_ECONOMY</v3:InterlineCarrierCode>
+            <v3:InterlineCarrierName>FedEx Freight</v3:InterlineCarrierName>
+            <v3:AdditionalDays>0</v3:AdditionalDays>
+            <v3:LocalService>FEDEX_FREIGHT_ECONOMY</v3:LocalService>
+            <v3:LocalDistance>
+              <v3:Value>1052.0</v3:Value>
+              <v3:Units>MI</v3:Units>
+            </v3:LocalDistance>
+            <v3:LocalDuration>P3D</v3:LocalDuration>
+            <v3:LocalServiceScheduling>STANDARD</v3:LocalServiceScheduling>
+            <v3:Location>CLE</v3:Location>
+            <v3:ContactAndAddress>
+              <v3:Address>
+                <v3:StreetLines>1234 Limbo St</v3:StreetLines>
+                <v3:StreetLines>Suite 200</v3:StreetLines>
+                <v3:City>AKRON</v3:City>
+                <v3:StateOrProvinceCode>OH</v3:StateOrProvinceCode>
+                <v3:PostalCode>44333</v3:PostalCode>
+                <v3:CountryCode>US</v3:CountryCode>
+                <v3:Residential>false</v3:Residential>
+              </v3:Address>
+            </v3:ContactAndAddress>
+          </v3:Destination>
+          <v3:TotalTravelTime>P3D</v3:TotalTravelTime>
+          <v3:EtaDeliveryTimestamp>2011-07-27T00:00:00</v3:EtaDeliveryTimestamp>
+        </v3:LineItems>
+        <v3:TotalPieces>0</v3:TotalPieces>
+        <v3:TotalWeight>
+          <v3:Units>LB</v3:Units>
+          <v3:Value>0.0</v3:Value>
+        </v3:TotalWeight>
+        <v3:TotalHandlingUnits>1</v3:TotalHandlingUnits>
+      </v3:CompletedFreightPickupDetail>
+    </v3:CreatePickupReply>
+  </soapenv:Body>
+</soapenv:Envelope>
+

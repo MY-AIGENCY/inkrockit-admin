@@ -1,0 +1,143 @@
+.bock_title_why_inkrockit{
+    font-size: 80px;
+    float: left;
+    color: #ff8400;
+    font-weight: bold;
+    width: 1002px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.content_why_inkrockit{
+    width: 958px;
+    float: left;
+    min-height: 300px;
+    margin-top: 44px;
+    margin-left: 20px;
+}
+
+.right_block_read_more{
+    width: 463px;
+    border-radius: 9px;
+    border: 1px solid #cccccc;
+    float: right;
+    background: url('/images/pepsiBg.png') repeat-x scroll 0 0 #FFFFFF;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 60px;
+    padding-bottom: 10px;
+}
+
+.title_right_block_read_more{
+    width: 432px;
+    height: 55px;
+    float: left;
+    margin-left: 15px;
+    margin-top: 20px;
+    background: url('/images/title_right_block_why.gif');
+}
+
+.slogan_right_block_read_more{
+    width: 433px;
+    border-top: 1px dotted #666;
+    border-bottom: 1px dotted #666;
+    padding-bottom: 9px;
+    padding-top: 8px;
+    color: #000;
+    font-size: 12px;
+    float: left;
+    margin-left: 15px;
+    margin-top: 14px;
+}
+
+.one_question{
+    width: 433px;
+    margin-left: 16px;
+    float: left;
+    margin-bottom: 4px;
+}
+
+.namber_question{
+    min-width: 18px;
+    min-height: 27px;
+    background: url('/images/print_it/bg_qestion.gif');
+    float: left;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    padding-left: 8px;
+}
+
+
+.title_question_active{
+    float: right;
+    width: 400px;
+    min-height: 27px;
+    background: #2d2d2d;
+    border-top-right-radius: 7px;
+    color: #91db47;
+    font-weight: bold;
+    font-style: italic;
+    padding-left: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.title_question{
+    float: right;
+    width: 400px;
+    min-height: 27px;
+    background: #666;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    color: #fff;
+    font-weight: bold;
+    font-style: italic;
+    padding-left: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.title_question:hover{
+    background: #4e9000;
+}
+
+.description_question{
+    float: right;
+    width: 400px;
+    min-height: 27px;
+    background: #2d2d2d;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+    color: #fff;
+    padding-left: 6px;
+    font-size: 14px;
+    margin-top: 1px;
+    padding-bottom: 16px;
+    padding-top: 15px;
+    display: none;
+}
+
+.block_text_left_why_inkrockit{
+    color: #000;
+    font-size: 14px;
+    border-bottom: 1px dotted #666;
+    width: 455px;
+    float: left;
+    line-height: 17px;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+}
+.block_text_left_why_inkrockit:last-of-type{
+    border: none;
+}
+
+
+
+.title_left_why_inkrockit{
+    color: #00286b;
+    font-size: 22px;
+    font-weight: bold;
+}

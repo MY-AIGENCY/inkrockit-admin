@@ -1,0 +1,233 @@
+.logo_mail_it{
+    font-family: arial;
+    font-weight: bold;
+    color: #ff8400;
+    font-size: 80px;
+    float: left;
+}
+
+.block_slogo_mail_it{
+    float: right;
+    width: 480px;
+    border-left: 1px solid #7d7d7d;
+    padding-left: 18px;
+    height: 63px;
+    margin-top: 16px;
+    margin-left: 16px;
+}
+.title_mail_it_page{
+    margin-top: 19px;
+    float: left;
+    margin-left: 16px;
+}
+
+.slogo_mail_it{
+    font-family: arial;
+    font-weight: bold;
+    color: #666666;
+    font-size: 24px;
+    margin-top: 6px;
+}
+
+.text_normal_mail_it{
+    font-family: arial;
+    font-size: 14px;
+    color: #000000;
+    line-height: 17px;
+    text-align: left; 
+    margin-top: 22px;
+    border-bottom: 1px dotted #666;
+    padding-bottom: 20px;
+    margin-left: 2px;
+}
+
+.left_block_mail_it{
+    margin-top: 25px;
+    width: 467px;
+    min-height: 350px;
+    float: left;
+    margin-left: 20px;
+    position: relative;
+}
+.block_from_text_mail_it{
+    width: 441px;
+}
+
+.title_direct_mail{
+    background: url('/images/print_it/direct_mail.png');
+    width: 315px;
+    height: 33px;
+    margin-top: 20px;
+}
+/*.title_design_it{
+    background: url('/images/print_it/design_capa.png');
+    width: 262px;
+    height: 34px;
+    margin-top: 2px;
+    margin-left: 4px;
+}*/
+.list_direct_mail_left{
+    margin: auto;
+    padding: 0;
+    margin-top: 17px;
+    margin-left: 28px;
+    float: left;
+}
+
+.list_direct_mail_left li{
+    list-style: none;
+    padding-bottom: 10px;
+    font-size: 14px;
+    color: #000;
+    line-height: 13px;
+}
+
+.list_direct_mail_right{
+    margin: auto;
+    padding: 0;
+    margin-top: 17px;
+    margin-left: 50px;
+    float: left;
+}
+
+.list_direct_mail_right li{
+    list-style: none;
+    padding-bottom: 10px;
+    font-size: 14px;
+    color: #000;
+    line-height: 13px;
+}
+
+.right_block_mail {
+    width:440px;
+    height:359px;
+    position: relative;
+    float: right;
+    margin-right: 35px;
+    margin-top: 58px;
+}
+.right_block_mail >div{
+    opacity: 0;
+    z-index: 0;
+}
+.right_block_mail >div:first-child{
+    opacity: 1;
+    z-index: 2;
+}
+.foursMail {
+    z-index:5;
+    position:absolute;
+    width:440px;
+    height:359px;
+}
+
+.rotatormainbuttonmail {
+    float: right;
+    margin-left: 183px;
+    bottom: 0;
+    position: absolute;
+    z-index: 1000;
+}
+
+.bottom_block_content_mail_it{
+    width: 956px;
+    min-height: 419px;
+    border-radius: 9px;
+    border: 1px solid #cccccc;
+    float: left;
+    background: url('/images/pepsiBg.png') repeat-x scroll 0 0 #FFFFFF;
+    margin-top: 35px;
+    margin-left: 22px;
+    font-size: 14px;
+    color: #000;
+}
+
+
+.left_block_content_info_mail_page{
+    width: 447px;
+    min-height: 370px;
+    border-right: 1px dotted #666666;
+    float: left;
+    margin-top: 25px;
+    margin-left: 30px;
+}
+.right_block_content_info_mail_page{
+    width: 447px;
+    min-height: 370px;
+    float: left;
+    margin-top: 25px;
+    margin-left: 30px;
+}
+.title_content_info_mail_page{
+    font-size: 22px;
+    font-weight: bold;
+    color: #00286b;
+    float: left;
+}
+
+.text_content_info_mail_page{
+    float: left;
+    width: 413px;
+    margin-top: 5px;
+    line-height: 17px;
+}
+.mainFooterMailIt {
+    margin-bottom: 15px;
+    float:left;
+    width: 303px;
+    height:119px;
+    position: relative;
+    display: block;
+    border-radius: 10px;
+    border:1px solid #fff;
+    margin: 0 12px 0px 9px;
+
+}
+
+.mainFooterdesign_it{
+    cursor:pointer;
+    background: url("/images/DESIGN_IT.png") no-repeat scroll 12px 11px transparent;
+    float:left;
+    width: 309px;
+    padding-right: 6px;
+    height:119px;
+    position: relative;
+    border-radius: 8px;
+    font-weight: 600;
+    border:1px solid #fff;
+    margin: -2px 8px 0px 9px;
+}
+
+.main_footer_tex_mail_it{
+    font-weight: bold;
+    font-size: 18px;
+    float: right;
+    color: #666666;
+    margin-right: 15px;
+    margin-top: 43px;
+}
+
+.arrow_hover_mail_it_firts{
+    background-image: url('/images/arrow_hover_bottom_hover.png');
+    width: 10px;
+    height: 12px;
+    float: left;
+    left: 156px;
+    display: none;
+    top: 15px;
+    position: absolute;
+}
+
+.block_min_footer_mail_it{
+    margin-bottom: 26px;
+}
+
+.mainFooterBlockText_mail_it {
+    color: #000000;
+    font-family: Arial,Helvetica,"sans-serif";
+    font-size: 12px;
+    margin: 58px 0 0 16px;
+    position: relative;
+    font-weight: normal;
+    width: 205px;
+}

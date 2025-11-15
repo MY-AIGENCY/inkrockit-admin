@@ -1,0 +1,25 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <env:Header xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+  <soapenv:Body>
+    <v3:CancelPickupReply xmlns:v3="http://fedex.com/ws/pickup/v3">
+      <v3:HighestSeverity xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">SUCCESS</v3:HighestSeverity>
+      <v3:Notifications xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <v3:Severity>SUCCESS</v3:Severity>
+        <v3:Source>disp</v3:Source>
+        <v3:Code>0000</v3:Code>
+        <v3:Message>Success</v3:Message>
+        <v3:LocalizedMessage>Success</v3:LocalizedMessage>
+      </v3:Notifications>
+      <q0:TransactionDetail xmlns:q0="http://fedex.com/ws/pickup/v3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <q0:CustomerTransactionId>Cancel Freight Pickup Example</q0:CustomerTransactionId>
+      </q0:TransactionDetail>
+      <q0:Version xmlns:q0="http://fedex.com/ws/pickup/v3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <q0:ServiceId>disp</q0:ServiceId>
+        <q0:Major>3</q0:Major>
+        <q0:Intermediate>0</q0:Intermediate>
+        <q0:Minor>0</q0:Minor>
+      </q0:Version>
+    </v3:CancelPickupReply>
+  </soapenv:Body>
+</soapenv:Envelope>
+

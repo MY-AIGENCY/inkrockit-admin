@@ -1,0 +1,735 @@
+.block_rewards_points{
+    min-width: 285px;
+    height: 35px;
+    margin-right: 8px;
+    margin-top: 11px;
+    background: #7d7d7d;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    padding-left: 12px;
+}
+
+.title_pints{
+    float: right;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 13px;
+    margin-top: 9px;
+}
+.block_redeem{
+    /*width: 147px;*/
+    min-width: 127px;
+    height: 29px;
+    background: #fff;
+    border-radius: 11px;
+    float: right;
+    margin-top: 3px;
+    margin-right: 3px;
+    padding-left: 10px
+}
+
+.count_points{
+    font-size: 18px;
+    color: #000;
+    float: right;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+.Reddem_Button {
+    background: url("/images/buttonBg.png") repeat scroll 0 0 transparent;
+    border: medium none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 3.5px 12px;
+    z-index: 10;
+    margin-top: 3px;
+    margin-right: 3px;
+    float: right;
+}
+.Reddem_Button:hover{
+    background: url("/images/buttonBgSel.png") repeat scroll 0 0 transparent;
+}
+
+.block_content_page_account{
+    width: 958px;
+    margin: auto;
+    margin-top: 32px;
+}
+
+.nav_account{
+    margin: auto;
+    padding: 0;
+}
+
+.nav_account li{
+    list-style: none;
+    margin-bottom: 2px;
+}
+
+.nav_account li a{
+    color: #000;
+    font-size: 12px;
+    padding-left: 15px;
+    width: 167px;
+    height: 22px;
+    border-radius: 5px;
+    display: block;
+    text-decoration: none;
+    background: #ebebeb;
+    line-height: 25px;
+}
+
+.nav_account li a:hover{
+    background: #4e9000;
+    color: #fff;
+    font-weight: bold;
+}
+li a.current_account{
+    background: #4e9000;
+    color: #fff;
+    font-weight: bold;
+}
+
+.block_my_account_order{
+    width: 722px;
+    margin-bottom: 50px;
+    float: left;
+}
+
+.active_order_active{
+    width: 360px;
+    height: 36px;
+    background:url(/images/print_it/bg_tabs_active.png) repeat-x;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    color: #ffffff;
+    font-family: HelveticaNeue-BoldExt;
+    font-size: 14px;
+    text-align: center;
+    position: relative;
+    float: left;
+}
+.active_order{
+    width: 360px;
+    height: 29px;
+    background: #044d7d;
+    font-size: 14px;
+    color: #95b8cc;
+    font-family: HelveticaNeue-BoldExt;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    float: left;
+    position: relative;
+}
+
+.history_information{
+    width: 360px;
+    height: 29px;
+    background: #044d7d;
+    font-size: 14px;
+    color: #95b8cc;
+    font-family: HelveticaNeue-BoldExt;
+    margin-left: 1px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    float: left;
+    position: relative;
+}
+
+.history_information_active{
+    width: 360px;
+    height: 36px;
+    background:url(/images/print_it/bg_tabs_active.png) repeat-x;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    color: #ffffff;
+    font-family: HelveticaNeue-BoldExt;
+    font-size: 14px;
+    text-align: center;
+    position: relative;
+    float: right;
+    margin-right: 1px;
+}
+.line_bottom_tabs_account{
+    float: left;
+    width: 361px;
+    height: 6px;
+    background: url('/images/print_it/bg_line_bottom_tabs.png') repeat-x;
+    margin-top: 1px;
+}
+.title_tabs_active{
+    float: left;
+    width: 359px;
+    text-align: center;
+    line-height: 29px;
+}
+
+.title_tabs_history{
+    float: left;
+    width: 361px;
+    text-align: center;
+    line-height: 29px;
+}
+.block_order_active_content{
+    float: left;
+    margin-top: 20px;
+}
+a.details_order_my_acount{
+    display: block;
+    float: left;
+    margin-left: 28px;
+    color: #0061c5;
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+a.details_order_my_acount:hover{
+    color: #5faa00;
+}
+
+.block_order_account_view{
+    border-radius: 7px;
+    background: #7d7d7d;
+    width: 722px;
+    float: left;
+    margin-top: 3px;
+    padding-bottom: 7px;
+}
+
+.block_payment_info_my_acconunt{
+    border-radius: 7px;
+    background: #7d7d7d;
+    width: 722px;
+    float: left;
+    margin-top: 7px;
+    padding-bottom: 3px;
+    margin-bottom: 40px;
+}
+
+.block_payment_info_new_card{
+    border-radius: 7px;
+    background: #7d7d7d;
+    width: 722px;
+    float: left;
+    padding-bottom: 3px;
+    margin-bottom: 40px;
+    min-height: 400px;
+}
+
+.art_work_my_order{
+
+}
+td.title_artwork_order{
+    width: 171px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+td.title_product_quantity_order{
+    width: 218px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+td.delivery_spping_order{
+    width: 218px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+td.price_order{
+    width: 101px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+
+td.content_artwork_order{
+    width: 171px;
+    font-size: 12px;
+    color: #000;
+    background: #ededed;
+    margin-top: 3px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    padding-bottom: 7px;
+}
+td.content_product_quantity_order{
+    width: 218px;
+    font-size: 12px;
+    color: #000;
+    background: #ededed;
+    border-left: 2px solid #7b7b7b;
+    margin-top: 3px;
+    padding-bottom: 10px;
+    line-height: 17px;
+}
+td.content_delivery_spping_order{
+    width: 218px;
+    font-size: 12px;
+    color: #000;
+    background: #ededed;
+    border-left: 2px solid #7b7b7b;
+    margin-top: 3px;
+    padding-bottom: 20px;
+    line-height: 16px;
+}
+
+td.content_price_order{
+    width: 99px;
+    text-align: center;
+    font-size: 12px;
+    color: #000;
+    background: #ededed;
+    padding-bottom: 10px;
+    border-left: 2px solid #7b7b7b; 
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin-top: 3px;
+    padding-bottom: 20px;
+}
+.border_booto_delivery_spping{
+    width: 202px;
+    border-bottom: 1px dotted #666666;
+    padding-bottom: 6px;
+    margin-bottom: 4px;
+}
+.border_booto_delivery_spping:last-child{
+    border: none; 
+}
+.block_order_totla_my_account{
+    min-width: 300px;
+    height: 29px;
+}
+.order_total_my_account{
+    min-width: 112px;
+    padding-left: 5px;
+    height: 27px;
+    background: #ff8400;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    margin-right: 4px;
+    margin-top: 4px;
+    float: right;
+}
+
+.order_total_my_account_title{
+    float: left;
+    margin-top: 13px;
+    margin-left: 75px;
+    margin-right: 13px;
+}
+
+.text_not_editable{
+    float: left;
+    margin-left: 28px;
+    color: #666666;
+    font-size: 12px;
+}
+
+a.next_bottom_dateils{
+    width: 82px;
+    height: 35px;
+    background: url('/images/print_it/next_accoun.png');
+    background-position: top; 
+    background-repeat: no-repeat;
+    overflow: hidden;
+    float: right;
+    cursor: pointer;
+    border: none;
+}
+
+a.next_bottom_dateils:hover{
+    width: 82px;
+    height: 35px;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+a.back_bottom_dateils{
+    width: 82px;
+    height: 35px;
+    background: url('/images/print_it/back_account.png');
+    background-position: top; 
+    background-repeat: no-repeat;
+    overflow: hidden;
+    float: left;
+    cursor: pointer;
+    border: none;
+}
+
+a.back_bottom_dateils:hover{
+    width: 82px;
+    height: 35px;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+a.print_bottom_dateils{
+    width: 71px;
+    height: 35px;
+    background: url('/images/print_it/print.png');
+    background-position: top; 
+    background-repeat: no-repeat;
+    overflow: hidden;
+    float: left;
+    cursor: pointer;
+    border: none;
+}
+
+a.print_bottom_dateils:hover{
+    width: 71px;
+    height: 35px;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+a.downloasd_bottom_dateils{
+    width: 140px;
+    height: 35px;
+    background: url('/images/print_it/downloads_account.png');
+    background-position: top; 
+    background-repeat: no-repeat;
+    overflow: hidden;
+    float: right;
+    cursor: pointer;
+    border: none;
+}
+
+a.downloasd_bottom_dateils:hover{
+    width: 140px;
+    height: 35px;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+.edit_order_account_box{
+    width: 316px;
+    min-height: 567px;
+    background: #ffffff;
+    position: absolute;
+    border-top-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+    z-index: 2000;
+    top: 0px;
+    left: 100px;
+    box-shadow: 3px 3px 10px 0px #666666;
+    display: none;
+    padding-bottom: 10px;
+}
+.eyar_histiry_orders{
+    margin: auto;
+    padding: 0;
+    margin-top: 7px;
+    float: left;
+    margin-left: 10px;
+}
+.eyar_histiry_orders li{
+    list-style: none;
+    float: left;
+    margin-right: 20px;
+}
+.eyar_histiry_orders li a{
+    font-size: 14px;
+    color: #0061c5;
+
+}
+.eyar_histiry_orders li a:hover{
+    color: #4e9000;
+}
+
+li a.current_years{
+    color: #4e9000;
+}
+.add_new_card{
+    margin-right: 20px;
+}
+td.title_credit_card_td{
+    width: 147px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    border-bottom: 5px solid #7d7d7d;
+}
+td.title_payment_info_td{
+    width: 167px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    border-bottom: 5px solid #7d7d7d;
+}
+td.title_biling_adress{
+    width: 153px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    border-bottom: 5px solid #7d7d7d;
+}
+
+td.action_paymnt_info{
+    width: 241px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    font-weight: bold;
+    border-bottom: 5px solid #7d7d7d;
+}
+
+
+td.content_credit_card div{
+    min-height: 105px;
+    border-right: 1px dotted #666666;
+    margin-top: 7px;
+    color: #000;
+}
+
+td.content_payment_info div{
+    min-height: 103px;
+    margin-top: 7px;
+    line-height: 15px;
+    color: #000;
+}
+
+td.content_biling_adress div{
+    min-height: 103px;
+    margin-top: 7px;
+    border-left: 1px dotted #666666;
+    line-height: 15px;
+    color: #000;
+}
+
+td.content_action_edit_delete div{
+    min-height: 103px;
+    margin-top: 7px;
+}
+
+
+
+
+
+td.content_credit_card{
+    width: 153px;
+    background: #ebebeb;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 7px;
+    font-size: 12px;
+    padding-bottom: 7px;
+}
+
+td.content_payment_info{
+    width: 174px;
+    background: #ebebeb;
+    font-size: 12px;
+    padding-bottom: 4px;
+}
+
+td.content_biling_adress{
+    width: 150px;
+    background: #ebebeb;
+    font-size: 12px;
+}
+
+td.content_action_edit_delete{
+    width: 255px;
+    background: #ebebeb;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 7px;
+}
+
+.new_card_title_payment_info{
+    font-size: 12px;
+    color: #fff;
+    text-align: center;
+    width: 356px;
+    margin-left: 4px;
+    font-weight: bold;
+    float: left;
+    line-height: 26px;
+}
+
+.new_card_title_biling_address{
+    font-size: 12px;
+    color: #fff;
+    text-align: center;
+    width: 356px;
+    margin-right: 4px;
+    font-weight: bold;
+    float: right;
+    line-height: 26px;
+}
+
+.block_new_card_payment_info{
+    width: 356px;
+    background: #ebebeb;
+    min-height: 310px;
+    float: left;
+    margin-left: 4px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+.block_new_card_billing_address{
+    width: 356px;
+    background: #ebebeb;
+    min-height: 310px;
+    float: right;
+    margin-right: 4px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.content_payment_info_new_card{
+    width: 313px;
+    margin-left: 22px;
+    min-height: 310px;
+    float: left;
+}
+
+.block_view_card_as{
+    font-size: 12px;
+    color: #000;
+    border-bottom: 1px dotted #666666;
+    margin-top: 16px;
+    float: left;
+    padding-bottom: 10px;
+    width: 313px;
+}
+.block_info_from_new_card{
+    width: 313px;
+    border-bottom: 1px dotted #666666;
+    float: left;
+    padding-bottom: 12px;
+}
+.info_from_new_card{
+    float: right;
+    min-height: 180px;
+    margin-right: 16px;
+    font-size: 12px;
+    color: #000;
+}
+
+.expiration_mount_my_account{
+    width: 49px;
+    height: 20px;
+    border: 1px solid #343434;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #000000;
+    background: #ffffff;
+    padding-left: 3px;
+    float: right;
+}
+
+.expiration_year_my_account{
+    width: 68px;
+    height: 20px;
+    border: 1px solid #343434;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #000000;
+    background: #ffffff;
+    padding-left: 3px;
+    float: right;
+    margin-left: 8px;
+}
+
+input.small_input_security_code{
+    width: 40px;
+    margin-top: 1px;
+    height: 14px;
+    padding-left: 5px;
+    border-top: 1px solid #848484;
+    border-left: 1px solid #c1c1c1;
+    border-right: 1px solid #c1c1c1;
+    border-bottom: 1px solid #e1e1e1;
+    font-size: 12px;
+    color: #000000;
+    border-radius: 0;
+    margin-top: 8px;
+}
+.ink_protected{
+    float: left;
+    width: 245px;
+    font-size: 12px;
+    color: #000;
+    margin-left: 8px;
+    margin-top: 3px;
+}
+
+.billing_address_my_account{
+    margin-top: 18px;
+    font-size: 12px;
+    color: #000000;
+    float: left;
+    margin-left: 36px;
+}
+
+input.input_billing_address{
+    width: 203px;
+    height: 14px;
+    border-top: 1px solid #848484;
+    border-left: 1px solid #c1c1c1;
+    border-right: 1px solid #c1c1c1;
+    border-bottom: 1px solid #e1e1e1;
+    font-size: 12px;
+    color: #000000;
+    border-radius: 0;
+    padding-left: 5px;
+}
+.big_select_my_account{
+    width: 211px;
+    margin-top: 2px;
+}
+.block_saved_info{
+    color: #fff;
+    font-size: 12px;
+    width: 300px;
+    float: left;
+    margin-top: 15px;
+    margin-left: 33px;
+}
+
+input.bottom_save_new_card{
+    background: url('/images/print_it/save_2.png');
+    width: 86px;
+    border: none;
+    height: 29px;
+    background-position: top;
+    margin-right: 20px;
+}
+.bottom_save_new_card:hover{
+    background-position: bottom;
+}
+
+input.bottom_cansel_new_card{
+    background: url('/images/print_it/cansel_2.png');
+    width: 86px;
+    border: none;
+    height: 29px;
+    background-position: top;
+}
+.bottom_cansel_new_card:hover{
+    background-position: bottom;
+}

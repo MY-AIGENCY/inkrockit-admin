@@ -1,0 +1,450 @@
+/*.perfect_pixsel{
+    position: absolute;
+    background: url(/images/perfect_pixsel/1.png);
+    width: 1034px;
+    height: 926px;
+    opacity: 0;
+    top: 0;
+    left: 114px;
+    cursor: pointer;
+    z-index: 1000;
+}*/
+
+.perfect_pixsel:hover{
+    opacity: 0.5;
+}
+.block_listing{
+    width: 200px;
+    height: 279px;
+    border: 8px solid #000000;
+    border-radius: 10px;
+    background: #3c3c3c;
+    box-shadow: 1px 1px 1px 2px rgba(33,32,31, 0.2);
+    position: absolute;
+    left: 295px;
+    z-index: 1000;
+    top: 195px;
+    padding-bottom: 10px;
+}
+.arrow_hover_fitst{
+    background-image: url('/images/arrow_hover_bottom_hover.png');
+    width: 10px;
+    height: 12px;
+    float: left;
+    left: 156px;
+    display: none;
+    top: 12px;
+    position: absolute;
+}
+.arrow_hover_second{
+    background-image: url('/images/arrow_hover_bottom_hover.png');
+    width: 10px;
+    height: 12px;
+    float: left;
+    left: 135px;
+    display: none;
+    top: 12px;
+    position: absolute;
+}
+.arrow_hover_third{
+    background-image: url('/images/arrow_hover_bottom_hover.png');
+    width: 10px;
+    height: 12px;
+    float: left;
+    left: 120px;
+    display: none;
+    top: 12px;
+    position: absolute;
+}
+.mainLeft {
+    background: url('/images/bg_slide_bottom.png') no-repeat bottom #ffffff;
+    width:745px;
+    height:534px;
+    border-radius: 7px 7px 7px 7px ;
+    margin: 15px 0 0;
+    position: relative;
+}
+.rotatormainbutton {
+    float: left;
+    margin-left: 336px;
+    margin-top: 129px;
+    position: absolute;
+    bottom: 15px;
+}
+
+.TopHeader {
+    padding-top:1px;
+}
+.headitemname {
+    padding-left:1px;
+    margin-bottom: 1px;
+}
+.headitemtext {
+    line-height: 14px;
+}
+.headitemtext2 {
+    line-height: 14px;
+}
+/*.headbutton {
+    margin-top:6px;
+    padding:3px 8px 4px 9px;
+    word-spacing: 1px;
+    border:none;
+}*/
+.headitemname2 {
+    color: #F2008F;
+    float: left;
+    font-size: 26px;
+    height: 26px;
+    letter-spacing: 0;
+
+    padding-top: 3px;
+    width: 300px;
+    z-index: 10;
+}
+
+/*.number {
+    padding-bottom: 7px;
+}*/
+.assigned{
+    word-spacing: 1px;
+}
+.ContentNav > a {
+    padding-top:6px;
+    padding-bottom:2px;
+}
+.ContentNav a img {
+    margin-right:17px;
+    margin-top:1px;
+}
+#imgRel > img {
+    border:2px solid  #ffffff;
+}
+.NewmainContent {
+    margin:7px 16px 0;    
+}
+#LinkNav5 {
+    width:167px;
+}
+#carousel_ul {
+    list-style-type: none; /* removing the default styling for unordered list items */
+}
+
+/* MAIN PAGE */
+/*.mainPage {
+    margin: 14px 16px 0 15px;
+}*/
+.mainTitle {
+    margin: 19px 0 1px 22px;
+}
+.MainButton {
+    border-radius: 8px 8px 8px 8px;
+    margin: 20px 0 0 21px;
+    padding: 3px 15px 4px 13px;
+}
+.sec1Img{
+    right: 34px;
+    position: absolute;
+    top: 72px;
+    z-index: -1;
+}
+.mainRightMenu {
+    padding-bottom: 9px;
+}
+.customerLogos {
+    background: url('/images/pepsiBg.png') repeat-x scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 10px 10px 10px 10px;
+    float: left;
+    height: 134px;
+    margin-top: 11px;
+    width: 241px;
+}
+.custom {
+    margin: 19px 0 1px 17px;
+}
+.customText {
+    margin: 4px 15px 9px 18px;
+}
+.custommenuText {
+    margin: 4px 0 0 2px;
+}
+.customerImage{
+    margin: 10px 0 0 89px;
+}
+.customerText {
+    margin: 8px 0 0 15px;
+}
+.mainFoot {
+    padding-left: 2px;
+    padding-bottom:1px;
+}
+/*.mainFooterFirstBlock {
+    padding-right: 5px;
+}
+.mainFooterSecondBlock {
+    background: url("/images/PRINT_IT.png") no-repeat scroll 20px 14px transparent;
+    padding-left: 4px;
+    width: 324px;
+}
+.mainFooterThirdBlock {
+    background: url("/images/MAIL_IT.png") no-repeat scroll 19px 14px transparent;
+    padding-left: 4px;
+    width:324px;
+}*/
+/*.mainFooterBlockText {
+    margin: 58px 0 0 19px;
+}*/
+.coatSecText {
+    margin-top: 4px;
+}
+.secButton {
+    margin: 2px 44px 0 0;
+}
+.MainButtonSec {
+    border-radius: 8px;
+    margin: 20px 0 0 21px;
+    padding: 3px 16px 4px 18px;
+}
+.MainButtonSec {
+    background: url("/images/buttonBg.png") repeat scroll 0 0 transparent;
+    border: medium none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: arial;
+    font-size: 14px;
+    margin: 18px 0 0 20px;
+    padding: 4px 18px;
+}
+.mainThirdTitle {
+    margin: 33px 0 0 23px;
+}
+.thirdText {
+    margin: 14px 0 0 21px;
+}
+.plus {
+    width:26px;
+}
+.custPrintPancer {
+    margin-left: 22px;
+    margin-top: 23px;
+}
+.custprintNav {
+    margin: 14px 0 11px;
+    padding-left:1px;
+}
+.custprintNav  li {
+    padding-bottom: 2px;
+}
+.mainthirdTitle {
+    margin: 33px 0 0 424px;
+}
+.foursText {
+   margin-top: 245px;
+}
+.thirdMainButton {
+    margin: 25px 44px 0 0;
+}
+.MainButtonthird {
+    border-radius: 8px;
+    padding: 3px 33px 4px 18px;
+}
+.MainButtonthird img {
+    right: 15px;
+    top: 5px;
+}
+.mainFooterBorder {
+    top: -22px;
+}
+/*PRINT IT MEDIA KITS */
+
+.rotatorMediaKitsbutton {
+    margin-top: 30px;
+
+}
+.leftMediaText {
+    font-family: arial;
+    font-size: 14px;
+    margin: 21px 0 0 22px;
+}
+.rightMediaText {
+    margin: 15px 0 13px 22px;
+}
+.mediaRightText {
+    line-height: 19px;
+    margin-bottom: 2px;
+}
+.underTopText {
+    margin: 6px 25px 14px 18px;
+}
+.mediaLabel {
+    padding-bottom: 4px;
+    padding-top: 3px;
+}
+.MediaUnderButton {
+    margin: 10px 19px 1px;
+}
+.mediaButton {
+    margin-top: 17px;
+
+}
+.mediaButton img{
+    margin-left: 12px;
+    margin-top: 7px;
+    margin-right: 3px;
+}
+.mediaButtonText {
+    padding: 3px 9px 6px 11px;
+}
+.rotatorMediaKitsbutton div:first-child {
+}
+.mediaImg {
+    margin: 34px 20px 0 45px;  
+}
+
+
+
+.mainFooterFirstBlock {
+    cursor:pointer;
+    background: url("/images/DESIGN_IT.png") no-repeat scroll 13px 9px transparent;
+    float:left;
+    width: 309px;
+    padding-right: 6px;
+    height:119px;
+    position: relative;
+    border-radius: 8px;
+    font-weight: 600;
+    border:1px solid #fff;
+    margin: 0 9px 0px 5px;
+}
+
+.mainFooterSecondBlock {
+    cursor:pointer;
+    background: url("/images/PRINT_IT.png") no-repeat scroll 15px 9px transparent;
+    margin-bottom: 15px;
+    float:left;
+    width: 316px;
+    height:119px;
+    position: relative;
+    display: block;
+    border-radius: 10px;
+    border:1px solid #fff;
+    margin: 0 9px 0px 9px;
+
+}
+.mainFooterThirdBlock {
+    cursor:pointer;
+    background: url("/images/MAIL_IT.png") no-repeat scroll 15px 9px transparent;
+    margin-bottom: 15px;
+    float:left;
+    width:314px;
+    position: relative; 
+    height:119px;
+    border-radius: 10px;
+    border:1px solid #fff;
+    margin: 0 9px 15px 8px;
+}
+
+.mainFooterBlockText {
+    color: #000000;
+    font-family: Arial,Helvetica,"sans-serif";
+    font-size: 12px;
+    margin: 58px 0 0 15px;
+    position: relative;
+    width: 205px;
+}
+
+.sec2Img{
+    position: absolute;  
+    left: 0;
+    position: absolute;
+    top: 43px;
+    z-index: -1;
+}
+.mainSecTitle {
+    float: left;
+    margin: 33px 0 0 435px;
+    width: 300px;
+}
+
+.secText {
+    float: right;
+    font-family: arial;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 45px;
+    margin-top: 236px;
+    text-align: right;
+    width: 244px;
+}
+
+.inspTextB {
+    position:relative;
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    height: 24px;
+    padding-left: 20px;
+    padding-right: 19px;
+    padding-top: 6px;
+}
+
+.order_confirmattion{
+    width: 318px;
+    height: 29px;
+    background: #044d7d;
+    font-size: 14px;
+    color: #95b8cc;
+    font-family: HelveticaNeue-BoldExt;
+    margin-left: 1px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    float: left;
+    position: relative;
+}
+.opera_order_confirmattion{
+    width: 319px;
+}
+.block_tabs_3{
+    float: left;
+    width: 318px;   
+}
+.select_size_table{
+    margin-top: 0px;
+}
+.select_size_table td{
+    vertical-align: bottom;
+    width: 400px;
+    /*text-align: center;*/
+    font-size: 12px;
+    color: #fff;
+    padding-right: 20px;
+}
+
+.firefox_last_list{
+    margin-left: 10px;
+}
+
+.coating_block_content{
+    width: 212px;
+    background: #3c3c3c;
+    padding-bottom: 5px;
+    border-radius: 5px;
+}
+.border_opera td{
+    -o-border-radius: 5px;
+    clear: left;
+}
+
+.Submit_Button {
+    background: url("/images/buttonBg.png") repeat scroll 0 0 transparent;
+    border: medium none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 3px 0 0 0px;
+    padding: 3px 16px;
+    z-index: 10;
+}

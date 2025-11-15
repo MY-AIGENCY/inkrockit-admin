@@ -1,0 +1,107 @@
+.orderd_confirmayion_page{
+    width: 722px;
+    min-height: 500px;
+    margin: auto;
+    margin-top: 8px;
+}
+
+.block_print{
+    margin-top: 42px;
+    float: left;
+    width: 722px;
+}
+
+.left_block_info_confirmation{
+    float: left;
+    font-size: 12px;
+    color: #000;
+    margin-top: 8px;
+    line-height: 16px;
+}
+
+.title_order_confir{
+    font-size: 24px;
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.logo_print_page{
+    background: url('/images/print_it/logo_print.png');
+    width: 145px;
+    height: 90px;
+    float: right;
+    margin-right: 2px;
+}
+
+.block_order_total_title{
+    width: 722px;
+    border-bottom: 4px solid #000000;
+    margin-top: 33px;
+    margin-left: -1px;
+}
+
+.block_payment_info_title{
+    width: 722px;
+    border-bottom: 4px solid #000000;
+    margin-top: 13px;
+    margin-left: -1px;
+}
+
+td.block_info_products{
+    width: 202px;
+    float: left;
+    font-size: 12px;
+    color: #000;
+    line-height: 15px;
+    padding-bottom: 19px;
+}
+
+td.block_info_deliver_to_by{
+    width: 482px;
+    float: left;
+    margin-left: 35px;
+    padding-bottom: 4px;
+    font-size: 12px;
+    line-height: 15px;
+    color: #000;
+    margin-top: 24px;
+}
+
+.left_block_deliveri_to{
+    width: 211px;
+    float: left;
+    margin-left: 4px;
+    padding-bottom: 27px;
+}
+.block_one_deliver_to_by{
+    border-bottom: 1px #000 dotted;
+    margin-bottom: 10px;
+}
+
+.block_one_deliver_to_by:last-of-type{
+    border: none;
+    margin-bottom: -10px;
+}
+.right_block_deliveri_by{
+    width: 201px;
+    float: right;
+    margin-left: 4px;
+    padding-bottom: 10px;
+}
+
+.block_blin_ship_order_confirmation{
+    width: 189px;
+    height: 53px;
+    border: 1px solid #999999;
+    border-radius: 7px;
+    padding-left: 10px;
+    padding-top: 6px;
+    margin-top: 9px;
+}
+
+.payment_info_footer{
+    font-size: 12px;
+    color: #000;
+    line-height: 16px;
+    margin-bottom: 34px;
+}

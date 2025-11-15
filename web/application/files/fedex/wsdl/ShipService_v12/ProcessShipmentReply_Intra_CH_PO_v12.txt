@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><env:Header xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/><env:Body xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><v12:ProcessShipmentReply xmlns:v12="http://fedex.com/ws/ship/v12"><v12:HighestSeverity>ERROR</v12:HighestSeverity><v12:Notifications><v12:Severity>ERROR</v12:Severity><v12:Source>ship</v12:Source><v12:Code>6647</v12:Code><v12:Message>ShippingChargesPayment - Payor country code must match either Origin or Destination country code</v12:Message><v12:LocalizedMessage>ShippingChargesPayment - Payor country code must match either Origin or Destination country code</v12:LocalizedMessage></v12:Notifications><v12:TransactionDetail>
+            <v12:CustomerTransactionId>ship_v12</v12:CustomerTransactionId>
+         </v12:TransactionDetail><v12:Version>
+            <v12:ServiceId>ship</v12:ServiceId>
+            <v12:Major>12</v12:Major>
+            <v12:Intermediate>1</v12:Intermediate>
+            <v12:Minor>0</v12:Minor>
+         </v12:Version></v12:ProcessShipmentReply></env:Body></soapenv:Envelope>

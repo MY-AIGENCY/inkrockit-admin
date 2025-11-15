@@ -1,0 +1,24 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <env:Header xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+   <env:Body xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <v12:CreatePendingShipmentReply xmlns:v12="http://fedex.com/ws/ship/v12">
+         <v12:HighestSeverity>ERROR</v12:HighestSeverity>
+         <v12:Notifications>
+            <v12:Severity>ERROR</v12:Severity>
+            <v12:Source>ship</v12:Source>
+            <v12:Code>8521</v12:Code>
+            <v12:Message>Invalid Merchant Contact Phone</v12:Message>
+            <v12:LocalizedMessage>Invalid Merchant Contact Phone</v12:LocalizedMessage>
+         </v12:Notifications>
+         <v12:TransactionDetail xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+            <v12:CustomerTransactionId>CreatePendingShipmentRequest_Smash_Email_Ret</v12:CustomerTransactionId>
+         </v12:TransactionDetail>
+         <v12:Version xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+            <v12:ServiceId>ship</v12:ServiceId>
+            <v12:Major>12</v12:Major>
+            <v12:Intermediate>1</v12:Intermediate>
+            <v12:Minor>0</v12:Minor>
+         </v12:Version>
+      </v12:CreatePendingShipmentReply>
+   </env:Body>
+</soapenv:Envelope>

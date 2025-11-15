@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><env:Header xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/><env:Body xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><v12:ShipmentReply xmlns:v12="http://fedex.com/ws/ship/v12"><v12:HighestSeverity>SUCCESS</v12:HighestSeverity><v12:Notifications><v12:Severity>SUCCESS</v12:Severity><v12:Source>ship</v12:Source><v12:Code>0000</v12:Code><v12:Message>Success</v12:Message><v12:LocalizedMessage>Success</v12:LocalizedMessage></v12:Notifications><v12:TransactionDetail>
+            <v12:CustomerTransactionId>PROCESS SHIPMENT</v12:CustomerTransactionId>
+            <v12:Localization>
+               <v12:LanguageCode>EN</v12:LanguageCode>
+               <v12:LocaleCode>ES</v12:LocaleCode>
+            </v12:Localization>
+         </v12:TransactionDetail><v12:Version>
+            <v12:ServiceId>ship</v12:ServiceId>
+            <v12:Major>12</v12:Major>
+            <v12:Intermediate>1</v12:Intermediate>
+            <v12:Minor>0</v12:Minor>
+         </v12:Version></v12:ShipmentReply></env:Body></soapenv:Envelope>
