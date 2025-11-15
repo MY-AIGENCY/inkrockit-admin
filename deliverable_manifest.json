@@ -1,0 +1,54 @@
+{
+  "files": [
+    "apps/api/src/index.ts",
+    "apps/api/src/routes/index.ts",
+    "apps/api/src/data/mockData.ts",
+    "apps/web/src/app/dashboard/page.tsx",
+    "apps/web/src/components",
+    "packages/types/src/index.ts",
+    "packages/ui/src",
+    "db/prisma/schema.prisma",
+    "docs/Architecture.md",
+    "docs/API.md",
+    "docs/Runbook.md"
+  ],
+  "endpoints": [
+    "/api/prospects",
+    "/api/companies",
+    "/api/sample-requests",
+    "/api/jobs",
+    "/api/payments",
+    "/api/activities",
+    "/api/tasks",
+    "/api/saved-filters",
+    "/api/metrics/overview",
+    "/api/metrics/sample-requests",
+    "/api/metrics/conversion",
+    "/api/metrics/revenue"
+  ],
+  "routes": [
+    "/dashboard",
+    "/dashboard/prospects",
+    "/dashboard/samples",
+    "/dashboard/jobs",
+    "/dashboard/tasks",
+    "/prospects",
+    "/prospects/[id]",
+    "/companies",
+    "/companies/[id]",
+    "/sample-requests",
+    "/sample-requests/[id]",
+    "/jobs",
+    "/jobs/[id]",
+    "/tasks",
+    "/tasks/[id]"
+  ],
+  "scripts": {
+    "dev": "npm run dev",
+    "dev:web": "npm run dev:web",
+    "dev:api": "npm run dev:api",
+    "build": "npm run build",
+    "lint": "npm run lint",
+    "test": "npm run test"
+  }
+}

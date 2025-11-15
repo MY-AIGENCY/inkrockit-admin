@@ -1,0 +1,19 @@
+FROM node:20-alpine AS base
+WORKDIR /app
+COPY package*.json ./
+COPY tsconfig.base.json ./
+COPY apps ./apps
+COPY packages ./packages
+RUN npm install
+RUN npm run build --workspace=inkrockit-web
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=base /app/apps/web/package.json ./apps/web/package.json
+COPY --from=base /app/package*.json ./
+COPY --from=base /app/apps/web/.next ./apps/web/.next
+COPY --from=base /app/apps/web/public ./apps/web/public
+RUN npm install --omit=dev --workspace=inkrockit-web
+EXPOSE 3000
+CMD ["npx", "next", "start", "-p", "3000", "apps/web"]
