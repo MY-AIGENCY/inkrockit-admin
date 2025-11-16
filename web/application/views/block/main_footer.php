@@ -1,6 +1,6 @@
 <div class="mainFoot">
     <span class="mainFooterBorder"><img src="/images/mainFooterBorder.png"></span>
-    <a href="/design">
+    <a href="/designlab">
         <div class="mainFooterFirstBlock">
             <div class="arrow_hover_fitst"></div>
             <p class="mainFooterBlockText"> An award-winning creative team that will maximize the impact of your piece or take your brand to the next level.</p>

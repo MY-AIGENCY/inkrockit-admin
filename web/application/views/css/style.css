@@ -1811,7 +1811,7 @@ MAIN PAGE
 
 .mainFooterFirstBlock {
     cursor:pointer;
-    background: url("/images/DESIGN_IT.png") no-repeat scroll 14px 13px transparent;
+    background: url("/images/DESIGN_IT.png") no-repeat scroll 14px 13px #ffffff;
     float:left;
     width: 309px;
     padding-right: 6px;
@@ -1824,7 +1824,7 @@ MAIN PAGE
 }
 .mainFooterSecondBlock {
     cursor:pointer;
-    background: url("/images/PRINT_IT.png") no-repeat scroll 16px 13px transparent;
+    background: url("/images/PRINT_IT.png") no-repeat scroll 16px 13px #ffffff;
     margin-bottom: 15px;
     float:left;
     width: 316px;
@@ -1838,11 +1838,11 @@ MAIN PAGE
 }
 .mainFooterThirdBlock {
     cursor:pointer;
-    background: url("/images/MAIL_IT.png") no-repeat scroll 16px 13px transparent;
+    background: url("/images/MAIL_IT.png") no-repeat scroll 16px 13px #ffffff;
     margin-bottom: 15px;
     float:left;
     width:314px;
-    position: relative; 
+    position: relative;
     height:119px;
     border-radius: 10px;
     border:1px solid #fff;

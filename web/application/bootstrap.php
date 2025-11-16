@@ -157,6 +157,11 @@ Route::set('print_it', 'print_it(/<id>)')
             'controller' => 'print',
             'action' => 'index',
         ));
+Route::set('designlab', 'designlab(/<id>)')
+        ->defaults(array(
+            'controller' => 'design',
+            'action' => 'index',
+        ));
 Route::set('default', '(<controller>(/<action>(/<id>)))')
         ->defaults(array(
             'controller' => 'home',
