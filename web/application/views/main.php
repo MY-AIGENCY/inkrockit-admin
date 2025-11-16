@@ -46,18 +46,18 @@
             <a href="/inspiration_station#posit">
             <div class="HeadItem">
                 <div class="headtext">
-                    <p class="headitemname"><img src="/images/DesignLabIcon.png">Inspiration Station</p>
+                    <p class="headitemname"><img src="/images/design.png">Inspiration Station</p>
                     <p class="headitemtext">Explore creative ideas, templates, and production-ready
                         files for your projects.</p>
                     <div class="headbutton vew_sample_pack">See Styles</div>
                 </div>
-                <img class="item2Bg" src="/images/headitem3.png">
+                <img class="item2Bg" src="/images/headitem2.png">
             </div>
             </a>
             <a href="/designlab">
             <div class="HeadItem">
                 <div class="headtext">
-                    <p class="headitemname"><img src="/images/DesignLabIcon.png">Design Lab</p>
+                    <p class="headitemname"><img src="/images/design.png">Design Lab</p>
                     <p class="headitemtext">Work with our team to turn your
                         ideas into finished products.</p>
                     <div class="headbutton vew_sample_pack">Start a Project</div>
@@ -106,7 +106,7 @@
                 ?>
                 <a href="/basket">
                     <div class="basket">
-                        <img src="/images/BasketIcon.png" class="left">
+                        <img src="/images/shopImg.png" class="left">
                         <div class="basketIn">
                             <p id="basketAmount">0 items</p>
                             <form action="/basket" method="post">
