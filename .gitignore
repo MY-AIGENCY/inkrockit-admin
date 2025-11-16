@@ -39,3 +39,7 @@ credentials.json
 *.bak
 *.sql
 *.sql.gz
+
+# Build artifacts
+apps/api/dist/
+apps/web/.next/

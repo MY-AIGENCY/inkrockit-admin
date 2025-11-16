@@ -807,8 +807,39 @@ router.get(
 
 router.get(
   '/api/metrics/overview',
-  asyncHandler(async (_req, res) => {
-    const [prospectsCount] = await query<RowDataPacket[]>(`SELECT COUNT(*) AS total FROM users`);
+  asyncHandler(async (req, res) => {
+    const filters = prospectFiltersSchema.parse(req.query);
+    const whereClauses = ['1=1'];
+    const params: any[] = [];
+
+    const baseFrom = `
+      FROM users u
+      LEFT JOIN (
+        SELECT user_id, COUNT(*) AS request_total
+        FROM requests
+        GROUP BY user_id
+      ) req_stats ON req_stats.user_id = u.id
+      LEFT JOIN (
+        SELECT user_id, COUNT(*) AS job_total
+        FROM user_jobs
+        GROUP BY user_id
+      ) job_stats ON job_stats.user_id = u.id
+    `;
+
+    if (filters.stage) {
+      whereClauses.push(`${stageExpression} = ?`);
+      params.push(filters.stage);
+    }
+
+    if (filters.region) {
+      whereClauses.push(`${regionExpression} = ?`);
+      params.push(filters.region);
+    }
+
+    const [prospectsCount] = await query<RowDataPacket[]>(
+      `SELECT COUNT(*) AS total ${baseFrom} WHERE ${whereClauses.join(' AND ')}`,
+      params
+    );
     const [companiesCount] = await query<RowDataPacket[]>(`SELECT COUNT(*) AS total FROM users_company`);
     const [sampleRequestsCount] = await query<RowDataPacket[]>(`SELECT COUNT(*) AS total FROM requests`);
     const [openTasksCount] = await query<RowDataPacket[]>(`SELECT COUNT(*) AS total FROM request_notes WHERE removed = 0`);

@@ -42,9 +42,20 @@ type APIPath =
   | '/api/activities'
   | '/api/saved-filters';
 
-async function fetchWithFallback<T>(path: APIPath, fallback: T): Promise<T> {
+function buildQueryString(params?: Record<string, string | undefined>): string {
+  if (!params) return '';
+  const searchParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value) searchParams.append(key, value);
+  });
+  const queryString = searchParams.toString();
+  return queryString ? `?${queryString}` : '';
+}
+
+async function fetchWithFallback<T>(path: APIPath, fallback: T, params?: Record<string, string | undefined>): Promise<T> {
   try {
-    const response = await fetch(`${API_BASE_URL}${path}`, {
+    const queryString = buildQueryString(params);
+    const response = await fetch(`${API_BASE_URL}${path}${queryString}`, {
       next: { revalidate: 0 },
     });
 
@@ -59,20 +70,20 @@ async function fetchWithFallback<T>(path: APIPath, fallback: T): Promise<T> {
   }
 }
 
-export async function getOverviewMetrics() {
-  return fetchWithFallback<MetricsOverviewResponse>('/api/metrics/overview', fallbackOverview);
+export async function getOverviewMetrics(params?: { stage?: string; region?: string }) {
+  return fetchWithFallback<MetricsOverviewResponse>('/api/metrics/overview', fallbackOverview, params);
 }
 
-export async function getSampleMetrics() {
-  return fetchWithFallback<SampleMetric[]>('/api/metrics/sample-requests', fallbackSampleMetrics);
+export async function getSampleMetrics(params?: { stage?: string; region?: string }) {
+  return fetchWithFallback<SampleMetric[]>('/api/metrics/sample-requests', fallbackSampleMetrics, params);
 }
 
-export async function getConversionMetrics() {
-  return fetchWithFallback<ConversionMetric[]>('/api/metrics/conversion', fallbackConversionMetrics);
+export async function getConversionMetrics(params?: { stage?: string; region?: string }) {
+  return fetchWithFallback<ConversionMetric[]>('/api/metrics/conversion', fallbackConversionMetrics, params);
 }
 
-export async function getRevenueMetrics() {
-  return fetchWithFallback<RevenueMetric[]>('/api/metrics/revenue', fallbackRevenueSeries);
+export async function getRevenueMetrics(params?: { stage?: string; region?: string }) {
+  return fetchWithFallback<RevenueMetric[]>('/api/metrics/revenue', fallbackRevenueSeries, params);
 }
 
 export async function getProspects() {

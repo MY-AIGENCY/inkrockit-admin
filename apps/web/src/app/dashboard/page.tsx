@@ -5,16 +5,24 @@ import { GlobalFilterBar } from '@/components/global-filter-bar';
 import { Card, CardContent, CardHeader, CardTitle } from '@inkrockit/ui';
 import { getOverviewMetrics, getSampleMetrics, getConversionMetrics, getRevenueMetrics } from '@/lib/server-api';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 function mapSeries(series: { label: string; value: number }[]) {
   return series.map((entry) => ({ label: entry.label, value: entry.value }));
 }
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  searchParams
+}: {
+  searchParams: Promise<{ stage?: string; region?: string }> | { stage?: string; region?: string }
+}) {
+  const params = await Promise.resolve(searchParams);
   const [overview, sampleMetrics, conversionMetrics, revenueSeries] = await Promise.all([
-    getOverviewMetrics(),
-    getSampleMetrics(),
-    getConversionMetrics(),
-    getRevenueMetrics(),
+    getOverviewMetrics(params),
+    getSampleMetrics(params),
+    getConversionMetrics(params),
+    getRevenueMetrics(params),
   ]);
 
   return (
