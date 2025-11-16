@@ -1,0 +1,103 @@
+services:
+  # MySQL Database for PHP App
+  mysql:
+    image: mysql:8.0
+    platform: linux/amd64
+    container_name: inkrockit_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-preprod}
+      MYSQL_USER: ${MYSQL_USER:-preprod_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-change-me}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root-password}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./ops/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    networks:
+      - inkrockit_network
+    command: --default-authentication-plugin=mysql_native_password
+
+  # PHP 7.4 with FPM for Main App
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    container_name: inkrockit_php
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./web:/var/www/html
+      - ./config/php-custom.ini:/usr/local/etc/php/conf.d/custom.ini:ro
+    networks:
+      - inkrockit_network
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-preprod}
+      MYSQL_USER: ${MYSQL_USER:-preprod_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-change-me}
+
+  # Express API for Analytics Dashboard
+  analytics_api:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile.api
+    container_name: inkrockit_analytics_api
+    restart: unless-stopped
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-preprod}
+      MYSQL_USER: ${MYSQL_USER:-preprod_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-change-me}
+      MYSQL_PORT: 3306
+      PORT: ${PORT:-4000}
+    ports:
+      - '4000:4000'
+    networks:
+      - inkrockit_network
+    depends_on:
+      - mysql
+
+  # Next.js Analytics Dashboard
+  analytics_web:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile.web
+    container_name: inkrockit_analytics_web
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://analytics_api:4000
+      NEXT_PUBLIC_BASE_PATH: /reports
+    ports:
+      - '3000:3000'
+    networks:
+      - inkrockit_network
+    depends_on:
+      - analytics_api
+
+  # Nginx Web Server - Main Gateway
+  nginx:
+    image: nginx:1.21-alpine
+    container_name: inkrockit_nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./web:/var/www/html:ro
+      - ./config/nginx-integrated.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - inkrockit_network
+    depends_on:
+      - php
+      - analytics_web
+
+networks:
+  inkrockit_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local

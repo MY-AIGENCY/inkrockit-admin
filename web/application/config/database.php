@@ -2,8 +2,16 @@
 
 defined('SYSPATH') OR die('No direct access allowed.');
 
-// Match GoDaddy config but with Ubuntu socket path
-if ($_SERVER['REMOTE_ADDR'] == '127.0.0.1' || $_SERVER['REMOTE_ADDR'] == '::1') {
+// Check if running in Docker (MYSQL_HOST environment variable is set)
+if (getenv('MYSQL_HOST')) {
+    // Docker development environment
+    $connection = array(
+        'dsn' => 'mysql:host=' . getenv('MYSQL_HOST') . ';dbname=' . getenv('MYSQL_DATABASE'),
+        'username' => getenv('MYSQL_USER'),
+        'password' => getenv('MYSQL_PASSWORD'),
+        'persistent' => FALSE,
+    );
+} elseif ($_SERVER['REMOTE_ADDR'] == '127.0.0.1' || $_SERVER['REMOTE_ADDR'] == '::1') {
     // Local development (not used on production server)
     $connection = array(
         'dsn' => 'mysql:unix_socket=/var/run/mysqld/mysqld.sock;dbname=preprod',
