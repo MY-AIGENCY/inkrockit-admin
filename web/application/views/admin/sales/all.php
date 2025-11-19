@@ -168,8 +168,20 @@
                                 ?>
                                 <tr data-id="<?= $val['id'] ?>" data-uid="<?= $val['user_id'] ?>" data-cid="<?= $val['company_id'] ?>" class="print_row" <?php
                                 if (!empty($val['order_data'])) {
-                                    $need_req = unserialize($val['order_data']);
-                                    if (in_array("Photo Frame", $need_req)){
+                                    // Handle both base64-encoded and plain serialized data
+                                    $order_data_to_unserialize = $val['order_data'];
+
+                                    // Check if data is base64-encoded
+                                    $decoded = base64_decode($val['order_data'], true);
+                                    if ($decoded !== false && base64_encode($decoded) === $val['order_data']) {
+                                        // It's valid base64, use decoded version
+                                        $order_data_to_unserialize = $decoded;
+                                    }
+
+                                    // Safely unserialize with error suppression
+                                    $need_req = @unserialize($order_data_to_unserialize);
+
+                                    if ($need_req !== false && is_array($need_req) && in_array("Photo Frame", $need_req)){
                                         echo 'style="background-color: #f7df65"';
                                     }
                                 }elseif ($val['ref_source'] == 'photoframepro.com') {
