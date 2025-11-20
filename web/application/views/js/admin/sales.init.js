@@ -961,16 +961,26 @@ $(function() {
             'prefix': prefix,
             'alt_num': alt_num
         }, function(data) {
+            console.log('AJAX success, received data:', data);
             //update main uid
             $('.task_details').prev().data('uid', job_user);
 
+            console.log('Closing modal...');
             $('.close_modal').trigger('click');
-            if (data.id) {
+            if (data && data.id) {
+                console.log('Adding job to menu:', data.id);
                 $('<li data-id="' + data.id + '" class="clickable"><a>' + data.id + '</a><span class="ui-icon ui-icon-pencil pointer marg_t5 edit_job" style="margin-right: 0">edit</span><span class="ui-icon ui-icon-close pointer marg_t5 remove_job">del</span></li>').insertAfter($('.job_menu li').first());
                 $('select[name=select_one_job],select[name=select_note_job],select[name=payment_job_id],select[name=ch_note_job]').append('<option value="' + data.id + '">' + data.id + '</option>');
+                console.log('Triggering click on new job...');
                 $('li[data-id="' + data.id + '"] a').trigger('click');
+            } else {
+                console.log('No data.id received, response:', data);
             }
-        }, 'json');
+            console.log('Callback complete');
+        }, 'json').fail(function(jqXHR, textStatus, errorThrown) {
+            console.error('AJAX failed:', textStatus, errorThrown, jqXHR.responseText);
+            alert('Error saving job. Please try again.');
+        });
     });
 
     $(document).on('keyup', 'input[name=job_abbr]', function() {
