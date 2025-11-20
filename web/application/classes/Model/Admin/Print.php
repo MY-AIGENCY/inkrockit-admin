@@ -1674,32 +1674,20 @@ class Model_Admin_Print extends Model_Print {
      */
 
     public function add_new_job($data) {
-        try {
-            file_put_contents('/tmp/add_new_job_debug.log', date('Y-m-d H:i:s') . " - Called with: " . json_encode($data) . "\n", FILE_APPEND);
-            $job = $data['job_abbr'] . '-' . $data['type'] . $data['num_job'] . $data['prefix'];
-            file_put_contents('/tmp/add_new_job_debug.log', "Generated job: $job\n", FILE_APPEND);
-
-            DB::sql('INSERT INTO user_jobs (user_id, company_id, job_id, estimate_id, order_total, payments, order_counts, edg) VALUES (:user_id, :company_id, :job_id, :estimate_id, :order_total, :payments, :order_counts, :edg)', array(
-                        ':user_id' => $data['job_user'],
-                        ':company_id' => $data['comp_id'],
-                        ':job_id' => $job,
-                        ':estimate_id' => '',
-                        ':order_total' => 0,
-                        ':payments' => 0,
-                        ':order_counts' => 0,
-                        ':edg' => 0
-            ));
-            file_put_contents('/tmp/add_new_job_debug.log', "INSERT completed\n", FILE_APPEND);
-
-            DB::sql('UPDATE users_company SET main_uid = :uid WHERE id=:cid', array(':uid' => $data['job_user'], ':cid' => $data['comp_id']));
-            DB::sql('UPDATE requests SET user_id = :uid WHERE company_id=:cid', array(':uid' => $data['job_user'], ':cid' => $data['comp_id']));
-            file_put_contents('/tmp/add_new_job_debug.log', "All queries completed, returning: $job\n", FILE_APPEND);
-            return $job;
-        } catch (Exception $e) {
-            file_put_contents('/tmp/add_new_job_debug.log', "ERROR: " . $e->getMessage() . "\n", FILE_APPEND);
-            file_put_contents('/tmp/add_new_job_debug.log', "Trace: " . $e->getTraceAsString() . "\n", FILE_APPEND);
-            throw $e;
-        }
+        $job = $data['job_abbr'] . '-' . $data['type'] . $data['num_job'] . $data['prefix'];
+        DB::sql('INSERT INTO user_jobs (user_id, company_id, job_id, estimate_id, order_total, payments, order_counts, edg) VALUES (:user_id, :company_id, :job_id, :estimate_id, :order_total, :payments, :order_counts, :edg)', array(
+                    ':user_id' => $data['job_user'],
+                    ':company_id' => $data['comp_id'],
+                    ':job_id' => $job,
+                    ':estimate_id' => '',
+                    ':order_total' => 0,
+                    ':payments' => 0,
+                    ':order_counts' => 0,
+                    ':edg' => 0
+        ));
+        DB::sql('UPDATE users_company SET main_uid = :uid WHERE id=:cid', array(':uid' => $data['job_user'], ':cid' => $data['comp_id']));
+        DB::sql('UPDATE requests SET user_id = :uid WHERE company_id=:cid', array(':uid' => $data['job_user'], ':cid' => $data['comp_id']));
+        return $job;
     }
 
     public function generate_new_job($cid, $check_abbr = '') {
