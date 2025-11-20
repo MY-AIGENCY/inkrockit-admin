@@ -1679,8 +1679,15 @@ class Model_Admin_Print extends Model_Print {
             $job = $data['job_abbr'] . '-' . $data['type'] . $data['num_job'] . $data['prefix'];
             file_put_contents('/tmp/add_new_job_debug.log', "Generated job: $job\n", FILE_APPEND);
 
-            DB::sql('INSERT INTO user_jobs (user_id, company_id, job_id, estimate_id) VALUES (:user_id, :company_id, :job_id, :estimate_id)', array(
-                        ':user_id' => $data['job_user'], ':company_id' => $data['comp_id'], ':job_id' => $job, ':estimate_id' => ''
+            DB::sql('INSERT INTO user_jobs (user_id, company_id, job_id, estimate_id, order_total, payments, order_counts, edg) VALUES (:user_id, :company_id, :job_id, :estimate_id, :order_total, :payments, :order_counts, :edg)', array(
+                        ':user_id' => $data['job_user'],
+                        ':company_id' => $data['comp_id'],
+                        ':job_id' => $job,
+                        ':estimate_id' => '',
+                        ':order_total' => 0,
+                        ':payments' => 0,
+                        ':order_counts' => 0,
+                        ':edg' => 0
             ));
             file_put_contents('/tmp/add_new_job_debug.log', "INSERT completed\n", FILE_APPEND);
 
