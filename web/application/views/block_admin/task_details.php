@@ -22,11 +22,9 @@
             }
             ?>
         </select>
-        <img src="/images/admin/<?= (empty($eye_company)) ? 'no_eye' : 'eye' ?>.png" class="eye_company_change" title="<?= (empty($eye_company)) ? 'Enable to be viewable in Active Customers tab' : 'Disable displaying at Active Customers tab' ?>">
-
+        <img src="/images/admin/<?= (empty($eye_company)) ? 'no_eye' : 'eye' ?>.png" class="eye_company_change" style="margin-right: 15px;" title="<?= (empty($eye_company)) ? 'Enable to be viewable in Active Customers tab' : 'Disable displaying at Active Customers tab' ?>">
+        <span class="add_job pointer" style="margin-left: 5px;">add job</span>
         <!--<span class="iconsweet add_job_manual">+</span>-->
-        <br>
-        <span class="add_job marg_r10 pointer">add job</span>
         <!--<span class="add_estimate pointer">add estimate</span>-->
 
     </div>
