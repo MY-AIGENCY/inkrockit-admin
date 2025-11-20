@@ -1,6 +1,6 @@
 <div class="jobs_id ui-tabs">
-    <div class="left" style="width: 9%">
-        <select name="select_one_job" style="min-width: 90px; width: 90px; margin-right: 10px;">
+    <div class="left" style="display: inline-block; white-space: nowrap; vertical-align: middle;">
+        <select name="select_one_job" style="min-width: 90px; width: 90px; margin-right: 10px; vertical-align: middle; display: inline-block;">
             <option value="">All</option>
             <?php
             if (!empty($job_id)) {
@@ -21,15 +21,10 @@
                 }
             }
             ?>
-        </select>
-        <img src="/images/admin/<?= (empty($eye_company)) ? 'no_eye' : 'eye' ?>.png" class="eye_company_change" style="margin-right: 15px; vertical-align: middle;" title="<?= (empty($eye_company)) ? 'Enable to be viewable in Active Customers tab' : 'Disable displaying at Active Customers tab' ?>">
-        <span class="add_job pointer" style="margin-right: 15px; vertical-align: middle;">add job</span>
+        </select><img src="/images/admin/<?= (empty($eye_company)) ? 'no_eye' : 'eye' ?>.png" class="eye_company_change" style="margin: 0 15px; vertical-align: middle; display: inline-block;" title="<?= (empty($eye_company)) ? 'Enable to be viewable in Active Customers tab' : 'Disable displaying at Active Customers tab' ?>"><span class="add_job pointer" style="margin-right: 20px; vertical-align: middle; display: inline-block;">add job</span>
         <!--<span class="iconsweet add_job_manual">+</span>-->
         <!--<span class="add_estimate pointer">add estimate</span>-->
-
-    </div>
-
-    <div class="jobs_list" style="display: inline-block; vertical-align: middle;">
+    </div><div class="jobs_list" style="display: inline-block; vertical-align: middle;">
         <ul class="job_menu ui-tabs-nav">
             <li data-id="" class="clickable <?php if (empty($current_job_id)) echo'ui-tabs-selected' ?>"><a>All</a></li>
             <?php
