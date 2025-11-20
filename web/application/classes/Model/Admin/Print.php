@@ -1674,13 +1674,25 @@ class Model_Admin_Print extends Model_Print {
      */
 
     public function add_new_job($data) {
-        $job = $data['job_abbr'] . '-' . $data['type'] . $data['num_job'] . $data['prefix'];
-        DB::sql('INSERT INTO user_jobs (user_id, company_id, job_id, estimate_id) VALUES (:user_id, :company_id, :job_id, :estimate_id)', array(
-                    ':user_id' => $data['job_user'], ':company_id' => $data['comp_id'], ':job_id' => $job, ':estimate_id' => ''
-        ));
-        DB::sql('UPDATE users_company SET main_uid = :uid WHERE id=:cid', array(':uid' => $data['job_user'], ':cid' => $data['comp_id']));
-        DB::sql('UPDATE requests SET user_id = :uid WHERE company_id=:cid', array(':uid' => $data['job_user'], ':cid' => $data['comp_id']));
-        return $job;
+        try {
+            file_put_contents('/tmp/add_new_job_debug.log', date('Y-m-d H:i:s') . " - Called with: " . json_encode($data) . "\n", FILE_APPEND);
+            $job = $data['job_abbr'] . '-' . $data['type'] . $data['num_job'] . $data['prefix'];
+            file_put_contents('/tmp/add_new_job_debug.log', "Generated job: $job\n", FILE_APPEND);
+
+            DB::sql('INSERT INTO user_jobs (user_id, company_id, job_id, estimate_id) VALUES (:user_id, :company_id, :job_id, :estimate_id)', array(
+                        ':user_id' => $data['job_user'], ':company_id' => $data['comp_id'], ':job_id' => $job, ':estimate_id' => ''
+            ));
+            file_put_contents('/tmp/add_new_job_debug.log', "INSERT completed\n", FILE_APPEND);
+
+            DB::sql('UPDATE users_company SET main_uid = :uid WHERE id=:cid', array(':uid' => $data['job_user'], ':cid' => $data['comp_id']));
+            DB::sql('UPDATE requests SET user_id = :uid WHERE company_id=:cid', array(':uid' => $data['job_user'], ':cid' => $data['comp_id']));
+            file_put_contents('/tmp/add_new_job_debug.log', "All queries completed, returning: $job\n", FILE_APPEND);
+            return $job;
+        } catch (Exception $e) {
+            file_put_contents('/tmp/add_new_job_debug.log', "ERROR: " . $e->getMessage() . "\n", FILE_APPEND);
+            file_put_contents('/tmp/add_new_job_debug.log', "Trace: " . $e->getTraceAsString() . "\n", FILE_APPEND);
+            throw $e;
+        }
     }
 
     public function generate_new_job($cid, $check_abbr = '') {
