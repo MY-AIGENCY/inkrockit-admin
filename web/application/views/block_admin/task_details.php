@@ -23,7 +23,7 @@
             ?>
         </select>
         <img src="/images/admin/<?= (empty($eye_company)) ? 'no_eye' : 'eye' ?>.png" class="eye_company_change" title="<?= (empty($eye_company)) ? 'Enable to be viewable in Active Customers tab' : 'Disable displaying at Active Customers tab' ?>">
-        <span class="add_job pointer">add job</span>
+        <span class="add_job pointer" style="background: #4CAF50; color: white; padding: 6px 12px; border-radius: 4px; border: 1px solid #45a049; white-space: nowrap; font-weight: 500;">Add Job</span>
         <!--<span class="iconsweet add_job_manual">+</span>-->
         <!--<span class="add_estimate pointer">add estimate</span>-->
     </div>
