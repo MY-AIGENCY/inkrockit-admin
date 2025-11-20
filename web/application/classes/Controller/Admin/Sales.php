@@ -801,6 +801,7 @@ class Controller_Admin_Sales extends Admin {
                 break;
         }
         if (!empty($rez)) {
+            header('Content-Type: application/json');
             echo json_encode($rez);
         } elseif (!empty($html_data)) {
             echo $html_data;

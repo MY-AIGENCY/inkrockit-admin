@@ -4,7 +4,7 @@ $(function() {
     $(".phone_num").mask("(999) 999-9999");
     $("#zip").mask("99999");
 
-    $('body').live('click', function() {
+    $(document).on('click', 'body', function() {
         $('.aval_company_users').hide();
         $('.edit_industry').remove();
     });
@@ -13,7 +13,7 @@ $(function() {
     /*
      *  Load task details for /admin/sales/all
      */
-    $('.load_tasks').live('click', function(e) {
+    $(document).on('click', '.load_tasks', function(e) {
         var $this = $(this),
                 id = $this.parent().data('id'),
                 uid = $this.parent().data('uid'),
@@ -76,7 +76,7 @@ $(function() {
     });
 
     //Load Users
-    $('.show_users').live('click', function() {
+    $(document).on('click', '.show_users', function() {
         var $this = $(this),
                 req_id = $(this).parents('tr').data('id');
         $.post('/admin/users/ajax', {
@@ -94,7 +94,7 @@ $(function() {
     });
 
     //update user - from company Job list
-    $('.edit_this_user').live('click', function() {
+    $(document).on('click', '.edit_this_user', function() {
         var $this = $(this);
         $.post('/admin/users/ajax', {
             'func': 'edit_user_form',
@@ -106,7 +106,7 @@ $(function() {
         });
     });
 
-    $('button[name=user_fast_update]').live('click', function() {
+    $(document).on('click', 'button[name=user_fast_update]', function() {
         var $this = $(this),
                 first_name = $this.parent().find('input[name=first_name]').val(),
                 last_name = $this.parent().find('input[name=last_name]').val(),
@@ -143,7 +143,7 @@ $(function() {
     });
 
     //remove user - from company Job list
-    $('.remove_this_user').live('click', function() {
+    $(document).on('click', '.remove_this_user', function() {
         var $this = $(this),
                 uid = $this.parent('li').data('id');
         if (confirm('Remove this user with all connected data?')) {
@@ -162,7 +162,7 @@ $(function() {
     });
 
     //select other user
-    $('select[name=select_comp_user]').live('change', function() {
+    $(document).on('change', 'select[name=select_comp_user]', function() {
         var $this = $(this),
                 req_id = $this.parents('tr').data('id'),
                 user_id = $this.val(),
@@ -200,24 +200,24 @@ $(function() {
         }
     });
 
-    $('input[name=additional_email]').live('change', function() {
+    $(document).on('change', 'input[name=additional_email]', function() {
         var val = $(this).val();
         $(this).parents('.additional_email').find('.v2').html('<a href="mailto:' + val + '">' + val + '</a>');
     });
 
-    $('input[name=additional_phone]').live('change', function() {
+    $(document).on('change', 'input[name=additional_phone]', function() {
         $(this).parents('.additional_phone').find('.v2').html($(this).val());
     });
 
     //add user form
-    $('button[name=add_user_form]').live('click', function() {
+    $(document).on('click', 'button[name=add_user_form]', function() {
         $(this).hide();
         $('button[name=sel_user_form]').show();
         $('.sel_user').hide();
         $('.add_user').show();
     });
     //select users form
-    $('button[name=sel_user_form]').live('click', function() {
+    $(document).on('click', 'button[name=sel_user_form]', function() {
         $(this).hide();
         $('button[name=add_user_form]').show();
         $('.sel_user').show();
@@ -226,7 +226,7 @@ $(function() {
 
 
     //Fast add user to company
-    $('button[name=user_fast_add]').live('click', function() {
+    $(document).on('click', 'button[name=user_fast_add]', function() {
         var $this = $(this),
                 fname = $this.parent().find('input[name=first_name]').val(),
                 lname = $this.parent().find('input[name=last_name]').val(),
@@ -268,7 +268,7 @@ $(function() {
         }
     });
 
-    $('button[name=user_fast_close]').live('click', function() {
+    $(document).on('click', 'button[name=user_fast_close]', function() {
         $(this).parents('.aval_company_users').hide();
         $(this).parents('.aval_company_users').html('');
     });
@@ -293,7 +293,7 @@ $(function() {
     /*
      * Samples collection. Close samples modal window in /admin/sales/all
      */
-    $('input[name=close_edit]').live('click', function() {
+    $(document).on('click', 'input[name=close_edit]', function() {
         $(this).parents('.edit_industry').remove();
         $('.iconsweet.right').css('opacity', 0);
     });
@@ -301,7 +301,7 @@ $(function() {
     /*
      * Samples collection. Change checkbox with industry category - show products
      */
-    $('.edit_industry input[name=industry_item]').live('change', function() {
+    $(document).on('change', '.edit_industry input[name=industry_item]', function() {
         $('.edit_industry label.active').removeClass('active');
         $(this).parent().addClass('active');
         $('input[name=industry_collection]').removeAttr('checked');
@@ -353,14 +353,14 @@ $(function() {
     /*
      * stopPropagation for click by main sample collection modal window
      */
-    $('.edit_industry').live('click', function(e) {
+    $(document).on('click', '.edit_industry', function(e) {
         e.stopPropagation();
     });
 
     /*
      * Samples collection. Change product selection
      */
-    $('input[name=ind_item_need]').live('change', function() {
+    $(document).on('change', 'input[name=ind_item_need]', function() {
         var $this = $(this),
                 id = $this.val(),
                 type_index = $this.data('type'),
@@ -381,7 +381,7 @@ $(function() {
     /*
      * Samples collection. Save collection/items
      */
-    $('input[name=save_industry_items]').live('click', function() {
+    $(document).on('click', 'input[name=save_industry_items]', function() {
         var req_id = $(this).parents('.print_row').data('id'),
                 industry_title = $('.print_row[data-id="' + req_id + '"]').find('.industry_title');
         industry_title.html('<img src="/images/admin/table-loader.gif" class="load">');
@@ -401,7 +401,7 @@ $(function() {
     /*
      * Task details. Add new note to request
      */
-    $('#add_new_note').live('click', function() {
+    $(document).on('click', '#add_new_note', function() {
         var note_text = $('textarea[name=new_note]').val(),
                 id = $('input[name=request_id]').val(),
                 type = $('select[name=type]').val(),
@@ -457,7 +457,7 @@ $(function() {
     /*
      * Task details -> Notes. Answer to required message
      */
-    $('select[name=required_ansver]').live('change', function() {
+    $(document).on('change', 'select[name=required_ansver]', function() {
         var $this = $(this),
                 val = $this.val();
         if (val == 'resolved') {
@@ -475,7 +475,7 @@ $(function() {
     /*
      * Save reassign request
      */
-    $('input[name=save_required_req]').live('click', function() {
+    $(document).on('click', 'input[name=save_required_req]', function() {
         var types = $(this).parents('.required_block').find('select[name=required_ansver]').val(),
                 text = $(this).parents('.required_block').find('textarea[name=required_text]').val(),
                 uid = $(this).parents('.required_block').find('select[name=reassign_uid]').val(),
@@ -511,7 +511,7 @@ $(function() {
     /*
      * Task details. Send email to client
      */
-    $('.send_client_message').live('click', function() {
+    $(document).on('click', '.send_client_message', function() {
         var subj = $('input[name=mess_subject]').val(),
                 text = $('textarea[name=mess_message]').val(),
                 email = $(this).data('email'),
@@ -538,7 +538,7 @@ $(function() {
     /*
      * Task details. Load task details with filter by User type/Job Id
      */
-    $('.job_menu li, .user_type, .buttons span').live('click', function(e) {
+    $(document).on('click', '.job_menu li, .user_type, .buttons span', function(e) {
         var $this = $(this),
                 id = $this.parents('.task_details').prev().data('id'),
                 uid = $this.parents('.task_details').prev().data('uid'),
@@ -633,7 +633,7 @@ $(function() {
     /*
      * Task details. Edit Job title
      */
-    $('.job_menu .edit_job').live('click', function(e) {
+    $(document).on('click', '.job_menu .edit_job', function(e) {
         var comp_id = $(this).parents('.task_details').prev().data('cid'),
                 job_id = $(this).parents('.clickable').data('id');
         $('.modal_bg').show();
@@ -653,7 +653,7 @@ $(function() {
         e.stopPropagation();
     });
 
-    $('input[name=edit_current_num]').live('click', function() {
+    $(document).on('click', 'input[name=edit_current_num]', function() {
         var type = $('select[name=job_type]').val(),
                 job_abbr = $('input[name=edit_job_abbr]').val(),
                 num_job = $('input[name=edit_num_job]').val(),
@@ -707,14 +707,14 @@ $(function() {
     /*
      * Task details. stopPropagation for job id edit field
      */
-    $('.job_menu input[name=edit_job]').live('click', function(e) {
+    $(document).on('click', '.job_menu input[name=edit_job]', function(e) {
         e.stopPropagation();
     });
 
     /*
      * Task details. Update Job title
      */
-    $('.job_menu .ui-icon-check').live('click', function(e) {
+    $(document).on('click', '.job_menu .ui-icon-check', function(e) {
         var $this = $(this),
                 text = $('.job_menu input[name=edit_job]').val();
         $.post('/admin/sales/ajax', {
@@ -731,7 +731,7 @@ $(function() {
     /*
      * Task details. Remove Job
      */
-    $('.job_menu .remove_job').live('click', function() {
+    $(document).on('click', '.job_menu .remove_job', function() {
         var parent = $(this).parent();
         if (confirm('Remove this Job?')) {
             $.post('/admin/sales/ajax', {
@@ -753,7 +753,7 @@ $(function() {
     /*
      * Add alternative email/phone
      */
-    $('.add_alternative').live('click', function() {
+    $(document).on('click', '.add_alternative', function() {
         var type = $(this).data('type');
         if (type === 'email') {
             $('.alt_' + type + '_block').append('<div><label>&nbsp;</label><input type="text" name="' + type + '_alt[]" value=""> <span class="iconsweet rem_alternative">-</span><br class="clear"></div>');
@@ -766,7 +766,7 @@ $(function() {
     /*
      * Remove alternative
      */
-    $('.rem_alternative').live('click', function() {
+    $(document).on('click', '.rem_alternative', function() {
         $(this).parent().remove();
     });
 
@@ -775,7 +775,7 @@ $(function() {
     /*
      * Task details. Show edit note form
      */
-    $('.edit_note').live('click', function() {
+    $(document).on('click', '.edit_note', function() {
         var $this = $(this),
                 $parent = $this.parent(),
                 id = $this.data('id'),
@@ -801,7 +801,7 @@ $(function() {
     /*
      * Task details. Delete note
      */
-    $('.del_note').live('click', function() {
+    $(document).on('click', '.del_note', function() {
         var $this = $(this),
                 id = $this.data('id');
         if (confirm('Remove this note?')) {
@@ -823,7 +823,7 @@ $(function() {
     /*
      * Task details. Cancel edit note without saving
      */
-    $('.cancel_note').live('click', function() {
+    $(document).on('click', '.cancel_note', function() {
         $('.clickable.ui-tabs-selected').trigger('click');
 //        var $this = $(this),
 //                $parent = $this.parents('.line'),
@@ -846,7 +846,7 @@ $(function() {
     /*
      * Task details. Update note
      */
-    $('.save_note').live('click', function() {
+    $(document).on('click', '.save_note', function() {
         var $this = $(this),
                 $parent = $this.parents('.line'),
                 id = $this.data('id'),
@@ -887,7 +887,7 @@ $(function() {
     /*
      * Task details. Restore removed note
      */
-    $('.restore_note').live('click', function() {
+    $(document).on('click', '.restore_note', function() {
         var $this = $(this),
                 id = $this.data('id');
         $.post('/admin/sales/ajax', {
@@ -904,7 +904,7 @@ $(function() {
     /*
      * Task details. When note is required
      */
-    $('input[name=note_required]').live('change', function() {
+    $(document).on('change', 'input[name=note_required]', function() {
         if ($(this).is(':checked')) {
             $('select[name=assign_to],.assign_to').show();
         } else {
@@ -1043,7 +1043,7 @@ $(function() {
     /*
      * Task details. Change select with jobs list
      */
-    $('select[name=select_one_job]').live('change', function() {
+    $(document).on('change', 'select[name=select_one_job]', function() {
         var val = $(this).val();
         $('li[data-id="' + val + '"]').trigger('click');
     });
@@ -1051,7 +1051,7 @@ $(function() {
     /*
      * Task details -> add note. Change select with note type
      */
-    $('.tasks_table select[name=type]').live('change', function() {
+    $(document).on('change', '.tasks_table select[name=type]', function() {
         var val = $(this).val();
         $('.date_time').mask('9999-99-99 99:99:00');
         if (val == 'payment' || val == 'credit') {
@@ -1067,7 +1067,7 @@ $(function() {
     /*
      * Task details -> Credit cards. Add credit card form
      */
-    $('.add_credit_card').live('click', function() {
+    $(document).on('click', '.add_credit_card', function() {
 
         if ($('.card_add_form').is(':visible')) {
             $('.cancel_save_card').trigger('click');
@@ -1129,7 +1129,7 @@ $(function() {
         }, 'json');
     }
 
-    $('.sel_list').live('change', function() {
+    $(document).on('change', '.sel_list', function() {
         var text = $(this).find('.ok').html(),
                 id = $(this).find('.ok').data('id');
         $('.sel_arrows').html(text);
@@ -1207,7 +1207,7 @@ $(function() {
         }
     }
 
-    $('input[name^=billing_]').live('keyup', function() {
+    $(document).on('keyup', 'input[name^=billing_]', function() {
         var show = false;
         $.each($('input[name^=billing_]'), function() {
             if ($(this).val()) {
@@ -1227,7 +1227,7 @@ $(function() {
     /*
      * Task details -> Credit cards. Clear billing fields
      */
-    $('.clear_billing').live('click', function(e) {
+    $(document).on('click', '.clear_billing', function(e) {
         $('.left_col:visible').find('input[type=text]').val('');
         $('.ok').removeClass('ok');
         $('.sel_arrows').html('');
@@ -1333,7 +1333,7 @@ $(function() {
     });
 
 
-    $('.clear_shipping').live('click', function() {
+    $(document).on('click', '.clear_shipping', function() {
         $('input[name^=shipping_]:visible').val('');
         $('.ok').removeClass('ok');
         $('.sel_arrows').html('');
@@ -1342,7 +1342,7 @@ $(function() {
         $('.right_col > div').show();
     });
 
-    $('input[name^=shipping_]').live('keyup', function() {
+    $(document).on('keyup', 'input[name^=shipping_]', function() {
         $('.shipp_add_contact').show();
         $('.right_col:visible > div').hide();
         if ($('.shipping_selector .ok').length > 0) {
@@ -1353,7 +1353,7 @@ $(function() {
     });
 
     //Update Shipping info
-    $('.shipp_update_contact').live('click', function() {
+    $(document).on('click', '.shipp_update_contact', function() {
         $('.right_col > div').show();
         $('.shipp_add_contact, .shipp_update_contact').hide();
         var id = $('.shipping_selector .ok').data('id');
@@ -1384,7 +1384,7 @@ $(function() {
     });
 
     //Add Shipping info
-    $('.shipp_add_contact').live('click', function() {
+    $(document).on('click', '.shipp_add_contact', function() {
         $('.modal_bg').show();
         $('.modal_bg .loading').hide();
         $('.modal_bg .contents').html('<p><h3>Adding Shipping Information</h3><br><span style="color: red">Add this Shipping address to Contact Profile (Backend only).</span><br><br><label>View as:</label> <input type="text" name="shipping_title" style="width: 50%">\n\
@@ -1392,7 +1392,7 @@ $(function() {
          <button class="button_small whitishBtn close_shipping_form">Cancel</button><button class="button_small dblueBtn confirm_save_shipping">Add</button></p><span class="err_save error"></span><br>');
     });
 
-    $('.confirm_save_shipping').live('click', function() {
+    $(document).on('click', '.confirm_save_shipping', function() {
         var data = {};
         data.job_id = $('select[name=payment_job_id]').val();
         data.company = $('input[name=shipping_company]').val();
@@ -1427,14 +1427,14 @@ $(function() {
         }, 'json');
     });
 
-    $('.close_shipping_form').live('click', function() {
+    $(document).on('click', '.close_shipping_form', function() {
         $('.close_modal').trigger('click');
     });
 
     /*
      * Task details -> Credit cards. Add new Credit Card for user
      */
-    $('.save_card').live('click', function() {
+    $(document).on('click', '.save_card', function() {
         var parent = $(this).parent(),
                 cc_number = parent.find('input[name="card_number"]').val(),
                 cc_ccv = parent.find('input[name=cc_ccv]').val(),
@@ -1479,10 +1479,10 @@ $(function() {
     /*
      * Task details -> disable propagation click by name.
      */
-    $('.aval_company_users').live('click', function(e) {
+    $(document).on('click', '.aval_company_users', function(e) {
         e.stopPropagation();
     });
-    $('.tasks_table, .jobs_list').live('click', function() {
+    $(document).on('click', '.tasks_table, .jobs_list', function() {
         $('.aval_company_users').hide();
         if ($('.edit_industry:visible').length > 0) {
             $('.edit_industry').find('input[type=button][value="Save"]').trigger('click');
@@ -1495,7 +1495,7 @@ $(function() {
     /*
      * Task details -> Credit cards. Close Add credit card form without saving
      */
-    $('.cancel_save_card').live('click', function() {
+    $(document).on('click', '.cancel_save_card', function() {
         $('.card_add_form').hide();
         $('.card_add_form input').val('');
         $('.card_err').text('');
@@ -1504,7 +1504,7 @@ $(function() {
         $('.save_billing_changes').hide();
     });
 
-    $('.cancel_edit_card').live('click', function() {
+    $(document).on('click', '.cancel_edit_card', function() {
         $('.card_edit_form').hide();
         $('.card_edit_form input').val('');
         $('.card_err').text('');
@@ -1514,7 +1514,7 @@ $(function() {
     /*
      * Task details -> Credit cards. Close Process credit card form
      */
-    $('.cancel_process_card').live('click', function() {
+    $(document).on('click', '.cancel_process_card', function() {
         $('.card_process_form input').val('');
         $('.card_process_form input[name=charge]').trigger('keyup');
         $('textarea[name=description]').val('');
@@ -1523,7 +1523,7 @@ $(function() {
         $('input[name=edg]').removeAttr('checked');
     });
 
-    $('input[name=set_card_default]').live('change', function() {
+    $(document).on('change', 'input[name=set_card_default]', function() {
         $.post('/admin/sales/ajax', {
             'func': 'set_card_default',
             'id': $(this).val()
@@ -1558,7 +1558,7 @@ $(function() {
         }
     }
 
-    $('input[name=card_number]').live('keyup', function() {
+    $(document).on('keyup', 'input[name=card_number]', function() {
         var $this = $(this),
                 nums = $this.val();
         num = $.trim(nums.replace(/\D/g, ''));
@@ -1591,11 +1591,11 @@ $(function() {
     });
 
     //user adress my select
-    $('.sel_selected').live('click', function() {
+    $(document).on('click', '.sel_selected', function() {
         $('.sel_list').show();
     });
 
-    $('.sel_list li').live('click', function() {
+    $(document).on('click', '.sel_list li', function() {
         $('.sel_list .ok').removeClass('ok');
         $(this).addClass('ok');
         $('.sel_arrows').html($(this).html());
@@ -1618,7 +1618,7 @@ $(function() {
     /*
      * Task details -> Credit cards. Open Process credit card form
      */
-    $('.card_process').live('click', function() {
+    $(document).on('click', '.card_process', function() {
         var $this = $(this),
                 id = $this.data('id'),
                 title = $this.parent().parent().find('strong').text();
@@ -1692,7 +1692,7 @@ $(function() {
     /*
      * Task details -> Credit cards. Delete note from payment history
      */
-    $('.del_payment').live('click', function() {
+    $(document).on('click', '.del_payment', function() {
         var $this = $(this),
                 id = $this.data('id');
 
@@ -1717,17 +1717,17 @@ $(function() {
      * Task details -> Credit cards. Process new payment for credit card
      */
 
-    $('.tooltip span').live('click', function(e) {
+    $(document).on('click', '.tooltip span', function(e) {
         e.stopPropagation();
     });
-    $('.tooltip').live('click', function(e) {
+    $(document).on('click', '.tooltip', function(e) {
         $(this).find('span').fadeIn();
     });
     $('body').on('click', function() {
         $('.tooltip span').hide();
     });
 
-    $('.process_card').live('click', function() {
+    $(document).on('click', '.process_card', function() {
         var $this = $(this),
                 parent = $this.parents('form'),
                 charge = $('input[name=charge]').val(),
@@ -1779,7 +1779,7 @@ $(function() {
     /*
      * Edit order total
      */
-    $('.edit_order_total').live('click', function() {
+    $(document).on('click', '.edit_order_total', function() {
         var job = $('.clickable.ui-tabs-selected a').text();
         $('.modal_bg').show();
         $('.modal_bg .loading').hide();
@@ -1788,7 +1788,7 @@ $(function() {
          <button class="button_small whitishBtn close_shipping_form">Cancel</button><button class="button_small dblueBtn confirm_change_order_total">Change</button></p><span class="err_save error"></span><br>');
     });
 
-    $('.confirm_change_order_total').live('click', function() {
+    $(document).on('click', '.confirm_change_order_total', function() {
         var text = $('textarea[name=reason_text]').val(),
                 summ = parseFloat($('input[name=new_total_summ]').val());
 
@@ -1814,13 +1814,13 @@ $(function() {
     /*
      * Task details -> Credit cards. Change edg field
      */
-    $('input[name=edg]').live('change', function() {
+    $(document).on('change', 'input[name=edg]', function() {
         if ($('input[name=edg]:checked').val() == 1) {
             $('input[name=payment_type][value="100"]').trigger('click');
         }
     });
 
-    $('.credit_payment').live('click', function(e) {
+    $(document).on('click', '.credit_payment', function(e) {
         $('.modal_bg').show();
         $.post('/admin/sales/ajax', {
             'func': 'get_credit_form',
@@ -1833,7 +1833,7 @@ $(function() {
         e.stopPropagation();
     });
 
-    $('button[name=run_credit]').live('click', function() {
+    $(document).on('click', 'button[name=run_credit]', function() {
         var amount = $('input[name=credit_amount]').val(),
                 note = $('textarea[name=credit_note]').val();
         $('.error').text('');
@@ -1869,17 +1869,17 @@ $(function() {
     /*
      * Task details -> Credit cards. Show saving link for credit card if change 
      */
-    $('input[name^=card_], input[name^=full_card_name],input[name^=cc_date],input[name^=cc_ccv],input[name^=full_user_name]').live('keyup', function(e) {
+    $(document).on('keyup', 'input[name^=card_], input[name^=full_card_name],input[name^=cc_date],input[name^=cc_ccv],input[name^=full_user_name]', function(e) {
         if (!e.isTrigger && !$('.save_billing_changes').is(':visible')) {
             $('.save_changed_info').show();
         }
     });
-    $('input[name^=billing_]').live('keyup', function(e) {
+    $(document).on('keyup', 'input[name^=billing_]', function(e) {
         if (!e.isTrigger) {
             $('.save_changed_info').hide();
         }
     });
-    $('input[name=set_default]').live('click', function(e) {
+    $(document).on('click', 'input[name=set_default]', function(e) {
         if (!$('.save_billing_changes').is(':visible')) {
             $('.save_changed_info').show();
         }
@@ -1888,7 +1888,7 @@ $(function() {
     /*
      * Task details -> Credit cards. Save changes in credit card
      */
-    $('.save_changed_info').live('click', function() {
+    $(document).on('click', '.save_changed_info', function() {
         var $this = $(this),
                 id = $this.data('id');
 
@@ -1913,7 +1913,7 @@ $(function() {
         }
     });
 
-    $('input[name=credit_amount]').live('keyup', function() {
+    $(document).on('keyup', 'input[name=credit_amount]', function() {
         if (parseFloat($(this).val()) > parseFloat($('.order_totals').text())) {
             $(this).val(parseFloat($('.order_totals').text()));
             $(this).css('background', '#ffaaaa').css('border', '1px solid red');
@@ -1925,7 +1925,7 @@ $(function() {
     /*
      * Task details -> Credit cards. Delete credit card for user
      */
-    $('.card_delete').live('click', function() {
+    $(document).on('click', '.card_delete', function() {
         var $this = $(this),
                 id = $this.data('id');
         if (confirm('Remove Credit Card?')) {
@@ -1945,7 +1945,7 @@ $(function() {
     });
 
     //Change charge
-    $('input[name=charge]').live('keyup', function() {
+    $(document).on('keyup', 'input[name=charge]', function() {
         if ($('input[name=balance_user]').length > 0) {
             if (parseInt($(this).val()) > parseInt($('input[name=balance_user]').val())) {
                 $(this).val($('input[name=balance_user]').val())
@@ -2007,7 +2007,7 @@ $(function() {
 //        }
     }
 
-    $('input[name=charge]').live('keyup', function() {
+    $(document).on('keyup', 'input[name=charge]', function() {
         var val = parseInt($(this).val()),
                 total = $('input[name=order_total]').val();
         if (val) {
@@ -2036,14 +2036,14 @@ $(function() {
     /*
      * Task details -> Credit cards. Calculate amaunt by changinf total field
      */
-    $('input[name=order_total]').live('keyup', function() {
+    $(document).on('keyup', 'input[name=order_total]', function() {
         calck_amount();
     });
 
     /*
      * Task details -> Credit cards. Calculate amaunt by changing payment type
      */
-    $('input[name=payment_type]').live('change', function() {
+    $(document).on('change', 'input[name=payment_type]', function() {
         calck_amount();
         $('input[name=charge]').trigger('keyup');
     });
@@ -2051,7 +2051,7 @@ $(function() {
     /*
      * Task details -> Credit cards. If we change charge, set payment type as installment
      */
-    $('input[name=charge]').live('keyup', function(e) {
+    $(document).on('keyup', 'input[name=charge]', function(e) {
         if (e.keyCode >= 9 && e.keyCode <= 45) {
             return false;
         }
@@ -2062,7 +2062,7 @@ $(function() {
     /*
      * Task details -> Credit cards. Show card details when we click on card number
      */
-    $('.show_card_details').live('click', function() {
+    $(document).on('click', '.show_card_details', function() {
         var id = $(this).data('id'),
                 inf1 = $.trim($(this).parent().find('.show_card_details .view_as').html()),
                 inf2 = $.trim($(this).parent().find('.show_card_details .view_as').next().html());
@@ -2189,16 +2189,17 @@ $(function() {
     /*
      * Additional email/phone action
      */
-    $('.industry_field,.additional_phone,.additional_email').live('mouseenter', function() {
+    $(document).on('mouseenter', '.industry_field,.additional_phone,.additional_email', function() {
         $(this).find('.iconsweet.right').css('opacity', 1);
-    }).live('mouseleave', function() {
+    });
+    $(document).on('mouseleave', '.industry_field,.additional_phone,.additional_email', function() {
         $(this).find('.iconsweet.right').css('opacity', 0);
     });
 
     /*
      * Show additional email/phone form
      */
-    $('.additional_phone .iconsweet, .additional_email .iconsweet').live('click', function(e) {
+    $(document).on('click', '.additional_phone .iconsweet, .additional_email .iconsweet', function(e) {
         $('.aval_company_users').hide();
         $('.edit_industry').remove();
 
@@ -2219,7 +2220,7 @@ $(function() {
     /*
      * Add fast additional fields
      */
-    $('.add_fast_additional').live('click', function() {
+    $(document).on('click', '.add_fast_additional', function() {
         var type = $(this).data('type');
         if (type === 'email') {
             $('<div class="all_additional" data-type="email"><input type="text" name="addtional_email" value=""><br class="clear"></div>').insertAfter($(this).parent().find('.all_additional:last'));
@@ -2232,7 +2233,7 @@ $(function() {
     /*
      * Save additional email/phone
      */
-    $('input[name=save_additional_phone], input[name=save_additional_email]').live('click', function() {
+    $(document).on('click', 'input[name=save_additional_phone], input[name=save_additional_email]', function() {
         var $this = $(this),
                 type = ($this.is('input[name=save_additional_phone]')) ? 'phone' : 'email',
                 func = $this.attr('name'),
@@ -2280,7 +2281,7 @@ $(function() {
     });
 
     // Samples Collection. Create content pack from items form
-    $('input[name=create_content]').live('click', function() {
+    $(document).on('click', 'input[name=create_content]', function() {
         $('.sel_products').html('<img src="/images/admin/table-loader.gif" class="load">');
         $('.edit_industry').addClass('details');
         $('.nav_buttons').hide();
@@ -2297,7 +2298,7 @@ $(function() {
     /*
      * Samples Collection. Create content pack from items save
      */
-    $('input[name=save_new_content]').live('click', function() {
+    $(document).on('click', 'input[name=save_new_content]', function() {
         var name = $('input[name=content_name]').val(),
                 checked = $('input.ind_new:checked').serialize();
         if (!name) {
@@ -2332,7 +2333,7 @@ $(function() {
     /*
      * Samples Collection. Show saved content packs
      */
-    $('.saved_button').live('click', function() {
+    $(document).on('click', '.saved_button', function() {
         if ($('.content_industry_list').is('.hide')) {
             $('.content_industry_list').removeClass('hide');
             $('.collections').addClass('hide');
@@ -2347,7 +2348,7 @@ $(function() {
     /*
      * Samples Collection. Fast Search by items
      */
-    $('input[name=content_search]').live('keyup', function() {
+    $(document).on('keyup', 'input[name=content_search]', function() {
         var val = $(this).val();
         $.each($('.one_item'), function() {
             if ($(this).find('.title').text().toLowerCase().indexOf(val.toLowerCase()) != '-1') {
@@ -2367,21 +2368,21 @@ $(function() {
     /*
      * Samples Collection. Fast Search by items
      */
-    $('input[name=content_search]').live('click', function() {
+    $(document).on('click', 'input[name=content_search]', function() {
         $(this).trigger('keyup');
     });
 
     /*
      * Fedex labels Print button
      */
-    $('.print_button').live('click', function() {
+    $(document).on('click', '.print_button', function() {
         $(this).text('Printed');
     });
 
     /*
      * Samples Collection. Check saved collection, show items inside
      */
-    $('input[name=industry_collection]').live('change', function() {
+    $(document).on('change', 'input[name=industry_collection]', function() {
         var id = $(this).val();
         $('input[name=industry_item]').removeAttr('checked');
         $.post('/admin/sales/ajax', {
@@ -2396,7 +2397,7 @@ $(function() {
     /*
      * Samples Collection. Change selected items in collection 
      */
-    $('input.ind_new').live('change', function() {
+    $(document).on('change', 'input.ind_new', function() {
         var $this = $(this),
                 id = $this.val(),
                 type_index = $this.data('type'),
@@ -2423,7 +2424,7 @@ $(function() {
     /*
      * Samples Collection. Remove collection
      */
-    $('.remove_collection').live('click', function() {
+    $(document).on('click', '.remove_collection', function() {
         var id = $(this).data('id');
         if (confirm('Remove content?')) {
             $(this).parents('label').remove();
@@ -2437,7 +2438,7 @@ $(function() {
     /*
      * Samples Collection. Cancel adding new content without saving
      */
-    $('input[name=cancel_new_content]').live('click', function() {
+    $(document).on('click', 'input[name=cancel_new_content]', function() {
         $('.new_ind_form').html('<input type="button" name="create_content" value="+ Create Content">');
         $('.nav_buttons').show();
         $('.edit_industry').removeClass('details');
@@ -2450,7 +2451,7 @@ $(function() {
     /* 
      * Advanced search. Search "Data entry" filter 
      */
-    $('input[name=print_filter]').live('change', function() {
+    $(document).on('change', 'input[name=print_filter]', function() {
         var val = $(this).val();
         $('.search_menu input[type=checkbox]').removeAttr('checked');
         $('.disable_advanced_search').attr('checked', 'checked');
@@ -2480,7 +2481,7 @@ $(function() {
     /*
      * Task details. Change user types (processed,revision)
      */
-    $('input[name=set_user_processed], input[name=set_user_revision]').live('change', function() {
+    $(document).on('change', 'input[name=set_user_processed], input[name=set_user_revision]', function() {
         var val = ($(this).is(':checked')) ? 1 : 0;
         var type = $(this).data('type');
 
@@ -2495,7 +2496,7 @@ $(function() {
     /*
      * Advanced search. Clear date field
      */
-    $('.clear_search_date').live('click', function() {
+    $(document).on('click', '.clear_search_date', function() {
         $(this).hide();
         $('input[name=datepick_hide]').val('');
         $('input[name=datepick]').val('');
@@ -2506,12 +2507,12 @@ $(function() {
     /*
      * Scroll tasks
      */
-    $('.job_slider .left_arrow').live('click', function() {
+    $(document).on('click', '.job_slider .left_arrow', function() {
         $('.job_menu').animate({
             left: '0'
         }, 500);
     });
-    $('.job_slider .right_arrow').live('click', function() {
+    $(document).on('click', '.job_slider .right_arrow', function() {
         $('.job_menu').css('left', 'auto').css('right', 0);
     });
 
@@ -2589,7 +2590,7 @@ $(function() {
      * Enter credit card - separate fields
      */
 
-    $('.edit_user_address').live('click', function() {
+    $(document).on('click', '.edit_user_address', function() {
         $('.edit_user_address_form').show();
         $(".phone").mask("(999) 999-9999");
         $(".zip").mask("99999");
@@ -2599,7 +2600,7 @@ $(function() {
     /*
      * Close Job modal window
      */
-    $('input[name=close_modal_window]').live('click', function() {
+    $(document).on('click', 'input[name=close_modal_window]', function() {
         $('.close_modal').trigger('click');
     });
 
@@ -2613,7 +2614,7 @@ $(function() {
         $('.loading').show();
     });
 
-    $('input[name=save_user_address_form]').live('click', function() {
+    $(document).on('click', 'input[name=save_user_address_form]', function() {
         var $this = $(this),
                 fname = $('input[name=addr_first_name]').val(),
                 lname = $('input[name=addr_last_name]').val(),
@@ -2652,12 +2653,12 @@ $(function() {
         }, 'json');
     });
 
-    $('input[name=cancel_user_address_form]').live('click', function() {
+    $(document).on('click', 'input[name=cancel_user_address_form]', function() {
         $('.edit_user_address_form').hide();
         $('.edit_user_address_form').prev().show();
     });
 
-    $('.edit_user_address_form input').live('keyup', function() {
+    $(document).on('keyup', '.edit_user_address_form input', function() {
         $(this).parent().find('input[name=save_user_address_form]').show();
     });
 
@@ -2678,7 +2679,7 @@ $(function() {
 
     });
 
-    $('.eye_company_change').live('click', function() {
+    $(document).on('click', '.eye_company_change', function() {
         var $this = $(this),
                 active = '/images/admin/eye.png',
                 not_active = '/images/admin/no_eye.png',
@@ -2707,7 +2708,7 @@ $(function() {
         }, 'json');
     });
 
-    $('.show_trans_details').live('click', function() {
+    $(document).on('click', '.show_trans_details', function() {
         $('.show_trans_details').removeAttr('style');
         if (!$(this).next().is(':visible')) {
             $('.trans_details').hide();
