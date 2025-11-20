@@ -1674,29 +1674,13 @@ class Model_Admin_Print extends Model_Print {
      */
 
     public function add_new_job($data) {
-        try {
-            error_log("add_new_job called with data: " . json_encode($data));
-            $job = $data['job_abbr'] . '-' . $data['type'] . $data['num_job'] . $data['prefix'];
-            error_log("Generated job ID: " . $job);
-
-            DB::sql('INSERT INTO user_jobs (user_id, company_id, job_id) VALUES (:user_id, :company_id, :job_id)', array(
-                        ':user_id' => $data['job_user'], ':company_id' => $data['comp_id'], ':job_id' => $job
-            ));
-            error_log("INSERT completed");
-
-            DB::sql('UPDATE users_company SET main_uid = :uid WHERE id=:cid', array(':uid' => $data['job_user'], ':cid' => $data['comp_id']));
-            error_log("UPDATE users_company completed");
-
-            DB::sql('UPDATE requests SET user_id = :uid WHERE company_id=:cid', array(':uid' => $data['job_user'], ':cid' => $data['comp_id']));
-            error_log("UPDATE requests completed");
-
-            error_log("Returning job: " . $job);
-            return $job;
-        } catch (Exception $e) {
-            error_log("ERROR in add_new_job: " . $e->getMessage());
-            error_log("Stack trace: " . $e->getTraceAsString());
-            throw $e;
-        }
+        $job = $data['job_abbr'] . '-' . $data['type'] . $data['num_job'] . $data['prefix'];
+        DB::sql('INSERT INTO user_jobs (user_id, company_id, job_id, estimate_id) VALUES (:user_id, :company_id, :job_id, :estimate_id)', array(
+                    ':user_id' => $data['job_user'], ':company_id' => $data['comp_id'], ':job_id' => $job, ':estimate_id' => ''
+        ));
+        DB::sql('UPDATE users_company SET main_uid = :uid WHERE id=:cid', array(':uid' => $data['job_user'], ':cid' => $data['comp_id']));
+        DB::sql('UPDATE requests SET user_id = :uid WHERE company_id=:cid', array(':uid' => $data['job_user'], ':cid' => $data['comp_id']));
+        return $job;
     }
 
     public function generate_new_job($cid, $check_abbr = '') {
