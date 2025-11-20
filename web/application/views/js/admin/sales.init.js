@@ -966,10 +966,10 @@ $(function() {
 
             $('.close_modal').trigger('click');
             if (data.id) {
-                $('.job_menu').prepend('<li data-id="' + data.id + '" class="clickable clickme"></li>');
-                $('.clickme').trigger('click');
+                $('<li data-id="' + data.id + '" class="clickable"><a>' + data.id + '</a><span class="ui-icon ui-icon-pencil pointer marg_t5 edit_job" style="margin-right: 0">edit</span><span class="ui-icon ui-icon-close pointer marg_t5 remove_job">del</span></li>').insertAfter($('.job_menu li').first());
+                $('select[name=select_one_job],select[name=select_note_job],select[name=payment_job_id],select[name=ch_note_job]').append('<option value="' + data.id + '">' + data.id + '</option>');
+                $('li[data-id="' + data.id + '"] a').trigger('click');
             }
-//            $('.clickable.ui-tabs-selected').trigger('click');
         }, 'json');
     });
 
