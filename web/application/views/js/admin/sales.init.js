@@ -916,7 +916,7 @@ $(function() {
     /*
      * Task details. Add new Job/Estimate form
      */
-    $('.add_job').live('click', function() {
+    $(document).on('click', '.add_job', function() {
         var comp_id = $(this).parents('.task_details').prev().data('cid');
         $('.modal_bg').show();
         //load modal form
@@ -929,7 +929,7 @@ $(function() {
         });
     });
 
-    $('select[name=job_type]').live('change', function() {
+    $(document).on('change', 'select[name=job_type]', function() {
         $('.type_job').text($(this).val());
         $('input[name=edit_num_job]').trigger('keyup');
 //        $('.num_job').text('');
@@ -942,7 +942,7 @@ $(function() {
 //        }, 'json');
     });
 
-    $('input[name=save_current_num]').live('click', function() {
+    $(document).on('click', 'input[name=save_current_num]', function() {
         var type = $('select[name=job_type]').val(),
                 job_abbr = $('input[name=job_abbr]').val(),
                 num_job = $('.num_job').text(),
@@ -973,7 +973,7 @@ $(function() {
         }, 'json');
     });
 
-    $('input[name=job_abbr]').live('keyup', function() {
+    $(document).on('keyup', 'input[name=job_abbr]', function() {
         $('.additional').text('');
         if ($(this).val().length === 3) {
             //check new abbr
@@ -999,7 +999,7 @@ $(function() {
         }
     });
 
-    $('input[name=use_alternative]').live('change', function() {
+    $(document).on('change', 'input[name=use_alternative]', function() {
         if ($(this).is(':checked')) {
             var s = $(this).val().substr(0, 3);
             var addit = $(this).val().substr(3);
@@ -1012,7 +1012,7 @@ $(function() {
         }
     });
 
-    $('.add_estimate').live('click', function() {
+    $(document).on('click', '.add_estimate', function() {
         var user_id = $(this).parents('.task_details').prev().data('uid');
         $.post('/admin/sales/ajax', {
             'func': 'add_new_estimate',
