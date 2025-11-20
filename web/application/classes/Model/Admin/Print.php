@@ -1675,10 +1675,9 @@ class Model_Admin_Print extends Model_Print {
 
     public function add_new_job($data) {
         $job = $data['job_abbr'] . '-' . $data['type'] . $data['num_job'] . $data['prefix'];
-        $r = DB::sql('INSERT INTO user_jobs (user_id, company_id, job_id) VALUES (:user_id, :company_id, :job_id)', array(
+        DB::sql('INSERT INTO user_jobs (user_id, company_id, job_id) VALUES (:user_id, :company_id, :job_id)', array(
                     ':user_id' => $data['job_user'], ':company_id' => $data['comp_id'], ':job_id' => $job
         ));
-        $job = $r[0];
         DB::sql('UPDATE users_company SET main_uid = :uid WHERE id=:cid', array(':uid' => $data['job_user'], ':cid' => $data['comp_id']));
         DB::sql('UPDATE requests SET user_id = :uid WHERE company_id=:cid', array(':uid' => $data['job_user'], ':cid' => $data['comp_id']));
         return $job;
