@@ -691,6 +691,23 @@ class Controller_Admin_Sales extends Admin {
             case 'run_credit':
                 $rez = $this->sales_model->cardReturnPayment();
                 break;
+            case 'test_helcim_connection':
+                // Test Helcim API connection
+                $helcim = Model::factory('Admin_Helcim');
+                if (!$helcim->isConfigured()) {
+                    $rez = array(
+                        'success' => false,
+                        'message' => 'Helcim API token not configured. Token: ' . $helcim->getMaskedToken()
+                    );
+                } else {
+                    $result = $helcim->testConnection();
+                    $rez = array(
+                        'success' => $result['success'],
+                        'message' => $result['message'],
+                        'token' => $helcim->getMaskedToken()
+                    );
+                }
+                break;
             case 'get_add_trans_form':
                 $data['credit_cards'] = $this->sales_model->getCreditCards($post['uid']);
                 $data['jobs'] = $this->user_model->getCompanyJobs($post['cid']);

@@ -2714,15 +2714,43 @@ $(function() {
 
 
     $('body').on('click', '.add_check_trans', function() {
+        var uid = $('.task_details').prev().data('uid'),
+            cid = $('.task_details').prev().data('cid'),
+            active = $('.clickable.ui-tabs-selected').data('id');
+        
+        // Validate required data
+        if (!uid || !cid) {
+            alert('Error: Please select a request first to view its details before adding a transaction.');
+            return false;
+        }
+        
         $('.modal_bg').fadeIn();
-        $.post('/admin/sales/ajax', {
-            func: 'get_add_trans_form',
-            uid: $('.task_details').prev().data('uid'),
-            cid: $('.task_details').prev().data('cid'),
-            active: $('.clickable.ui-tabs-selected').data('id')
-        }, function(data) {
-            $('.loading').hide();
-            $('.modal_bg .contents').html(data);
+        $('.modal_bg .loading').show();
+        $('.modal_bg .contents').html('');
+        
+        $.ajax({
+            url: '/admin/sales/ajax',
+            type: 'POST',
+            data: {
+                func: 'get_add_trans_form',
+                uid: uid,
+                cid: cid,
+                active: active || ''
+            },
+            success: function(data) {
+                $('.modal_bg .loading').hide();
+                $('.modal_bg .contents').html(data);
+                // Initialize datepicker for the loaded form
+                $(".datepicker_mod").datepicker({
+                    changeMonth: true,
+                    changeYear: true
+                });
+            },
+            error: function(xhr, status, error) {
+                $('.modal_bg .loading').hide();
+                $('.modal_bg .contents').html('<div style="color: red; padding: 20px;"><b>Error loading form:</b><br>' + error + '<br><br>Status: ' + status + '</div>');
+                console.error('Add Transaction Form Error:', error, status, xhr.responseText);
+            }
         });
     }).on('click', '.redestribute_payment', function(e) {
         var id = $(this).data('id'),
@@ -2796,25 +2824,34 @@ $(function() {
                 return false;
             }
         }
-        $.post('/admin/sales/ajax', {
-            func: 'add_card_transaction',
-            job_id: select_job_trans,
-            date: trans_date,
-            card: card,
-            add_card_name: add_card_name,
-            add_card_type: add_card_type,
-            last_digits: last_digits,
-            amount: trans_amount,
-            trans_note: trans_note,
-            req_id: $('.task_details').prev().data('id'),
-            comp_id: $('.task_details').prev().data('cid'),
-            order_total: set_order_total
-        }, function(data) {
-            $('.modal_bg .contents').html('<b>Transaction added.</b>');
-            setTimeout(function() {
-                $('.close_modal').trigger('click');
-                $('.clickable.ui-tabs-selected').trigger('click');
-            }, 2000);
+        $.ajax({
+            url: '/admin/sales/ajax',
+            type: 'POST',
+            data: {
+                func: 'add_card_transaction',
+                job_id: select_job_trans,
+                date: trans_date,
+                card: card,
+                add_card_name: add_card_name,
+                add_card_type: add_card_type,
+                last_digits: last_digits,
+                amount: trans_amount,
+                trans_note: trans_note,
+                req_id: $('.task_details').prev().data('id'),
+                comp_id: $('.task_details').prev().data('cid'),
+                order_total: set_order_total
+            },
+            success: function(data) {
+                $('.modal_bg .contents').html('<b>Transaction added.</b>');
+                setTimeout(function() {
+                    $('.close_modal').trigger('click');
+                    $('.clickable.ui-tabs-selected').trigger('click');
+                }, 2000);
+            },
+            error: function(xhr, status, error) {
+                $('.trans_card_error').text('Error: ' + error);
+                console.error('Add Card Transaction Error:', error, xhr.responseText);
+            }
         });
 
     }).on('change', 'select[name=select_job_trans]', function() {
@@ -2848,22 +2885,31 @@ $(function() {
             $('.trans_cash_error').text('*Amount field is empty');
             return false;
         }
-        $.post('/admin/sales/ajax', {
-            func: 'add_cash_transaction',
-            job_id: select_job_trans,
-            date: date,
-            amount: amount,
-            note: note,
-            req_id: $('.task_details').prev().data('id'),
-            comp_id: $('.task_details').prev().data('cid'),
-            order_total: set_order_total
-        }, function(data) {
-            $('.modal_bg .contents').html('<b>Transaction added.</b>');
-            setTimeout(function() {
-                $('.close_modal').trigger('click');
-                $('.clickable.ui-tabs-selected').trigger('click');
-            }, 2000);
-        }, 'json');
+        $.ajax({
+            url: '/admin/sales/ajax',
+            type: 'POST',
+            data: {
+                func: 'add_cash_transaction',
+                job_id: select_job_trans,
+                date: date,
+                amount: amount,
+                note: note,
+                req_id: $('.task_details').prev().data('id'),
+                comp_id: $('.task_details').prev().data('cid'),
+                order_total: set_order_total
+            },
+            success: function(data) {
+                $('.modal_bg .contents').html('<b>Transaction added.</b>');
+                setTimeout(function() {
+                    $('.close_modal').trigger('click');
+                    $('.clickable.ui-tabs-selected').trigger('click');
+                }, 2000);
+            },
+            error: function(xhr, status, error) {
+                $('.trans_cash_error').text('Error: ' + error);
+                console.error('Add Cash Transaction Error:', error, xhr.responseText);
+            }
+        });
 
     }).on('click', 'input[name=add_misc_transaction]', function() {
         var date = $('input[name=misc_trans_date]').val(),
@@ -2879,22 +2925,31 @@ $(function() {
             $('.trans_misc_error').text('*Amount field is empty');
             return false;
         }
-        $.post('/admin/sales/ajax', {
-            func: 'add_misc_transaction',
-            job_id: select_job_trans,
-            date: date,
-            amount: amount,
-            note: note,
-            req_id: $('.task_details').prev().data('id'),
-            comp_id: $('.task_details').prev().data('cid'),
-            order_total: set_order_total
-        }, function(data) {
-            $('.modal_bg .contents').html('<b>Transaction added.</b>');
-            setTimeout(function() {
-                $('.close_modal').trigger('click');
-                $('.clickable.ui-tabs-selected').trigger('click');
-            }, 2000);
-        }, 'json');
+        $.ajax({
+            url: '/admin/sales/ajax',
+            type: 'POST',
+            data: {
+                func: 'add_misc_transaction',
+                job_id: select_job_trans,
+                date: date,
+                amount: amount,
+                note: note,
+                req_id: $('.task_details').prev().data('id'),
+                comp_id: $('.task_details').prev().data('cid'),
+                order_total: set_order_total
+            },
+            success: function(data) {
+                $('.modal_bg .contents').html('<b>Transaction added.</b>');
+                setTimeout(function() {
+                    $('.close_modal').trigger('click');
+                    $('.clickable.ui-tabs-selected').trigger('click');
+                }, 2000);
+            },
+            error: function(xhr, status, error) {
+                $('.trans_misc_error').text('Error: ' + error);
+                console.error('Add Misc Transaction Error:', error, xhr.responseText);
+            }
+        });
 
     }).on('click', 'input[name=add_check_transaction]', function() {
         var date = $('input[name=check_trans_date]').val(),
@@ -2914,23 +2969,32 @@ $(function() {
             $('.trans_check_error').text('*Check# is empty');
             return false;
         }
-        $.post('/admin/sales/ajax', {
-            func: 'add_check_transaction',
-            job_id: select_job_trans,
-            date: date,
-            amount: amount,
-            number: number,
-            note: note,
-            req_id: $('.task_details').prev().data('id'),
-            comp_id: $('.task_details').prev().data('cid'),
-            order_total: set_order_total
-        }, function(data) {
-            $('.modal_bg .contents').html('<b>Transaction added.</b>');
-            setTimeout(function() {
-                $('.close_modal').trigger('click');
-                $('.clickable.ui-tabs-selected').trigger('click');
-            }, 2000);
-        }, 'json');
+        $.ajax({
+            url: '/admin/sales/ajax',
+            type: 'POST',
+            data: {
+                func: 'add_check_transaction',
+                job_id: select_job_trans,
+                date: date,
+                amount: amount,
+                number: number,
+                note: note,
+                req_id: $('.task_details').prev().data('id'),
+                comp_id: $('.task_details').prev().data('cid'),
+                order_total: set_order_total
+            },
+            success: function(data) {
+                $('.modal_bg .contents').html('<b>Transaction added.</b>');
+                setTimeout(function() {
+                    $('.close_modal').trigger('click');
+                    $('.clickable.ui-tabs-selected').trigger('click');
+                }, 2000);
+            },
+            error: function(xhr, status, error) {
+                $('.trans_check_error').text('Error: ' + error);
+                console.error('Add Check Transaction Error:', error, xhr.responseText);
+            }
+        });
     }).on('click', 'input[name=edit_transaction]', function() {
         var type = $('select[name=editing_trans_type]').val(),
                 trans_date = $('input[name=trans_date]').val(),
@@ -3051,20 +3115,29 @@ $(function() {
             $('.trans_confirm_error').text('*Amount field is empty');
             return false;
         }
-        $.post('/admin/sales/ajax', {
-            func: 'add_confirm_transaction',
-            job_id: select_job_trans,
-            date: date,
-            amount: amount,
-            req_id: $('.task_details').prev().data('id'),
-            comp_id: $('.task_details').prev().data('cid')
-        }, function(data) {
-            $('.modal_bg .contents').html('<b>Transaction added.</b>');
-            setTimeout(function() {
-                $('.close_modal').trigger('click');
-                $('.clickable.ui-tabs-selected').trigger('click');
-            }, 2000);
-        }, 'json');
+        $.ajax({
+            url: '/admin/sales/ajax',
+            type: 'POST',
+            data: {
+                func: 'add_confirm_transaction',
+                job_id: select_job_trans,
+                date: date,
+                amount: amount,
+                req_id: $('.task_details').prev().data('id'),
+                comp_id: $('.task_details').prev().data('cid')
+            },
+            success: function(data) {
+                $('.modal_bg .contents').html('<b>Transaction added.</b>');
+                setTimeout(function() {
+                    $('.close_modal').trigger('click');
+                    $('.clickable.ui-tabs-selected').trigger('click');
+                }, 2000);
+            },
+            error: function(xhr, status, error) {
+                $('.trans_confirm_error').text('Error: ' + error);
+                console.error('Add Confirm Transaction Error:', error, xhr.responseText);
+            }
+        });
 
     }).on('click', 'input[name=add_failed_transaction]', function() {
 
@@ -3080,21 +3153,30 @@ $(function() {
             $('.trans_failed_error').text('*Amount field is empty');
             return false;
         }
-        $.post('/admin/sales/ajax', {
-            func: 'add_failed_transaction',
-            job_id: select_job_trans,
-            date: date,
-            amount: amount,
-            note: note,
-            req_id: $('.task_details').prev().data('id'),
-            comp_id: $('.task_details').prev().data('cid')
-        }, function(data) {
-            $('.modal_bg .contents').html('<b>Transaction added.</b>');
-            setTimeout(function() {
-                $('.close_modal').trigger('click');
-                $('.clickable.ui-tabs-selected').trigger('click');
-            }, 2000);
-        }, 'json');
+        $.ajax({
+            url: '/admin/sales/ajax',
+            type: 'POST',
+            data: {
+                func: 'add_failed_transaction',
+                job_id: select_job_trans,
+                date: date,
+                amount: amount,
+                note: note,
+                req_id: $('.task_details').prev().data('id'),
+                comp_id: $('.task_details').prev().data('cid')
+            },
+            success: function(data) {
+                $('.modal_bg .contents').html('<b>Transaction added.</b>');
+                setTimeout(function() {
+                    $('.close_modal').trigger('click');
+                    $('.clickable.ui-tabs-selected').trigger('click');
+                }, 2000);
+            },
+            error: function(xhr, status, error) {
+                $('.trans_failed_error').text('Error: ' + error);
+                console.error('Add Failed Transaction Error:', error, xhr.responseText);
+            }
+        });
 
     }).on('click', 'input[name=add_credit_transaction]', function() {
 
@@ -3110,21 +3192,30 @@ $(function() {
             $('.trans_credit_error').text('*Amount field is empty');
             return false;
         }
-        $.post('/admin/sales/ajax', {
-            func: 'add_credit_transaction',
-            job_id: select_job_trans,
-            date: date,
-            amount: amount,
-            note: note,
-            req_id: $('.task_details').prev().data('id'),
-            comp_id: $('.task_details').prev().data('cid')
-        }, function(data) {
-            $('.modal_bg .contents').html('<b>Transaction added.</b>');
-            setTimeout(function() {
-                $('.close_modal').trigger('click');
-                $('.clickable.ui-tabs-selected').trigger('click');
-            }, 2000);
-        }, 'json');
+        $.ajax({
+            url: '/admin/sales/ajax',
+            type: 'POST',
+            data: {
+                func: 'add_credit_transaction',
+                job_id: select_job_trans,
+                date: date,
+                amount: amount,
+                note: note,
+                req_id: $('.task_details').prev().data('id'),
+                comp_id: $('.task_details').prev().data('cid')
+            },
+            success: function(data) {
+                $('.modal_bg .contents').html('<b>Transaction added.</b>');
+                setTimeout(function() {
+                    $('.close_modal').trigger('click');
+                    $('.clickable.ui-tabs-selected').trigger('click');
+                }, 2000);
+            },
+            error: function(xhr, status, error) {
+                $('.trans_credit_error').text('Error: ' + error);
+                console.error('Add Credit Transaction Error:', error, xhr.responseText);
+            }
+        });
 
     }).on('change', 'select[name=editing_trans_type]', function() {
         var val = $(this).val();

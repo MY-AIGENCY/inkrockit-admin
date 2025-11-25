@@ -111,7 +111,8 @@ class Model_Admin_Sales extends Model_Sales {
     }
 
     /*
-     * First Data payment from customer (SALE)
+     * Helcim payment from customer (SALE)
+     * Previously used First Data - now uses Helcim API
      * @param (array)  $result_data: all data array from payment form
      * @return (array) $rez: payment result
      */
@@ -143,14 +144,7 @@ class Model_Admin_Sales extends Model_Sales {
                 $result_data['card_billing']['phone_ext'] = $result_data['card']['bill_phone_ext'];
             }
 
-            $phone = $result_data['card_billing']['phone'];
-            if (!empty($result_data['card_billing']['phone_ext'])) {
-                $phone.=$result_data['card_billing']['phone_ext'];
-            }
-
             $card_num = str_replace(array(' ', '-', '.'), array(''), $result_data['card']['card_number']);
-            $phone = str_replace(array('-', '(', ')'), array(''), $phone);
-            $sphone = str_replace(array('-', '(', ')'), array(''), $result_data['shipping_email']);
             $summ = str_replace(array(','), '', $post['charge']);
 
             if (empty($summ) || $summ < 0) {
@@ -160,129 +154,100 @@ class Model_Admin_Sales extends Model_Sales {
             $print_model = Model::factory('Admin_Print');
             $current_job = $print_model->getJob($result_data['payment_job_id']);
 
-            $exp = explode('/', $result_data['card']['exp_date']);
-            if (count($exp) != 2) {
-                $rez = array('err' => 'Invalid Exp. Date field');
+            $exp_date = $result_data['card']['exp_date'];
+            if (empty($exp_date) || strpos($exp_date, '/') === false) {
+                return array('err' => 'Invalid Exp. Date field');
+            }
+
+            // Initialize Helcim payment processor
+            $helcim = Model::factory('Admin_Helcim');
+            
+            // Check if Helcim is configured
+            if (!$helcim->isConfigured()) {
+                return array('err' => 'Payment processor not configured. Please contact administrator.');
+            }
+
+            $summ = number_format(floatval($summ), 2, '.', '');
+            $result_data['transaction_num'] = (empty($result_data['transaction_num'])) ? 1 : $result_data['transaction_num'];
+            $result_data['ponumber'] = $current_job['job_id'] . ' [TRAN: ' . $result_data['transaction_num'] . ']';
+            $result_data['chargetotal'] = $summ;
+
+            // Prepare payment data for Helcim
+            $paymentData = array(
+                'amount' => $summ,
+                'cardNumber' => $card_num,
+                'cardExpiry' => $exp_date,
+                'cardCVV' => $result_data['card']['ccv'],
+                'cardHolderName' => $result_data['card_billing']['first_name'] . ' ' . $result_data['card_billing']['last_name'],
+                'billingAddress' => $result_data['card_billing']['address'],
+                'billingZip' => $result_data['card_billing']['zip'],
+                'invoiceNumber' => $result_data['ponumber'],
+                'customerCode' => 'CUST-' . $result_data['client_id'],
+            );
+
+            // Process payment via Helcim
+            $result = $helcim->processPurchase($paymentData);
+
+            // Add order total if not set
+            $job_order = DB::sql_row('SELECT order_total FROM user_jobs WHERE id=:id', array(':id' => $result_data['payment_job_id']));
+            if (empty($job_order['order_total'])) {
+                DB::sql('UPDATE user_jobs SET order_total=:total, edg=:edg WHERE id=:id', array(':total' => $result_data['order_total'], ':id' => $result_data['payment_job_id'], ':edg' => $result_data['edg']));
+                DB::sql('INSERT INTO payment_history (job_id,`type`,user_type,`date`,client_id,`summ`,description,`total`) VALUES (:job_id,:type,:user_type,NOW(),:client_id,:summ,:description,:total)', array(
+                    ':job_id' => $result_data['payment_job_id'], ':type' => 'order_confirmed', ':user_type' => 'sys', ':client_id' => $result_data['client_id'],
+                    ':summ' => $result_data['order_total'], ':description' => 'ORDER TOTAL $' . $result_data['order_total'] . '. Description: ' . $result_data['description'], ':total' => $result_data['order_total']
+                ));
+            }
+            
+            // Add transactions count
+            DB::sql('UPDATE user_jobs SET order_counts=order_counts+1 WHERE id=:id', array(':id' => $result_data['payment_job_id']));
+
+            if (!$result['success']) {
+                // Transaction failed
+                $error_msg = isset($result['error']) ? $result['error'] : 'Unknown error';
+                $rez['err'] = $error_msg;
+
+                $card_num_short = substr($result_data['card']['card_number'], -4);
+                $note = 'Payment FAILED ' . $result_data['card']['title'] . ' xxxxxxxxx' . $card_num_short . '; AMOUNT: $' . $result_data['chargetotal'] . '; JOB ID: ' . $current_job['job_id'] . '; Payment Description: ' . $result_data['description'] . '; Payment error: ' . $error_msg;
+                $r = DB::sql('INSERT INTO payment_history (job_id,`type`,user_type,`date`,client_id,summ,description, card_id, edg, transaction_code, procent, total) 
+                    VALUES (:job_id,:type,:user_type,NOW(),:client_id,:summ,:description,:card_id, :edg, :transaction_code, :procent, :total)', array(':job_id' => $current_job['id'], ':type' => 'failed', ':user_type' => $result_data['user_type'], ':client_id' => $result_data['client_id'],
+                            ':summ' => $result_data['chargetotal'], ':description' => $note, ':card_id' => $result_data['card']['id'], ':edg' => '', ':transaction_code' => '', ':procent' => '', ':total' => $result_data['chargetotal']));
+
+                $job_order = DB::sql_row('SELECT * FROM user_jobs WHERE id=:id', array(':id' => $result_data['payment_job_id']));
+                $this->addSmallNotifications($result_data['request_id'], $current_job['id'], $job_order['company_id'], $r[0], 'order_failed', $note);
             } else {
-                require_once VNDPATH . 'first_data/lphp.php';
-                $mylphp = new lphp;
-                # constants
-                $summ = number_format(floatval($summ), 2, '.', '');
-//                $myorder["result"] = "good"; //TEST MODE
-                $myorder["host"] = "secure.linkpt.net";
-                $myorder["port"] = "1129";
-                $myorder["keyfile"] = APPPATH . "files/first_data/1001270436.pem"; # name and location of your certificate file 
-                $myorder["configfile"] = "1001341195";        # store number
-//                $myorder["configfile"] = "1001270436";        # store number
-                # form data
-                $myorder["ordertype"] = "SALE";
-                $myorder['userid'] = $result_data['client_id']; #A user ID allowing merchants to track their customers
-                $myorder["cardnumber"] = $card_num;
-                $myorder["cardexpmonth"] = $exp[0];
-                $myorder["cardexpyear"] = $exp[1];
-                $result_data['oid'] = $current_job['job_id'];
-                $result_data['transaction_num'] = (empty($result_data['transaction_num'])) ? 1 : $result_data['transaction_num'];
-                $result_data['ponumber'] = $current_job['job_id'] . ' [TRAN: ' . $result_data['transaction_num'] . ']'; //The order ID of the transaction. Job ID
-                $myorder['oid'] = time()+1;
-                $result_data['chargetotal'] = $myorder["chargetotal"] = $myorder["subtotal"] = $summ;
-                $myorder['comments'] = $result_data['description'];
-                $myorder["debug"] = $myorder["debugging"] = "false";
-
-                //user data
-                //Shipping
-                $myorder["sname"] = $result_data['shipping_fname'] . ' ' . $result_data['shipping_lname'];
-                if (!empty($result_data['shipping_company'])) {
-                    $myorder["scompany"] = $result_data['shipping_company'];
-                }
-                $myorder["saddress1"] = $result_data['shipping_address'];
-                $myorder["saddress2"] = $result_data['shipping_address2'];
-
-                $myorder["scity"] = $result_data['shipping_city'];
-                $myorder["sstate"] = $result_data['shipping_state'];
-                if (!empty($result_data['shipping_country'])) {
-                    $myorder["scountry"] = $result_data['shipping_country'];
-                }
-                $myorder["sphone"] = $result_data['shipping_phone'];
-                $myorder["semail"] = $sphone;
-                $myorder["szip"] = $result_data['shipping_zip'];
-
-                //Billing data
-                $myorder["name"] = $result_data['card_billing']['first_name'] . ' ' . $result_data['card_billing']['last_name'];
-                if (!empty($result_data['card_billing']['company'])) {
-                    $myorder["company"] = $result_data['card_billing']['company'];
-                }
-                $myorder["phone"] = $phone;
-                $myorder["email"] = $result_data['card_billing']['email'];
-                $myorder["address1"] = $result_data['card_billing']['address'];
-                $myorder["address2"] = $result_data['card_billing']['address2'];
-                $myorder["city"] = $result_data['card_billing']['city'];
-                $myorder["state"] = $result_data['card_billing']['state'];
-                if (!empty($result_data['card_billing']['country'])) {
-                    $myorder["country"] = $result_data['card_billing']['country'];
-                }
-
-                $myorder["zip"] = $result_data['card_billing']['zip'];
-                $result = $mylphp->curl_process($myorder);    # use curl methods
-                //add order total
-                $job_order = DB::sql_row('SELECT order_total FROM user_jobs WHERE id=:id', array(':id' => $result_data['payment_job_id']));
-                if (empty($job_order['order_total'])) {
-                    DB::sql('UPDATE user_jobs SET order_total=:total, edg=:edg WHERE id=:id', array(':total' => $result_data['order_total'], ':id' => $result_data['payment_job_id'], ':edg' => $result_data['edg']));
-                    //add to payment history ORDER CONFIRMED
-                    DB::sql('INSERT INTO payment_history (job_id,`type`,user_type,`date`,client_id,`summ`,description,`total`) VALUES (:job_id,:type,:user_type,NOW(),:client_id,:summ,:description,:total)', array(
-                        ':job_id' => $result_data['payment_job_id'], ':type' => 'order_confirmed', ':user_type' => 'sys', ':client_id' => $result_data['client_id'],
-                        ':summ' => $result_data['order_total'], ':description' => 'ORDER TOTAL $' . $result_data['order_total'] . '. Description: ' . $result_data['description'], ':total' => $result_data['order_total']
-                    ));
-                }
-                //Add transactions count
-                DB::sql('UPDATE user_jobs SET order_counts=order_counts+1 WHERE id=:id', array(':id' => $result_data['payment_job_id']));
-
-                if ($result["r_approved"] != "APPROVED") {    // transaction failed, print the reason
-//                    $rez['err'] = "Status:" . $result['r_approved'] . "<br>
-//                    Error:" . $result['r_error'];
-                    //ADD Transaction Failed
-                    $this->check_error($result['r_error'], $result_data, $exp, $rez['err']);
-
-                    $card_num_short = substr($result_data['card']['card_number'], -4);
-                    $note = 'Payment FAILED ' . $result_data['card']['title'] . ' xxxxxxxxx' . $card_num_short . '; AMOUNT: $' . $result_data['chargetotal'] . '; JOB ID: ' . $current_job['job_id'] . '; X:Payment Description: ' . $result_data['description'] . '; Payment error: ' . $rez['err'];
-                    $r = DB::sql('INSERT INTO payment_history (job_id,`type`,user_type,`date`,client_id,summ,description, card_id, edg, transaction_code, procent, total) 
-                        VALUES (:job_id,:type,:user_type,NOW(),:client_id,:summ,:description,:card_id, :edg, :transaction_code, :procent, :total)', array(':job_id' => $current_job['id'], ':type' => 'failed', ':user_type' => $result_data['user_type'], ':client_id' => $result_data['client_id'],
-                                ':summ' => $result_data['chargetotal'], ':description' => $note, ':card_id' => $result_data['card']['id'], ':edg' => '', ':transaction_code' => '', ':procent' => '', ':total' => $result_data['chargetotal']));
-
-                    //event
-                    $job_order = DB::sql_row('SELECT * FROM user_jobs WHERE id=:id', array(':id' => $result_data['payment_job_id']));
-                    $this->addSmallNotifications($result_data['request_id'], $current_job['id'], $job_order['company_id'], $r[0], 'order_failed', $note);
-                } else { // success
-//                  Transaction Code:" . $result['r_code'] . "<br><br>\n";
-                    //Payment notification
-                    $this->paymentNotifications($result_data, $result['r_code'], $summ);
-                    $rez = array('ok' => 'Payment success!');
-                }
+                // Success - Payment approved
+                $transaction_code = isset($result['transactionId']) ? $result['transactionId'] : '';
+                $this->paymentNotifications($result_data, $transaction_code, $summ);
+                $rez = array('ok' => 'Payment success!');
             }
         }
         return $rez;
     }
 
     /*
-     * First Data return payment to customer
+     * Helcim refund/return payment to customer
+     * Previously used First Data - now uses Helcim API
      * @param (array)  $result_data: all data array from payment form
      * @return (array) $rez: payment result
      */
 
     public function cardReturnPayment() {
         $post = Request::initial()->post();
+        $rez = array();
 
         //get payment data
         $payment = DB::sql_row('SELECT payment_history.*, credit_card.card_number, credit_card.exp_date, credit_card.ccv, credit_card.title'
                         . ' FROM payment_history '
                         . ' LEFT JOIN credit_card ON credit_card.id=payment_history.card_id '
                         . ' WHERE payment_history.id=:id', array(':id' => $post['id']));
+        
         //check total payments
         $pays = DB::sql_row('SELECT SUM(summ) pay_summ FROM payment_history WHERE job_id=:job_id AND `type` NOT IN ("credit","change_total")', array(':job_id' => $payment['job_id']));
         $credits = DB::sql_row('SELECT SUM(summ) pay_summ FROM payment_history WHERE job_id=:job_id AND `type`="credit"', array(':job_id' => $payment['job_id']));
         $pay_true = $pays['pay_summ'] - ($credits['pay_summ'] + $post['amount']);
 
         if ($pay_true < 0) {
-            return array('err' => 'You cant Credit this amount!');
+            return array('err' => 'You cannot credit this amount!');
         } elseif (empty($payment['card_number'])) {
             return array('err' => 'This credit card is removed!');
         }
@@ -296,56 +261,56 @@ class Model_Admin_Sales extends Model_Sales {
             $user = DB::sql_row('SELECT users.*, users_company.company FROM users '
                             . '  LEFT JOIN users_company ON users.company_id=users_company.id'
                             . ' WHERE users.id=:id', array(':id' => $payment['client_id']));
+            
             //Job #
             $print_model = Model::factory('Admin_Print');
             $current_job = $print_model->getJob($payment['job_id']);
 
-            $exp = explode('/', $payment['exp_date']);
             $amount = str_replace(array(','), '', $post['amount']);
             $amount = number_format(floatval($amount), 2, '.', '');
-            $phone = str_replace(array('-', '(', ')'), array(''), $user['phone']);
 
-//            $myorder["result"] = "good"; //TEST MODE
-            $myorder["host"] = "secure.linkpt.net";
-            $myorder["port"] = "1129";
-            $myorder["keyfile"] = APPPATH . "files/first_data/1001270436.pem"; # name and location of your certificate file 
-//            $myorder["configfile"] = "1001270436"; # store number
-            $myorder["configfile"] = "1001341195"; # store number
-            # form data
-            $myorder["ordertype"] = "CREDIT";
-            $myorder["oid"] = $payment['transaction_code']; //sale order ID
-            $myorder["cardnumber"] = $payment['card_number'];
-            $myorder["cardexpmonth"] = @$exp[0];
-            $myorder["cardexpyear"] = @$exp[1];
-            $result_data['oid'] = $myorder["chargetotal"] = $amount;
-            $myorder["debug"] = $myorder["debugging"] = "false";
-
-            $myorder["name"] = $myorder["sname"] = $user['first_name'] . ' ' . $user['last_name'];
-            $myorder["company"] = $myorder["scompany"] = $user['company'];
-            $myorder["address1"] = $myorder["saddress1"] = $user['street'];
-            $myorder["city"] = $myorder["scity"] = $user['city'];
-            $myorder["state"] = $myorder["sstate"] = $user['state'];
-            if (!empty($user['country'])) {
-                $myorder["country"] = $myorder["scountry"] = $user['country'];
+            // Initialize Helcim payment processor
+            $helcim = Model::factory('Admin_Helcim');
+            
+            // Check if Helcim is configured
+            if (!$helcim->isConfigured()) {
+                return array('err' => 'Payment processor not configured. Please contact administrator.');
             }
-            $myorder["zip"] = $myorder["szip"] = $user['zipcode'];
-            $myorder["sphone"] = $myorder["phone"] = $phone;
-            $myorder["semail"] = $myorder["email"] = $user['email'];
 
-            require_once VNDPATH . 'first_data/lphp.php';
-            $mylphp = new lphp;
-            $result = $mylphp->curl_process($myorder);
+            // Check if we have the original transaction code for refund
+            if (empty($payment['transaction_code'])) {
+                // No original transaction code - need to process as a credit
+                // For Helcim, we can still do a refund with card details
+                $refundData = array(
+                    'amount' => $amount,
+                    'cardNumber' => str_replace(array(' ', '-', '.'), array(''), $payment['card_number']),
+                    'cardExpiry' => $payment['exp_date'],
+                    'cardCVV' => $payment['ccv'],
+                    'cardHolderName' => $user['first_name'] . ' ' . $user['last_name'],
+                );
+                
+                // Note: Helcim may require original transaction ID for refunds
+                // In this case, we'll log a manual credit entry instead
+                $rez['err'] = 'Original transaction code not found. Please process refund manually through Helcim portal.';
+                return $rez;
+            }
 
-            if ($result["r_approved"] != "APPROVED") {
-                // transaction failed, print the reason
-//                    $rez['err'] = "Status:" . $result['r_approved'] . "<br>
-//                        Error:" . $result['r_error'];
-                $this->check_error($result['r_error'], $result_data, $exp, $rez['err']);
+            // Process refund via Helcim using original transaction ID
+            $result = $helcim->processRefund($payment['transaction_code'], $amount);
+
+            if (!$result['success']) {
+                // Refund failed
+                $error_msg = isset($result['error']) ? $result['error'] : 'Unknown error';
+                $rez['err'] = $error_msg;
             } else {
-                // success
-                $myorder['title'] = $payment['title'];
-                $this->creditNotifications($myorder, $result['r_ordernum'], $post['note'], $current_job, $payment);
-                $rez = array('ok' => 'Payment success!');
+                // Success
+                $refund_transaction_id = isset($result['transactionId']) ? $result['transactionId'] : '';
+                $myorder = array(
+                    'title' => $payment['title'],
+                    'chargetotal' => $amount,
+                );
+                $this->creditNotifications($myorder, $refund_transaction_id, $post['note'], $current_job, $payment);
+                $rez = array('ok' => 'Refund processed successfully!');
             }
         } else {
             $rez['err'] = 'Original payment not found';

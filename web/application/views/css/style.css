@@ -1888,11 +1888,14 @@ MAIN PAGE
 .mainFooterBlockText {
     color: #000000;
     font-family: Arial,Helvetica,"sans-serif";
-    font-size: 12px;
-    margin: 85px 0 0 25px;
+    font-size: 11px;
+    line-height: 1.4;
+    margin: 68px 0 0 20px;
+    padding-right: 15px;
     position: relative;
     font-weight: normal;
-    width: 270px;
+    width: auto;
+    max-width: 280px;
 }
 .footerSeparator {
     background: none repeat scroll 0 0 #AFAFAF;
