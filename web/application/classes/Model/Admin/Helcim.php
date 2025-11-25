@@ -350,7 +350,7 @@ class Model_Admin_Helcim extends Model {
         $url = $this->apiUrl . $endpoint;
 
         $headers = array(
-            'Authorization: Bearer ' . $this->apiToken,
+            'api-token: ' . $this->apiToken,
             'Content-Type: application/json',
             'Accept: application/json',
         );
