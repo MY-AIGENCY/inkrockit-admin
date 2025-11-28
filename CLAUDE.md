@@ -1,7 +1,11 @@
-# Project: staging.inkrockit.com (Admin Panel)
+# Project: inkrockit-admin (Admin Panel)
 
+> **Repository:** https://github.com/MY-AIGENCY/inkrockit-admin
+>
 > **READ FIRST**: See `DEVELOPER.md` for complete technical documentation.
 > Also see `SOURCE_OF_TRUTH.md` for the dashboard build spec.
+>
+> **Laravel Migration:** See `LARAVEL_KICKOFF.md` for the Laravel 11 migration project.
 
 ## Git Safety Protocol
 Before making any code changes:
