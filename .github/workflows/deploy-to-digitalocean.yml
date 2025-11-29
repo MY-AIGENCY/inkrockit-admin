@@ -1,22 +1,21 @@
-name: Deploy to DigitalOcean
+name: "[LEGACY] Deploy Kohana Admin"
+
+# LEGACY WORKFLOW - Manual dispatch only
+# This deploys the old Kohana 3.3 admin panel to staging.inkrockit.com
+# For the new Laravel admin panel, see: deploy-laravel-admin.yml
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
-      environment:
-        description: 'Environment to deploy to'
+      confirm:
+        description: 'Type "deploy-legacy" to confirm deployment of Kohana app'
         required: true
-        default: 'production'
-        type: choice
-        options:
-          - production
+        type: string
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.confirm == 'deploy-legacy' }}
 
     steps:
       - name: Checkout code
@@ -32,9 +31,9 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H 67.205.161.183 >> ~/.ssh/known_hosts
 
-      - name: Deploy PHP application to DigitalOcean
+      - name: Deploy Kohana application to DigitalOcean
         run: |
-          echo "Deploying files to production server..."
+          echo "⚠️  Deploying LEGACY Kohana application..."
           rsync -avz --exclude='.git' --exclude='node_modules' --exclude='apps/' \
             web/ root@67.205.161.183:/var/www/staging.inkrockit.com/
 
@@ -45,9 +44,9 @@ jobs:
             chmod -R 775 /var/www/staging.inkrockit.com/application/files
 
             echo "Clearing OPcache..."
-            systemctl reload php7.4-fpm
+            systemctl reload php7.4-fpm || systemctl reload php8.4-fpm || true
 
-            echo "Deployment completed successfully!"
+            echo "Legacy deployment completed!"
           ENDSSH
 
       - name: Verify deployment
@@ -57,10 +56,12 @@ jobs:
 
       - name: Deployment summary
         run: |
-          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## ⚠️ Legacy Kohana Deployment Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Environment**: ${{ inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+          echo "> **Note**: This is the legacy Kohana 3.3 application" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Application**: Kohana Admin (Legacy)" >> $GITHUB_STEP_SUMMARY
           echo "- **Server**: 67.205.161.183 (staging.inkrockit.com)" >> $GITHUB_STEP_SUMMARY
           echo "- **Deployed by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- **Time**: $(date)" >> $GITHUB_STEP_SUMMARY

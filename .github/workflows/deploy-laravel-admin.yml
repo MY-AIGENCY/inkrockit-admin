@@ -1,0 +1,84 @@
+name: Deploy Laravel Admin Panel
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'laravel/**'
+      - '.github/workflows/deploy-laravel-admin.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+
+      - name: Add server to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H 67.205.161.183 >> ~/.ssh/known_hosts
+
+      - name: Deploy Laravel application
+        run: |
+          echo "Deploying Laravel admin panel..."
+
+          ssh root@67.205.161.183 << 'ENDSSH'
+            cd /var/www/dev.inkrockit.com/admin
+
+            echo "Pulling latest code..."
+            git fetch origin main
+            git reset --hard origin/main
+
+            echo "Installing Composer dependencies..."
+            cd laravel
+            COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader --no-interaction
+
+            echo "Installing npm dependencies and building assets..."
+            npm ci
+            npm run build
+
+            echo "Clearing Laravel caches..."
+            php artisan config:clear
+            php artisan route:clear
+            php artisan view:clear
+
+            echo "Setting proper permissions..."
+            chown -R www-data:www-data storage bootstrap/cache public/build
+            chmod -R 775 storage bootstrap/cache
+
+            echo "Restarting PHP-FPM..."
+            systemctl reload php8.4-fpm || systemctl reload php8.3-fpm || true
+
+            echo "Deployment completed successfully!"
+          ENDSSH
+
+      - name: Verify deployment
+        run: |
+          echo "Testing site availability..."
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://dev-admin.inkrockit.com/login)
+          if [[ "$HTTP_CODE" =~ ^(200|301|302)$ ]]; then
+            echo "✅ Site is responding (HTTP $HTTP_CODE)"
+          else
+            echo "❌ Site check failed (HTTP $HTTP_CODE)"
+            exit 1
+          fi
+
+      - name: Deployment summary
+        run: |
+          echo "## Laravel Admin Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Application**: Laravel Admin Panel" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL**: https://dev-admin.inkrockit.com" >> $GITHUB_STEP_SUMMARY
+          echo "- **Server**: 67.205.161.183" >> $GITHUB_STEP_SUMMARY
+          echo "- **Deployed by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Time**: $(date)" >> $GITHUB_STEP_SUMMARY

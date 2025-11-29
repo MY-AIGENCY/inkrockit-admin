@@ -64,6 +64,14 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that should be cast.
+     */
+    protected $casts = [
+        'group_id' => 'integer',
+        'company_id' => 'integer',
+    ];
+
+    /**
      * Group ID constants matching the legacy system.
      */
     const GROUP_CUSTOMER = 1;
