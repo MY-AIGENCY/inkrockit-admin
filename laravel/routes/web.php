@@ -2,11 +2,20 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect()->route('login');
 });
+
+// Convenience GET logout route (in addition to POST)
+Route::get('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect()->route('login');
+})->name('logout.get');
 
 // Redirect /dashboard to /admin for authenticated users
 Route::get('/dashboard', function () {
