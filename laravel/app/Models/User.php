@@ -89,6 +89,21 @@ class User extends Authenticatable implements FilamentUser
     }
 
     /**
+     * Get the user's name (required by Filament).
+     * Falls back to login or email if no name is set.
+     */
+    public function getNameAttribute(): string
+    {
+        $fullName = trim("{$this->first_name} {$this->last_name}");
+
+        if (!empty($fullName)) {
+            return $fullName;
+        }
+
+        return $this->login ?? $this->email ?? 'User';
+    }
+
+    /**
      * Check if user is an admin.
      */
     public function isAdmin(): bool
