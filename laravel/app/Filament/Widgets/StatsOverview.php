@@ -12,7 +12,10 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class StatsOverview extends BaseWidget
 {
-    protected static ?int $sort = 1;
+    protected static ?int $sort = 99;
+
+    // Disable on dashboard - replaced by DashboardStats
+    protected static bool $isDiscovered = false;
 
     protected function getStats(): array
     {

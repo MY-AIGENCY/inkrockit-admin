@@ -9,7 +9,10 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class RecentRequests extends BaseWidget
 {
-    protected static ?int $sort = 2;
+    protected static ?int $sort = 99;
+
+    // Disable on dashboard - replaced by UrgentJobs
+    protected static bool $isDiscovered = false;
 
     protected int | string | array $columnSpan = 'full';
 
