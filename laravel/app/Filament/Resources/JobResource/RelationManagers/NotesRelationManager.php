@@ -75,12 +75,13 @@ class NotesRelationManager extends RelationManager
                     ->label('Add Note')
                     ->mutateFormDataUsing(function (array $data): array {
                         $data['date'] = now();
-                        $data['author_id'] = auth()->id();
+                        $data['author_id'] = auth()->id() ?? 0;
                         $data['type'] = 0;
                         $data['removed'] = 0;
                         // Legacy table requires these fields with NOT NULL constraints
-                        $data['request_id'] = $this->ownerRecord->estimate_id ?? 0;
-                        $data['company_id'] = $this->ownerRecord->company_id ?? 0;
+                        // Use intval() to ensure we always pass integers, not empty strings
+                        $data['request_id'] = intval($this->ownerRecord->estimate_id) ?: 0;
+                        $data['company_id'] = intval($this->ownerRecord->company_id) ?: 0;
                         $data['type_user'] = 0;
                         $data['required_uid'] = 0;
                         return $data;
