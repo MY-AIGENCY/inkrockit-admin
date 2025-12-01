@@ -26,6 +26,7 @@ class PaymentHistory extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = [
+        'invoice_id',
         'job_id',
         'client_id',
         'summ',
@@ -63,6 +64,14 @@ class PaymentHistory extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(User::class, 'client_id', 'id');
+    }
+
+    /**
+     * Get the invoice this payment belongs to.
+     */
+    public function invoice(): BelongsTo
+    {
+        return $this->belongsTo(Invoice::class);
     }
 
     /**
