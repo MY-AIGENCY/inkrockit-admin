@@ -42,13 +42,28 @@ class PaymentHistory extends Model
 
     /**
      * The attributes that should be cast.
+     * Note: summ/total are not cast to decimal due to legacy data having empty strings
      */
     protected $casts = [
         'date' => 'date',
-        'summ' => 'decimal:2',
-        'total' => 'decimal:2',
         'removed' => 'boolean',
     ];
+
+    /**
+     * Get the summ attribute as a float, defaulting to 0 for empty values.
+     */
+    public function getSummAttribute($value): float
+    {
+        return is_numeric($value) ? (float) $value : 0.0;
+    }
+
+    /**
+     * Get the total attribute as a float, defaulting to 0 for empty values.
+     */
+    public function getTotalAttribute($value): float
+    {
+        return is_numeric($value) ? (float) $value : 0.0;
+    }
 
     /**
      * Get the job this payment belongs to.
