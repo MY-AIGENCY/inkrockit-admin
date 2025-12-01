@@ -78,6 +78,16 @@ class Job extends Model
     }
 
     /**
+     * Get the notes for this job.
+     */
+    public function notes(): HasMany
+    {
+        return $this->hasMany(RequestNote::class, 'job_id', 'id')
+            ->where('removed', 0)
+            ->orderBy('date', 'desc');
+    }
+
+    /**
      * Calculate the balance due.
      */
     public function getBalanceDueAttribute(): float

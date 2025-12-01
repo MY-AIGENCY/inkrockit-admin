@@ -3,9 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\JobResource\Pages;
+use App\Filament\Resources\JobResource\RelationManagers;
 use App\Models\Job;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -77,6 +80,94 @@ class JobResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make()
+                    ->schema([
+                        Infolists\Components\Grid::make(4)
+                            ->schema([
+                                Infolists\Components\TextEntry::make('job_id')
+                                    ->label('Job #')
+                                    ->badge()
+                                    ->color('gray')
+                                    ->copyable()
+                                    ->size('lg'),
+
+                                Infolists\Components\TextEntry::make('payment_status')
+                                    ->label('Status')
+                                    ->badge()
+                                    ->getStateUsing(fn (Job $record): string => $record->isFullyPaid() ? 'Paid' : 'Balance Due')
+                                    ->color(fn (Job $record): string => $record->isFullyPaid() ? 'success' : 'warning'),
+
+                                Infolists\Components\TextEntry::make('order_total')
+                                    ->label('Order Total')
+                                    ->money('USD')
+                                    ->size('lg'),
+
+                                Infolists\Components\TextEntry::make('balance_due')
+                                    ->label('Balance')
+                                    ->money('USD')
+                                    ->size('lg')
+                                    ->color(fn (Job $record): string => $record->balance_due > 0 ? 'danger' : 'success'),
+                            ]),
+                    ]),
+
+                Infolists\Components\Section::make('Customer Information')
+                    ->icon('heroicon-o-user')
+                    ->schema([
+                        Infolists\Components\Grid::make(2)
+                            ->schema([
+                                Infolists\Components\TextEntry::make('user.email')
+                                    ->label('Email')
+                                    ->icon('heroicon-m-envelope')
+                                    ->copyable()
+                                    ->url(fn (Job $record) => $record->user ? route('filament.admin.resources.users.view', $record->user) : null),
+
+                                Infolists\Components\TextEntry::make('user.full_name')
+                                    ->label('Name')
+                                    ->icon('heroicon-m-user')
+                                    ->getStateUsing(fn (Job $record) => trim(($record->user?->first_name ?? '') . ' ' . ($record->user?->last_name ?? '')) ?: 'N/A'),
+
+                                Infolists\Components\TextEntry::make('company.company')
+                                    ->label('Company')
+                                    ->icon('heroicon-m-building-office')
+                                    ->url(fn (Job $record) => $record->company ? route('filament.admin.resources.companies.view', $record->company) : null),
+
+                                Infolists\Components\TextEntry::make('estimate_id')
+                                    ->label('Estimate ID')
+                                    ->icon('heroicon-m-document-text')
+                                    ->placeholder('N/A'),
+                            ]),
+                    ])->collapsible(),
+
+                Infolists\Components\Section::make('Financial Details')
+                    ->icon('heroicon-o-currency-dollar')
+                    ->schema([
+                        Infolists\Components\Grid::make(4)
+                            ->schema([
+                                Infolists\Components\TextEntry::make('order_total')
+                                    ->label('Order Total')
+                                    ->money('USD'),
+
+                                Infolists\Components\TextEntry::make('payments')
+                                    ->label('Payments Received')
+                                    ->money('USD'),
+
+                                Infolists\Components\TextEntry::make('balance_due')
+                                    ->label('Balance Due')
+                                    ->money('USD')
+                                    ->color(fn (Job $record): string => $record->balance_due > 0 ? 'danger' : 'success'),
+
+                                Infolists\Components\TextEntry::make('order_counts')
+                                    ->label('Order Count')
+                                    ->placeholder('0'),
+                            ]),
+                    ])->collapsible(),
+            ]);
+    }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -89,17 +180,19 @@ class JobResource extends Resource
                     ->label('Job #')
                     ->searchable()
                     ->sortable()
-                    ->copyable(),
+                    ->copyable()
+                    ->weight('bold'),
+                Tables\Columns\TextColumn::make('payment_status')
+                    ->label('Status')
+                    ->badge()
+                    ->getStateUsing(fn (Job $record): string => $record->isFullyPaid() ? 'Paid' : ($record->payments > 0 ? 'Partial' : 'Unpaid'))
+                    ->color(fn (Job $record): string => $record->isFullyPaid() ? 'success' : ($record->payments > 0 ? 'warning' : 'danger')),
                 Tables\Columns\TextColumn::make('user.email')
                     ->label('Customer')
                     ->searchable()
                     ->sortable()
-                    ->limit(25),
-                Tables\Columns\TextColumn::make('company.company')
-                    ->label('Company')
-                    ->searchable()
-                    ->sortable()
-                    ->limit(20),
+                    ->limit(25)
+                    ->description(fn (Job $record) => $record->company?->company),
                 Tables\Columns\TextColumn::make('order_total')
                     ->label('Total')
                     ->money('USD')
@@ -107,20 +200,13 @@ class JobResource extends Resource
                 Tables\Columns\TextColumn::make('payments')
                     ->label('Paid')
                     ->money('USD')
-                    ->sortable(),
+                    ->sortable()
+                    ->color('success'),
                 Tables\Columns\TextColumn::make('balance_due')
                     ->label('Balance')
                     ->money('USD')
                     ->sortable()
                     ->color(fn (Job $record): string => $record->balance_due > 0 ? 'danger' : 'success'),
-                Tables\Columns\IconColumn::make('is_fully_paid')
-                    ->label('Paid')
-                    ->boolean()
-                    ->getStateUsing(fn (Job $record): bool => $record->isFullyPaid())
-                    ->trueIcon('heroicon-o-check-circle')
-                    ->falseIcon('heroicon-o-x-circle')
-                    ->trueColor('success')
-                    ->falseColor('danger'),
             ])
             ->defaultSort('id', 'desc')
             ->filters([
@@ -145,7 +231,8 @@ class JobResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\NotesRelationManager::class,
+            RelationManagers\PaymentsRelationManager::class,
         ];
     }
 
