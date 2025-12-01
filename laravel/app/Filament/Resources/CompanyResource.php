@@ -3,13 +3,17 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CompanyResource\Pages;
+use App\Filament\Resources\CompanyResource\RelationManagers;
 use App\Models\Company;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class CompanyResource extends Resource
 {
@@ -105,10 +109,108 @@ class CompanyResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make()
+                    ->schema([
+                        Infolists\Components\Split::make([
+                            Infolists\Components\Grid::make(1)
+                                ->schema([
+                                    Infolists\Components\TextEntry::make('company')
+                                        ->label('')
+                                        ->size('lg')
+                                        ->weight('bold'),
+
+                                    Infolists\Components\TextEntry::make('abbr')
+                                        ->label('Abbreviation')
+                                        ->placeholder('No abbreviation'),
+                                ])
+                                ->grow(),
+
+                            Infolists\Components\Grid::make(1)
+                                ->schema([
+                                    Infolists\Components\TextEntry::make('duplicate')
+                                        ->label('Status')
+                                        ->badge()
+                                        ->formatStateUsing(fn ($state) => $state ? 'Duplicate' : 'Active')
+                                        ->color(fn ($state) => $state ? 'warning' : 'success'),
+
+                                    Infolists\Components\TextEntry::make('id')
+                                        ->label('ID')
+                                        ->badge()
+                                        ->color('gray'),
+                                ])
+                                ->grow(false),
+                        ]),
+                    ]),
+
+                Infolists\Components\Section::make('Financial Summary')
+                    ->icon('heroicon-o-banknotes')
+                    ->schema([
+                        Infolists\Components\Grid::make(4)
+                            ->schema([
+                                Infolists\Components\TextEntry::make('total_revenue')
+                                    ->label('Total Revenue')
+                                    ->getStateUsing(fn (Model $record) => $record->payments()->sum('summ'))
+                                    ->money('usd')
+                                    ->weight('bold')
+                                    ->color('success'),
+
+                                Infolists\Components\TextEntry::make('outstanding_balance')
+                                    ->label('Outstanding Balance')
+                                    ->getStateUsing(fn (Model $record) => $record->invoices()->where('balance_due', '>', 0)->sum('balance_due'))
+                                    ->money('usd')
+                                    ->weight('bold')
+                                    ->color(fn ($state) => $state > 0 ? 'danger' : 'success'),
+
+                                Infolists\Components\TextEntry::make('total_jobs')
+                                    ->label('Total Jobs')
+                                    ->getStateUsing(fn (Model $record) => $record->jobs()->count())
+                                    ->badge()
+                                    ->color('primary'),
+
+                                Infolists\Components\TextEntry::make('last_payment')
+                                    ->label('Last Payment')
+                                    ->getStateUsing(fn (Model $record) => $record->payments()->latest('date')->first()?->date)
+                                    ->date()
+                                    ->placeholder('No payments'),
+                            ]),
+                    ]),
+
+                Infolists\Components\Section::make('Primary Contact')
+                    ->icon('heroicon-o-user')
+                    ->schema([
+                        Infolists\Components\Grid::make(3)
+                            ->schema([
+                                Infolists\Components\TextEntry::make('mainUser.full_name')
+                                    ->label('Name')
+                                    ->placeholder('Not set'),
+
+                                Infolists\Components\TextEntry::make('mainUser.email')
+                                    ->label('Email')
+                                    ->icon('heroicon-m-envelope')
+                                    ->copyable()
+                                    ->placeholder('Not set'),
+
+                                Infolists\Components\TextEntry::make('mainUser.phone')
+                                    ->label('Phone')
+                                    ->icon('heroicon-m-phone')
+                                    ->placeholder('Not set'),
+                            ]),
+                    ]),
+            ]);
+    }
+
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\UsersRelationManager::class,
+            RelationManagers\JobsRelationManager::class,
+            RelationManagers\InvoicesRelationManager::class,
+            RelationManagers\PaymentsRelationManager::class,
+            RelationManagers\AddressesRelationManager::class,
         ];
     }
 

@@ -210,12 +210,29 @@ class JobResource extends Resource
             ])
             ->defaultSort('id', 'desc')
             ->filters([
+                Tables\Filters\Filter::make('with_balance')
+                    ->label('With Balance Due')
+                    ->query(fn (Builder $query): Builder => $query->whereRaw('order_total > payments'))
+                    ->toggle(),
                 Tables\Filters\Filter::make('unpaid')
                     ->label('Unpaid Only')
-                    ->query(fn (Builder $query): Builder => $query->whereRaw('order_total > payments')),
+                    ->query(fn (Builder $query): Builder => $query->whereRaw('order_total > payments AND payments = 0')),
                 Tables\Filters\Filter::make('paid')
                     ->label('Fully Paid')
                     ->query(fn (Builder $query): Builder => $query->whereRaw('order_total <= payments')),
+                Tables\Filters\SelectFilter::make('status')
+                    ->options([
+                        'Production' => 'Production',
+                        'Pre-Production' => 'Pre-Production',
+                        'Proofing' => 'Proofing',
+                        'Waiting' => 'Waiting',
+                        'Review' => 'Review',
+                        'On Hold' => 'On Hold',
+                        'Ready to Ship' => 'Ready to Ship',
+                        'Shipped' => 'Shipped',
+                        'Complete' => 'Complete',
+                        'Cancelled' => 'Cancelled',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -240,6 +257,7 @@ class JobResource extends Resource
     {
         return [
             'index' => Pages\ListJobs::route('/'),
+            'create' => Pages\CreateJob::route('/create'),
             'view' => Pages\ViewJob::route('/{record}'),
             'edit' => Pages\EditJob::route('/{record}/edit'),
         ];

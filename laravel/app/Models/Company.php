@@ -82,6 +82,38 @@ class Company extends Model
     }
 
     /**
+     * Get all invoices for this company.
+     */
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class, 'company_id', 'id');
+    }
+
+    /**
+     * Get all payments for this company.
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(PaymentHistory::class, 'company_id', 'id');
+    }
+
+    /**
+     * Get all addresses for this company.
+     */
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(CompanyAddress::class, 'company_id', 'id');
+    }
+
+    /**
+     * Get all notes for this company.
+     */
+    public function notes(): HasMany
+    {
+        return $this->hasMany(RequestNote::class, 'company_id', 'id');
+    }
+
+    /**
      * Scope a query to exclude duplicate companies.
      */
     public function scopeNotDuplicate($query)

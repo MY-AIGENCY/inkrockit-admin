@@ -38,6 +38,16 @@ class Job extends Model
     ];
 
     /**
+     * Generate the next job ID.
+     */
+    public static function generateJobId(): string
+    {
+        $lastJob = self::orderBy('id', 'desc')->first();
+        $lastNumber = $lastJob ? (int) preg_replace('/\D/', '', $lastJob->job_id) : 0;
+        return 'JOB-' . str_pad($lastNumber + 1, 6, '0', STR_PAD_LEFT);
+    }
+
+    /**
      * The attributes that should be cast.
      */
     protected $casts = [

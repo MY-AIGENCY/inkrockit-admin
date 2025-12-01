@@ -27,11 +27,15 @@ class DashboardStats extends BaseWidget
         // Jobs count - total active jobs
         $totalJobs = Job::count();
 
+        // Active jobs (in production/proofing etc)
+        $activeJobs = Job::whereIn('status', ['Production', 'Pre-Production', 'Proofing', 'Waiting', 'Review', 'On Hold'])
+            ->count();
+
         // Pending requests - sample requests in pending status (status = 0)
         $pendingRequests = SampleRequest::pending()->count();
 
-        // Active/In Production - jobs with balance due (not fully paid)
-        $activeProduction = Job::whereRaw('order_total > payments')->count();
+        // Orders with balance due (not fully paid)
+        $ordersWithBalance = Job::whereRaw('order_total > payments')->count();
 
         // Weekly revenue trend for sparkline
         $weeklyRevenue = [];
@@ -57,31 +61,59 @@ class DashboardStats extends BaseWidget
             ? round((($thisWeekRevenue - $lastWeekRevenue) / $lastWeekRevenue) * 100, 1)
             : 0;
 
+        // Get yesterday's revenue for additional context
+        $yesterdayRevenue = PaymentHistory::whereDate('date', Carbon::yesterday())
+            ->active()
+            ->sum('summ');
+
+        $todayVsYesterday = $yesterdayRevenue > 0
+            ? round((($revenueToday - $yesterdayRevenue) / $yesterdayRevenue) * 100, 1)
+            : ($revenueToday > 0 ? 100 : 0);
+
         return [
             Stat::make('Revenue Today', '$' . number_format($revenueToday, 2))
                 ->description($percentChange >= 0 ? "+{$percentChange}% vs last week" : "{$percentChange}% vs last week")
                 ->descriptionIcon($percentChange >= 0 ? 'heroicon-m-arrow-trending-up' : 'heroicon-m-arrow-trending-down')
                 ->color($percentChange >= 0 ? 'success' : 'danger')
                 ->chart($weeklyRevenue)
-                ->url(route('filament.admin.resources.payment-histories.index')),
+                ->extraAttributes([
+                    'class' => 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition',
+                ])
+                ->url(route('filament.admin.resources.payment-histories.index', [
+                    'tableFilters[date][date_from]' => $today->format('Y-m-d'),
+                    'tableFilters[date][date_until]' => $today->format('Y-m-d'),
+                ])),
 
             Stat::make('Total Jobs', number_format($totalJobs))
-                ->description('All orders')
+                ->description($activeJobs . ' active')
                 ->descriptionIcon('heroicon-m-briefcase')
                 ->color('warning')
+                ->extraAttributes([
+                    'class' => 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition',
+                ])
                 ->url(route('filament.admin.resources.jobs.index')),
 
             Stat::make('Pending Requests', (string) $pendingRequests)
                 ->description('Awaiting processing')
                 ->descriptionIcon('heroicon-m-clock')
                 ->color('info')
-                ->url(route('filament.admin.resources.sample-requests.index')),
+                ->extraAttributes([
+                    'class' => 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition',
+                ])
+                ->url(route('filament.admin.resources.sample-requests.index', [
+                    'tableFilters[status][value]' => '0',
+                ])),
 
-            Stat::make('With Balance', (string) $activeProduction)
-                ->description('Unpaid orders')
+            Stat::make('Orders With Balance', (string) $ordersWithBalance)
+                ->description('Awaiting payment')
                 ->descriptionIcon('heroicon-m-currency-dollar')
                 ->color('primary')
-                ->url(route('filament.admin.resources.jobs.index')),
+                ->extraAttributes([
+                    'class' => 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition',
+                ])
+                ->url(route('filament.admin.resources.jobs.index', [
+                    'tableFilters[with_balance][isActive]' => true,
+                ])),
         ];
     }
 }

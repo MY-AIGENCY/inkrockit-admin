@@ -161,6 +161,30 @@ class User extends Authenticatable implements FilamentUser
     }
 
     /**
+     * Get the invoices for this user.
+     */
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class, 'user_id', 'id');
+    }
+
+    /**
+     * Get the payments for this user.
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(PaymentHistory::class, 'user_id', 'id');
+    }
+
+    /**
+     * Get the quotes for this user.
+     */
+    public function quotes(): HasMany
+    {
+        return $this->hasMany(Quote::class, 'user_id', 'id');
+    }
+
+    /**
      * Scope a query to only include admin/staff users.
      */
     public function scopeAdminUsers($query)

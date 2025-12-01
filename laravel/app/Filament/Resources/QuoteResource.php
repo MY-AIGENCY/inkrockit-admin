@@ -27,6 +27,24 @@ class QuoteResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'quote_number';
 
+    /**
+     * Calculate pricing for a price tier.
+     */
+    protected static function calculatePricing(Forms\Get $get, Forms\Set $set): void
+    {
+        $qty = floatval($get('qty') ?? 0);
+        $unitCost = floatval($get('unit_cost') ?? 0);
+        $markupPercent = floatval($get('markup_percent') ?? 0);
+
+        if ($qty > 0 && $unitCost > 0) {
+            $unitPrice = $unitCost * (1 + ($markupPercent / 100));
+            $total = $unitPrice * $qty;
+
+            $set('unit_price', round($unitPrice, 4));
+            $set('total', round($total, 2));
+        }
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -94,6 +112,70 @@ class QuoteResource extends Resource
                     ])
                     ->columns(2),
 
+                Forms\Components\Section::make('Pricing Tiers')
+                    ->schema([
+                        Forms\Components\Repeater::make('price_options')
+                            ->label('Price Options')
+                            ->schema([
+                                Forms\Components\TextInput::make('qty')
+                                    ->label('Quantity')
+                                    ->numeric()
+                                    ->required()
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(fn ($state, Forms\Set $set, Forms\Get $get) =>
+                                        static::calculatePricing($get, $set)),
+
+                                Forms\Components\TextInput::make('unit_cost')
+                                    ->label('Unit Cost')
+                                    ->numeric()
+                                    ->prefix('$')
+                                    ->step(0.01)
+                                    ->required()
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(fn ($state, Forms\Set $set, Forms\Get $get) =>
+                                        static::calculatePricing($get, $set)),
+
+                                Forms\Components\TextInput::make('markup_percent')
+                                    ->label('Markup %')
+                                    ->numeric()
+                                    ->suffix('%')
+                                    ->default(50)
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(fn ($state, Forms\Set $set, Forms\Get $get) =>
+                                        static::calculatePricing($get, $set)),
+
+                                Forms\Components\TextInput::make('unit_price')
+                                    ->label('Unit Price')
+                                    ->numeric()
+                                    ->prefix('$')
+                                    ->step(0.01)
+                                    ->disabled()
+                                    ->dehydrated(),
+
+                                Forms\Components\TextInput::make('total')
+                                    ->label('Total')
+                                    ->numeric()
+                                    ->prefix('$')
+                                    ->disabled()
+                                    ->dehydrated(),
+
+                                Forms\Components\Toggle::make('selected')
+                                    ->label('Selected')
+                                    ->inline(false)
+                                    ->helperText('Mark as chosen option'),
+                            ])
+                            ->columns(6)
+                            ->defaultItems(1)
+                            ->addActionLabel('Add Price Tier')
+                            ->reorderable()
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string =>
+                                isset($state['qty'], $state['total'])
+                                    ? number_format($state['qty']) . ' qty @ $' . number_format($state['total'], 2)
+                                    : null
+                            ),
+                    ]),
+
                 Forms\Components\Section::make('Options & Finishing')
                     ->schema([
                         Forms\Components\TagsInput::make('finishing')
@@ -114,7 +196,8 @@ class QuoteResource extends Resource
                             ->keyLabel('Option')
                             ->valueLabel('Value')
                             ->addActionLabel('Add Option'),
-                    ]),
+                    ])
+                    ->collapsible(),
 
                 Forms\Components\Section::make('Notes')
                     ->schema([
@@ -274,6 +357,38 @@ class QuoteResource extends Resource
                         Infolists\Components\KeyValueEntry::make('options')
                             ->label('Additional Options'),
                     ]),
+
+                Infolists\Components\Section::make('Pricing Options')
+                    ->schema([
+                        Infolists\Components\RepeatableEntry::make('price_options')
+                            ->label('')
+                            ->schema([
+                                Infolists\Components\TextEntry::make('qty')
+                                    ->label('Quantity')
+                                    ->numeric(),
+                                Infolists\Components\TextEntry::make('unit_cost')
+                                    ->label('Unit Cost')
+                                    ->money('usd'),
+                                Infolists\Components\TextEntry::make('markup_percent')
+                                    ->label('Markup')
+                                    ->suffix('%'),
+                                Infolists\Components\TextEntry::make('unit_price')
+                                    ->label('Unit Price')
+                                    ->money('usd'),
+                                Infolists\Components\TextEntry::make('total')
+                                    ->label('Total')
+                                    ->money('usd')
+                                    ->weight('bold'),
+                                Infolists\Components\IconEntry::make('selected')
+                                    ->label('Selected')
+                                    ->boolean()
+                                    ->trueIcon('heroicon-o-check-circle')
+                                    ->falseIcon('heroicon-o-minus')
+                                    ->trueColor('success'),
+                            ])
+                            ->columns(6),
+                    ])
+                    ->visible(fn ($record) => !empty($record->price_options)),
 
                 Infolists\Components\Section::make('Notes')
                     ->schema([

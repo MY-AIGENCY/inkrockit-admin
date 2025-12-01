@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class UserResource extends Resource
 {
@@ -224,6 +225,39 @@ class UserResource extends Resource
                             ]),
                     ])->collapsible(),
 
+                Infolists\Components\Section::make('Financial Summary')
+                    ->icon('heroicon-o-banknotes')
+                    ->schema([
+                        Infolists\Components\Grid::make(4)
+                            ->schema([
+                                Infolists\Components\TextEntry::make('total_spent')
+                                    ->label('Total Spent')
+                                    ->getStateUsing(fn (Model $record) => $record->payments()->sum('summ'))
+                                    ->money('usd')
+                                    ->weight('bold')
+                                    ->color('success'),
+
+                                Infolists\Components\TextEntry::make('outstanding_balance')
+                                    ->label('Balance Due')
+                                    ->getStateUsing(fn (Model $record) => $record->invoices()->where('balance_due', '>', 0)->sum('balance_due'))
+                                    ->money('usd')
+                                    ->weight('bold')
+                                    ->color(fn ($state) => $state > 0 ? 'danger' : 'success'),
+
+                                Infolists\Components\TextEntry::make('total_orders')
+                                    ->label('Total Orders')
+                                    ->getStateUsing(fn (Model $record) => $record->jobs()->count())
+                                    ->badge()
+                                    ->color('primary'),
+
+                                Infolists\Components\TextEntry::make('last_order')
+                                    ->label('Last Order')
+                                    ->getStateUsing(fn (Model $record) => $record->jobs()->latest('date')->first()?->date)
+                                    ->date()
+                                    ->placeholder('No orders'),
+                            ]),
+                    ]),
+
                 Infolists\Components\Section::make('Admin Notes')
                     ->icon('heroicon-o-document-text')
                     ->schema([
@@ -314,6 +348,9 @@ class UserResource extends Resource
         return [
             RelationManagers\JobsRelationManager::class,
             RelationManagers\RequestsRelationManager::class,
+            RelationManagers\InvoicesRelationManager::class,
+            RelationManagers\PaymentsRelationManager::class,
+            RelationManagers\QuotesRelationManager::class,
         ];
     }
 

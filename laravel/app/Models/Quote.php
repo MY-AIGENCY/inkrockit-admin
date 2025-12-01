@@ -19,6 +19,7 @@ class Quote extends Model
         'color',
         'finishing',
         'options',
+        'price_options',
         'valid_until',
         'internal_notes',
         'customer_message',
@@ -27,6 +28,7 @@ class Quote extends Model
     protected $casts = [
         'finishing' => 'array',
         'options' => 'array',
+        'price_options' => 'array',
         'valid_until' => 'date',
     ];
 
