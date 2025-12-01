@@ -27,9 +27,8 @@ class DashboardStats extends BaseWidget
         // Jobs count - total active jobs
         $totalJobs = Job::count();
 
-        // Active jobs (in production/proofing etc)
-        $activeJobs = Job::whereIn('status', ['Production', 'Pre-Production', 'Proofing', 'Waiting', 'Review', 'On Hold'])
-            ->count();
+        // Active jobs (with balance due - unpaid or partially paid)
+        $activeJobs = Job::whereRaw('order_total > payments')->count();
 
         // Pending requests - sample requests in pending status (status = 0)
         $pendingRequests = SampleRequest::pending()->count();
@@ -85,7 +84,7 @@ class DashboardStats extends BaseWidget
                 ])),
 
             Stat::make('Total Jobs', number_format($totalJobs))
-                ->description($activeJobs . ' active')
+                ->description($activeJobs . ' with balance')
                 ->descriptionIcon('heroicon-m-briefcase')
                 ->color('warning')
                 ->extraAttributes([
