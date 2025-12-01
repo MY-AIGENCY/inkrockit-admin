@@ -3,10 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use App\Models\Company;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -23,6 +26,8 @@ class UserResource extends Resource
     protected static ?int $navigationSort = 1;
 
     protected static ?string $recordTitleAttribute = 'email';
+
+    protected static ?string $navigationLabel = 'Customers';
 
     public static function getGloballySearchableAttributes(): array
     {
@@ -109,6 +114,129 @@ class UserResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make()
+                    ->schema([
+                        Infolists\Components\Split::make([
+                            Infolists\Components\Grid::make(1)
+                                ->schema([
+                                    Infolists\Components\TextEntry::make('full_name')
+                                        ->label('')
+                                        ->size('lg')
+                                        ->weight('bold')
+                                        ->placeholder('No name'),
+
+                                    Infolists\Components\TextEntry::make('email')
+                                        ->label('')
+                                        ->icon('heroicon-m-envelope')
+                                        ->copyable(),
+                                ])
+                                ->grow(),
+
+                            Infolists\Components\Grid::make(1)
+                                ->schema([
+                                    Infolists\Components\TextEntry::make('group_id')
+                                        ->label('Role')
+                                        ->badge()
+                                        ->formatStateUsing(fn (int $state): string => match ($state) {
+                                            User::GROUP_ADMIN => 'Admin',
+                                            User::GROUP_STAFF => 'Staff',
+                                            default => 'Customer',
+                                        })
+                                        ->color(fn (int $state): string => match ($state) {
+                                            User::GROUP_ADMIN => 'danger',
+                                            User::GROUP_STAFF => 'warning',
+                                            default => 'success',
+                                        }),
+
+                                    Infolists\Components\TextEntry::make('id')
+                                        ->label('ID')
+                                        ->badge()
+                                        ->color('gray'),
+                                ])
+                                ->grow(false),
+                        ]),
+                    ]),
+
+                Infolists\Components\Section::make('Contact Information')
+                    ->icon('heroicon-o-user')
+                    ->schema([
+                        Infolists\Components\Grid::make(3)
+                            ->schema([
+                                Infolists\Components\TextEntry::make('phone')
+                                    ->label('Phone')
+                                    ->icon('heroicon-m-phone')
+                                    ->placeholder('Not provided'),
+
+                                Infolists\Components\TextEntry::make('phone_ext')
+                                    ->label('Extension')
+                                    ->placeholder('N/A'),
+
+                                Infolists\Components\TextEntry::make('fax')
+                                    ->label('Fax')
+                                    ->placeholder('N/A'),
+
+                                Infolists\Components\TextEntry::make('email')
+                                    ->label('Primary Email')
+                                    ->icon('heroicon-m-envelope')
+                                    ->copyable(),
+
+                                Infolists\Components\TextEntry::make('email_alt')
+                                    ->label('Alternate Email')
+                                    ->icon('heroicon-m-envelope')
+                                    ->placeholder('N/A'),
+
+                                Infolists\Components\TextEntry::make('position')
+                                    ->label('Job Title')
+                                    ->placeholder('N/A'),
+                            ]),
+                    ])->collapsible(),
+
+                Infolists\Components\Section::make('Company & Address')
+                    ->icon('heroicon-o-building-office')
+                    ->schema([
+                        Infolists\Components\Grid::make(2)
+                            ->schema([
+                                Infolists\Components\TextEntry::make('company.company')
+                                    ->label('Company')
+                                    ->icon('heroicon-m-building-office')
+                                    ->url(fn (User $record) => $record->company ? route('filament.admin.resources.companies.view', $record->company) : null)
+                                    ->placeholder('No company'),
+
+                                Infolists\Components\TextEntry::make('industry')
+                                    ->label('Industry')
+                                    ->placeholder('N/A'),
+
+                                Infolists\Components\TextEntry::make('full_address')
+                                    ->label('Address')
+                                    ->icon('heroicon-m-map-pin')
+                                    ->getStateUsing(fn (User $record) => collect([
+                                        $record->street,
+                                        $record->street2,
+                                        implode(', ', array_filter([$record->city, $record->state, $record->zipcode])),
+                                        $record->country,
+                                    ])->filter()->join("\n"))
+                                    ->placeholder('No address')
+                                    ->columnSpanFull(),
+                            ]),
+                    ])->collapsible(),
+
+                Infolists\Components\Section::make('Admin Notes')
+                    ->icon('heroicon-o-document-text')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('admin_comment')
+                            ->label('')
+                            ->markdown()
+                            ->placeholder('No internal notes recorded.')
+                            ->columnSpanFull(),
+                    ])->collapsible()
+                    ->collapsed(),
+            ]);
+    }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -184,7 +312,8 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\JobsRelationManager::class,
+            RelationManagers\RequestsRelationManager::class,
         ];
     }
 
