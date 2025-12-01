@@ -185,7 +185,7 @@ class ShipmentResource extends Resource
                 Tables\Columns\TextColumn::make('carrier')
                     ->label('Carrier')
                     ->badge(),
-                Tables\Columns\TextColumn::make('job.name')
+                Tables\Columns\TextColumn::make('job.job_id')
                     ->label('Job')
                     ->limit(20)
                     ->url(fn ($record) => $record->job_id
@@ -346,7 +346,7 @@ class ShipmentResource extends Resource
                     ->schema([
                         Infolists\Components\Grid::make(3)
                             ->schema([
-                                Infolists\Components\TextEntry::make('job.name')
+                                Infolists\Components\TextEntry::make('job.job_id')
                                     ->label('Job')
                                     ->url(fn ($record) => $record->job_id
                                         ? JobResource::getUrl('view', ['record' => $record->job_id])
@@ -391,6 +391,7 @@ class ShipmentResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['tracking_number', 'recipient_name', 'user.email', 'job.name'];
+        // Note: user_jobs table doesn't have a name column, use job_id instead
+        return ['tracking_number', 'recipient_name', 'user.email', 'job.job_id'];
     }
 }

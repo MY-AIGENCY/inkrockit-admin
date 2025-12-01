@@ -390,6 +390,7 @@ class InvoiceResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['invoice_number', 'user.email', 'company.name'];
+        // Note: company column is 'company' not 'name' in legacy users_company table
+        return ['invoice_number', 'user.email', 'company.company'];
     }
 }

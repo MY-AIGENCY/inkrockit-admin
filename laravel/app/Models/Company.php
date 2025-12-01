@@ -41,6 +41,15 @@ class Company extends Model
     ];
 
     /**
+     * Get the name attribute (alias for company column).
+     * This allows using 'name' consistently in Filament resources.
+     */
+    public function getNameAttribute(): ?string
+    {
+        return $this->company;
+    }
+
+    /**
      * Get the main/primary user for this company.
      */
     public function mainUser(): BelongsTo

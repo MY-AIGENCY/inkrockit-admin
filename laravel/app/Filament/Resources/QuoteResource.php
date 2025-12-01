@@ -310,6 +310,7 @@ class QuoteResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['quote_number', 'project_name', 'user.email', 'company.name'];
+        // Note: company column is 'company' not 'name' in legacy users_company table
+        return ['quote_number', 'project_name', 'user.email', 'company.company'];
     }
 }
