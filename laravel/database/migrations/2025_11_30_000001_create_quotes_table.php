@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('quotes', function (Blueprint $table) {
             $table->id();
             $table->string('quote_number', 50)->unique();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('company_id')->nullable();
+            // Match legacy table types: users.id is INT, users_company.id is INT
+            $table->integer('user_id')->nullable();
+            $table->integer('company_id')->nullable();
             $table->string('project_name', 255)->nullable();
             $table->enum('status', ['Draft', 'Review', 'Sent', 'Accepted', 'Rejected'])->default('Draft');
             // Print specs
@@ -30,9 +31,9 @@ return new class extends Migration
             $table->text('customer_message')->nullable();
             $table->timestamps();
 
-            // Foreign keys (without cascade delete for safety)
-            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
-            $table->foreign('company_id')->references('id')->on('users_company')->nullOnDelete();
+            // Add indexes for foreign keys (without constraints for legacy compatibility)
+            $table->index('user_id');
+            $table->index('company_id');
         });
 
         Schema::create('quote_requests', function (Blueprint $table) {
