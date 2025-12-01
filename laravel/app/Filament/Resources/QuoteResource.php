@@ -71,7 +71,7 @@ class QuoteResource extends Resource
                             ]),
                         Forms\Components\Select::make('company_id')
                             ->label('Company')
-                            ->relationship('company', 'name')
+                            ->relationship('company', 'company')
                             ->searchable()
                             ->preload(),
                     ])

@@ -81,7 +81,7 @@ class InvoiceResource extends Resource
                             ->preload(),
                         Forms\Components\Select::make('company_id')
                             ->label('Company')
-                            ->relationship('company', 'name')
+                            ->relationship('company', 'company')
                             ->searchable()
                             ->preload(),
                         Forms\Components\Select::make('job_id')
