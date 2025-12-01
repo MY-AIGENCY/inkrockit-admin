@@ -78,6 +78,11 @@ class NotesRelationManager extends RelationManager
                         $data['author_id'] = auth()->id();
                         $data['type'] = 0;
                         $data['removed'] = 0;
+                        // Legacy table requires these fields with NOT NULL constraints
+                        $data['request_id'] = $this->ownerRecord->estimate_id ?? 0;
+                        $data['company_id'] = $this->ownerRecord->company_id ?? 0;
+                        $data['type_user'] = 0;
+                        $data['required_uid'] = 0;
                         return $data;
                     }),
             ])

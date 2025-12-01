@@ -92,7 +92,7 @@ class ShipmentResource extends Resource
                             ->preload(),
                         Forms\Components\Select::make('company_id')
                             ->label('Company')
-                            ->relationship('company', 'name')
+                            ->relationship('company', 'company')  // Note: column is 'company' not 'name' in legacy users_company table
                             ->searchable()
                             ->preload(),
                     ])
