@@ -91,10 +91,11 @@ class Company extends Model
 
     /**
      * Get all payments for this company.
+     * Note: payment_history uses client_id for company, not company_id
      */
     public function payments(): HasMany
     {
-        return $this->hasMany(PaymentHistory::class, 'company_id', 'id');
+        return $this->hasMany(PaymentHistory::class, 'client_id', 'id');
     }
 
     /**
