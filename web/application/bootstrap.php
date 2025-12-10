@@ -74,6 +74,7 @@ if (isset($_SERVER['KOHANA_ENV'])) {
 Cookie::$salt = '34249erhjrfX401209vdsdfRnHS4Jdy4UJJP9';
 Cookie::$expiration = Date::MONTH;
 Cookie::$path = '/';
+Cookie::$domain = '.inkrockit.com'; // Allow cookies across subdomains
 
 /**
  * Initialize Kohana, setting the default options.
