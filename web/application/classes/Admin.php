@@ -18,12 +18,26 @@ class Admin extends Controller_Template {
         $this->template->menu = '';
         $this->template->sub_menu = '';
 
-        $cookies = new Cookie();
+        $session = Session::instance();
         $this->model = Model::factory('Inspiration');
         $this->admin_model = Model::factory('Admin');
-        $this->admin = $cookies->get('admin_user');
+
+        // Prefer server-side session for admin auth; fall back to legacy cookie.
+        $this->admin = $session->get('admin_user');
+        if (empty($this->admin)) {
+            $this->admin = Cookie::get('admin_user');
+        }
         if(!empty($this->admin)){
-            $this->admin = unserialize($this->admin);
+            // Legacy cookie path stores serialized array; session path stores the array directly.
+            if (is_string($this->admin)) {
+                $this->admin = @unserialize($this->admin);
+            }
+            if (is_array($this->admin)) {
+                // Ensure session is hydrated even if we only had the legacy cookie.
+                $session->set('admin_user', $this->admin);
+            } else {
+                $this->admin = NULL;
+            }
         }
 
         if (empty($this->admin) && $this->data['action'] != 'login') {

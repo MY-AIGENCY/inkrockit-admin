@@ -11,13 +11,25 @@ class Model_Admin extends Model {
      */
 
     public static function check_login($login, $pass) {
+        $login = is_string($login) ? trim($login) : $login;
+
         if (!empty($login) && !empty($pass)) {
+            // Allow login by username OR email. Admin access is determined by group_id >= 2.
             $res = DB::sql_row('SELECT users.*, user_group.access
                 FROM users
                 LEFT JOIN user_group ON user_group.id=users.group_id
-                WHERE login = :login AND password = MD5(:pass) AND group_id>=2', array(':login' => $login, ':pass' => $pass));
+                WHERE (login = :login OR email = :login)
+                  AND password = MD5(:pass)
+                  AND group_id>=2', array(':login' => $login, ':pass' => $pass));
             if (!empty($res)) {
-                Session::instance()->set('user', $res['login']);
+                $session = Session::instance();
+                // Prevent session fixation on privilege change.
+                $session->regenerate();
+
+                $session->set('user', $res['login']);
+                $session->set('admin_user', $res);
+
+                // Backward compatibility: some legacy code expects admin data in this cookie.
                 Cookie::set('admin_user', serialize($res));
                 return true;
             }
