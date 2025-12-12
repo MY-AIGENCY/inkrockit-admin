@@ -33,7 +33,6 @@ class Controller_Admin_Index extends Admin {
                     // - wrong username/email, wrong password
                     // - user is not in an admin-capable group (group_id must be >= 2)
                     $error = 'Invalid login, password, or insufficient permissions.';
-                    error_log("admin_login_failed trace_id={$trace_id} login=" . substr((string) $login, 0, 3) . "…");
                 }
             }
 
