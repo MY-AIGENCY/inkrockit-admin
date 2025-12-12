@@ -18,6 +18,8 @@ class Controller_Admin_Index extends Admin {
             $this->redirect('admin/index');
         } else {
             $error = NULL;
+            $trace_id = bin2hex(random_bytes(8));
+            $this->response->headers('X-Login-Trace-Id', $trace_id);
             if ($this->request->method() === HTTP_Request::POST) {
                 $login = $this->request->post('login');
                 $pass = $this->request->post('pass');
@@ -31,6 +33,7 @@ class Controller_Admin_Index extends Admin {
                     // - wrong username/email, wrong password
                     // - user is not in an admin-capable group (group_id must be >= 2)
                     $error = 'Invalid login, password, or insufficient permissions.';
+                    error_log("admin_login_failed trace_id={$trace_id} login=" . substr((string) $login, 0, 3) . "…");
                 }
             }
 

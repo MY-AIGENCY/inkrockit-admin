@@ -15,13 +15,15 @@ class Model_Admin extends Model {
 
         if (!empty($login) && !empty($pass)) {
             // Allow login by username OR email. Admin access is determined by group_id >= 2.
+            // Password storage has evolved over time (legacy MD5 -> modern bcrypt), so we
+            // fetch the candidate user and verify the password in PHP.
             $res = DB::sql_row('SELECT users.*, user_group.access
                 FROM users
                 LEFT JOIN user_group ON user_group.id=users.group_id
                 WHERE (login = :login OR email = :login)
-                  AND password = MD5(:pass)
-                  AND group_id>=2', array(':login' => $login, ':pass' => $pass));
-            if (!empty($res)) {
+                  AND group_id>=2', array(':login' => $login));
+
+            if (!empty($res) && self::verify_password((string) $res['password'], (string) $pass)) {
                 $session = Session::instance();
                 // Prevent session fixation on privilege change.
                 $session->regenerate();
@@ -34,6 +36,33 @@ class Model_Admin extends Model {
                 return true;
             }
         }
+        return false;
+    }
+
+    /**
+     * Verify a user password against stored hash.
+     *
+     * Supports:
+     * - bcrypt (`$2y$...`) used by newer systems
+     * - legacy MD5 hex digests (32 chars) used by older systems
+     */
+    protected static function verify_password($stored_hash, $plain_password) {
+        $stored_hash = is_string($stored_hash) ? trim($stored_hash) : '';
+        if ($stored_hash === '') {
+            return false;
+        }
+
+        // bcrypt / password_hash() formats
+        if (strpos($stored_hash, '$2y$') === 0 || strpos($stored_hash, '$2a$') === 0 || strpos($stored_hash, '$2b$') === 0) {
+            return password_verify($plain_password, $stored_hash);
+        }
+
+        // Legacy MD5 (32 hex chars)
+        if (preg_match('/^[a-f0-9]{32}$/i', $stored_hash)) {
+            return strcasecmp($stored_hash, md5($plain_password)) === 0;
+        }
+
+        // Unknown format
         return false;
     }
 
