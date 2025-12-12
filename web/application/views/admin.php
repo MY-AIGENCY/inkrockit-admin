@@ -7,7 +7,7 @@
     <!-- Core CSS -->
     <link rel="stylesheet" href="/css/admin/reset.css">
     <link rel="stylesheet" href="/css/admin/main.css">
-    <link rel="stylesheet" href="/css/admin/typography.css">
+    <link rel="stylesheet" href="/css/admin/typography.css?v=20251212">
     <link rel="stylesheet" href="/css/admin/jquery-ui-1.9.2.css">
     <link rel="stylesheet" href="/css/admin/bootstrap.css">
 
