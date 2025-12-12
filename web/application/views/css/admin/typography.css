@@ -68,7 +68,7 @@
   font-family: 'ArchivoNarrow';
   font-style: normal;
   font-weight: 400;
-  src: local('Archivo Narrow Regular'), local('ArchivoNarrow-Regular'), url(http://themes.googleusercontent.com/static/fonts/archivonarrow/v2/DsLzC9scoPnrGiwYYMQXphdbPw3QSf9R-kE0EsQUn2A.woff) format('woff');
+  src: local('Archivo Narrow Regular'), local('ArchivoNarrow-Regular'), url(https://themes.googleusercontent.com/static/fonts/archivonarrow/v2/DsLzC9scoPnrGiwYYMQXphdbPw3QSf9R-kE0EsQUn2A.woff) format('woff');
 }
 
 .widget_body h1, .widget_body h2, .widget_body h3, .widget_body h4, .widget_body h5, .widget_body h6{
